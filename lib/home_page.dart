@@ -43,10 +43,12 @@ class _ShowPlaceListState extends State<ShowPlaceList>
           ],
         ),
       ),
+      //TabBarView를 따로 하나의 class로 만들어서 column으로 묶어보자
       body: TabBarView(
         controller: tabController,
         children: const <Widget>[
           PlacePage(),
+          Text('course'),
         ],
       ),
     );
