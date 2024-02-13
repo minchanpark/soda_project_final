@@ -49,6 +49,7 @@ class _PlacePageState extends State<PlacePage> {
           return Column(
             children: [
               const SizedBox(height: 20),
+
               LayoutBuilder(builder: (context, constraints) {
                 final spacing = (constraints.maxWidth - (110 * 3)) / 3;
                 return Wrap(
@@ -98,6 +99,67 @@ class _PlacePageState extends State<PlacePage> {
                   }),
                 );
               }),
+
+              Row(
+                children: [
+                  const Expanded(child: Text('')),
+                  GestureDetector(
+                    onTap: () {
+                      print('tap');
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: const Row(
+                                      children: [
+                                        Text('가격 설정'),
+                                        Icon(
+                                          Icons.keyboard_arrow_down,
+                                          size: 20,
+                                          color: AppColor.textColor3,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    child: const Text('Close BottomSheet'),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: const Row(
+                      children: [
+                        Text('낮은 가격순',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.18,
+                              color: AppColor.textColor3,
+                            )),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 20,
+                          color: AppColor.textColor3,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                ],
+              ),
               if (_value == 1) // 맛집이 선택되었을 때만 ListView를 보여줌
                 Expanded(
                   child: ListView.builder(

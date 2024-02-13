@@ -40,6 +40,7 @@ dependencies:
   firebase_storage: ^11.6.4
   provider: ^6.1.1
   english_words: ^4.0.0
+  filter_list: ^1.0.2
 
 dev_dependencies:
   flutter_test:

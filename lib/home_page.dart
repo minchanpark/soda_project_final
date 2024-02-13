@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:soda_project_final/app_color/app_color.dart';
 import 'package:soda_project_final/page_folder/place_page.dart';
 import 'firestore_file/firestore_resturant.dart';
+import 'page_folder/course_page.dart';
 
 class ShowPlaceList extends StatefulWidget {
   const ShowPlaceList({super.key});
@@ -48,7 +49,8 @@ class _ShowPlaceListState extends State<ShowPlaceList>
         controller: tabController,
         children: const <Widget>[
           PlacePage(),
-          Text('course'),
+          //Text('course'),
+          CoursePage(),
         ],
       ),
     );
