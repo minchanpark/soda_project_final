@@ -3,27 +3,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:majesticons_flutter/majesticons_flutter.dart';
 import 'package:soda_project_final/app_color/app_color.dart';
-import 'package:soda_project_final/page_folder/culture_page.dart';
+import 'package:soda_project_final/home_page.dart';
 import 'package:soda_project_final/page_folder/place_page.dart';
-import 'firestore_file/firestore_resturant.dart';
-import 'page_folder/course_page.dart';
+
 import 'package:iconamoon/iconamoon.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
-import 'page_folder/custom_page.dart';
+import 'course_page.dart';
+import 'custom_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class CulturePage extends StatefulWidget {
+  const CulturePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CulturePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _HomePageState extends State<CulturePage> with TickerProviderStateMixin {
   late final TabController tabController;
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
 
   @override
   void initState() {
@@ -37,20 +37,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  static const List<Widget> widgetOptions = <Widget>[
-    //
-  ];
-
   @override
   Widget build(BuildContext context) {
     void onItemTapped(int index) {
-      if (index == 1) {
+      if (index == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        return;
+      } else if (index == 1) {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const CustomPage()));
-        return;
-      } else if (index == 2) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const CulturePage()));
         return;
       }
 
@@ -64,7 +60,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 83),
+            padding: const EdgeInsets.only(top: 77),
             child: TabBar(
               controller: tabController,
               indicatorColor: AppColor.navigationBarColor1,
@@ -72,8 +68,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               unselectedLabelColor: AppColor.appBarColor2,
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: const <Widget>[
-                Tab(child: Text('장소')),
-                Tab(child: Text('코스')),
+                Tab(child: Text('진행중인')),
+                Tab(child: Text('예정된')),
               ],
             ),
           ),
@@ -81,8 +77,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: TabBarView(
               controller: tabController,
               children: const <Widget>[
-                PlacePage(),
-                CoursePage(),
+                PlacePage(), //페이지 새로 파기-진행중인 페이지
+                CoursePage(), //페이지 새로 파기-예정된 페이지
               ],
             ),
           ),

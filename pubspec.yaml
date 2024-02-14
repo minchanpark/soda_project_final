@@ -41,6 +41,13 @@ dependencies:
   provider: ^6.1.1
   english_words: ^4.0.0
   filter_list: ^1.0.2
+  iconify_flutter: ^0.0.5
+  material_symbols_icons: ^4.2719.1
+  majesticons_flutter: ^0.0.1
+  material_design_icons_flutter: ^7.0.7296
+  iconamoon: ^0.0.3
+  fluentui_system_icons: ^1.1.226
+  
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +65,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

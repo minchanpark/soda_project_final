@@ -1,29 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:majesticons_flutter/majesticons_flutter.dart';
 import 'package:soda_project_final/app_color/app_color.dart';
-import 'package:soda_project_final/page_folder/culture_page.dart';
+import 'package:soda_project_final/home_page.dart';
 import 'package:soda_project_final/page_folder/place_page.dart';
-import 'firestore_file/firestore_resturant.dart';
-import 'page_folder/course_page.dart';
 import 'package:iconamoon/iconamoon.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
-import 'page_folder/custom_page.dart';
+import 'course_page.dart';
+import 'culture_page.dart';
+import 'place_page_for_custom.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class CustomPage extends StatefulWidget {
+  const CustomPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CustomPage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _HomePageState extends State<CustomPage> with TickerProviderStateMixin {
   late final TabController tabController;
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   @override
   void initState() {
@@ -37,57 +36,47 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  static const List<Widget> widgetOptions = <Widget>[
-    //
-  ];
-
   @override
   Widget build(BuildContext context) {
     void onItemTapped(int index) {
-      if (index == 1) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const CustomPage()));
+      if (index == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
         return;
       } else if (index == 2) {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const CulturePage()));
         return;
       }
-
       setState(() {
         _selectedIndex = index;
       });
     }
 
     return Scaffold(
-      //TabBarView를 따로 하나의 class로 만들어서 column으로 묶어보자
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 83),
-            child: TabBar(
-              controller: tabController,
-              indicatorColor: AppColor.navigationBarColor1,
-              labelColor: AppColor.textColor1,
-              unselectedLabelColor: AppColor.appBarColor2,
-              indicatorSize: TabBarIndicatorSize.tab,
-              tabs: const <Widget>[
-                Tab(child: Text('장소')),
-                Tab(child: Text('코스')),
-              ],
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Column(
+          //mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 10),
+              child: Text(
+                '커스텀하기',
+                style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w700,
+                  height: 1.0,
+                  letterSpacing: -0.49,
+                  color: AppColor.textColor7,
+                ),
+              ),
             ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: const <Widget>[
-                PlacePage(),
-                CoursePage(),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
+      //TabBarView를 따로 하나의 class로 만들어서 column으로 묶어보자
+      body: const PlacePageForCustom(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: [

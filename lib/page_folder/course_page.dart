@@ -1,18 +1,56 @@
 import 'package:flutter/material.dart';
-
 import '../app_color/app_color.dart';
 import 'card_in_course/card1.dart';
-import 'card_in_course/card2.dart';
-import 'card_in_course/card3.dart';
-import 'card_in_course/card4.dart';
-import 'card_in_course/card5.dart';
-import 'card_in_course/card6.dart';
 
-class CoursePage extends StatelessWidget {
+class CoursePage extends StatefulWidget {
   const CoursePage({super.key});
 
   @override
+  State<CoursePage> createState() => _CoursePageState();
+}
+
+class _CoursePageState extends State<CoursePage> {
+  @override
   Widget build(BuildContext context) {
+    List<Card1> cards = [
+      const Card1(
+        title: '스트레스 받아?',
+        description: '매운거 먹고 소리 질러~',
+        price: 19000,
+        pictureName: 'card1',
+      ),
+      const Card1(
+        title: '추적추적 비올 땐',
+        description: '실내가 최고지',
+        price: 15400,
+        pictureName: 'card2',
+      ),
+      const Card1(
+        title: '야자 끝나고 어디가지?',
+        description: '떡볶이 먹고 노래방 고?',
+        price: 12500,
+        pictureName: 'card3',
+      ),
+      const Card1(
+        title: '오늘은 소녀처럼 놀고시퍼',
+        description: '파스타 먹고 티타임 가자 공주들아~',
+        price: 20500,
+        pictureName: 'card4',
+      ),
+      const Card1(
+        title: '예쁜곳 모음.zip',
+        description: '분위기 있고 인스타 감성 느낌~',
+        price: 22300,
+        pictureName: 'card5',
+      ),
+      const Card1(
+        title: '몸이 뻐근하네',
+        description: '총싸움 하고 놀아볼까?',
+        price: 22800,
+        pictureName: 'card6',
+      ),
+    ];
+
     return Column(
       children: [
         const SizedBox(height: 18),
@@ -23,7 +61,6 @@ class CoursePage extends StatelessWidget {
               const Expanded(child: Text('')),
               GestureDetector(
                 onTap: () {
-                  print('tap');
                   showModalBottomSheet<void>(
                     context: context,
                     builder: (BuildContext context) {
@@ -35,23 +72,25 @@ class CoursePage extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               GestureDetector(
+                                child: const Text('낮은 가격순 정렬'),
                                 onTap: () {
-                                  print('북구');
+                                  setState(() {
+                                    cards.sort(
+                                        (a, b) => a.price.compareTo(b.price));
+                                  });
+                                  Navigator.pop(context);
                                 },
-                                child: const Row(
-                                  children: [
-                                    Text('포항시 북구'),
-                                    Icon(
-                                      Icons.keyboard_arrow_down,
-                                      size: 20,
-                                      color: AppColor.textColor3,
-                                    ),
-                                  ],
-                                ),
                               ),
-                              ElevatedButton(
-                                child: const Text('Close BottomSheet'),
-                                onPressed: () => Navigator.pop(context),
+                              const SizedBox(height: 10),
+                              GestureDetector(
+                                child: const Text('높은 가격순 정렬'),
+                                onTap: () {
+                                  setState(() {
+                                    cards.sort(
+                                        (a, b) => b.price.compareTo(a.price));
+                                  });
+                                  Navigator.pop(context);
+                                },
                               ),
                             ],
                           ),
@@ -74,26 +113,7 @@ class CoursePage extends StatelessWidget {
                       size: 20,
                       color: AppColor.textColor3,
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const SizedBox(
-                        height: 200,
-                        child: Center(
-                          child: Text('정렬하기'),
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: const Row(
-                  children: [
+                    SizedBox(width: 10),
                     Text('낮은 가격순',
                         style: TextStyle(
                           fontSize: 12,
@@ -108,7 +128,8 @@ class CoursePage extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
+              const SizedBox(width: 10),
             ],
           ),
         ),
@@ -121,14 +142,7 @@ class CoursePage extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             crossAxisCount: 2,
-            children: const <Widget>[
-              Card1(),
-              Card2(),
-              Card3(),
-              Card4(),
-              Card5(),
-              Card6(),
-            ],
+            children: cards.map((card) => card).toList(),
           ),
         ),
       ],
