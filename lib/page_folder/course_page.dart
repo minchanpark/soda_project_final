@@ -51,9 +51,12 @@ class _CoursePageState extends State<CoursePage> {
 
   late String title = '낮은 가격순';
 
+  double _currentSliderValue = 20000;
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 18),
         Padding(
@@ -95,6 +98,27 @@ class _CoursePageState extends State<CoursePage> {
                                   width: 393,
                                   height: 261,
                                   child: TabBarView(children: [
+                                    StatefulBuilder(builder:
+                                        (BuildContext context,
+                                            StateSetter setState) {
+                                      return Slider(
+                                        thumbColor: AppColor.appBarColor1,
+                                        activeColor: AppColor.appBarColor1,
+                                        inactiveColor: AppColor.appBarColor1,
+                                        value: _currentSliderValue,
+                                        min: 0,
+                                        max: 60000,
+                                        divisions: 3,
+                                        label: _currentSliderValue
+                                            .round()
+                                            .toString(),
+                                        onChanged: (double value) {
+                                          setState(() {
+                                            _currentSliderValue = value;
+                                          });
+                                        },
+                                      );
+                                    }),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 21),
                                       child: Column(
