@@ -48,6 +48,9 @@ class _CoursePageState extends State<CoursePage> {
       pictureName: 'card6',
     ),
   ];
+
+  late String title = '낮은 가격순';
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -63,66 +66,123 @@ class _CoursePageState extends State<CoursePage> {
                   showModalBottomSheet<void>(
                     context: context,
                     builder: (BuildContext context) {
-                      return SizedBox(
-                        height: 200,
-                        child: Center(
+                      return DefaultTabController(
+                          length: 2,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              GestureDetector(
-                                child: const Text('낮은 가격순 정렬'),
-                                onTap: () {
-                                  setState(() {
-                                    cards = List.from(cards)
-                                      ..sort(
-                                          (a, b) => a.price.compareTo(b.price));
-                                  });
-                                  Navigator.pop(context);
-                                },
+                            children: [
+                              const SizedBox(height: 30),
+                              const TabBar(
+                                tabs: [
+                                  Text(
+                                    '가격',
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Text(
+                                    '정렬',
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
+                                unselectedLabelColor:
+                                    AppColor.navigationBarColor5,
+                                labelColor: AppColor.textColor1,
+                                indicator: BoxDecoration(),
                               ),
-                              const SizedBox(height: 10),
-                              GestureDetector(
-                                child: const Text('높은 가격순 정렬'),
-                                onTap: () {
-                                  setState(() {
-                                    cards = List.from(cards)
-                                      ..sort(
-                                          (a, b) => b.price.compareTo(a.price));
-                                  });
-                                  Navigator.pop(context);
-                                },
-                              ),
+                              SizedBox(
+                                  width: 393,
+                                  height: 261,
+                                  child: TabBarView(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 21),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 39),
+                                            child: GestureDetector(
+                                              child: const Text(
+                                                '낮은 가격순',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              onTap: () {
+                                                setState(() {
+                                                  cards = List.from(cards)
+                                                    ..sort((a, b) => a.price
+                                                        .compareTo(b.price));
+                                                });
+                                                title = '낮은 가격순';
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12),
+                                          const Divider(),
+                                          const SizedBox(height: 10),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 39),
+                                            child: GestureDetector(
+                                              child: const Text(
+                                                '높은 가격순',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              onTap: () {
+                                                setState(() {
+                                                  cards = List.from(cards)
+                                                    ..sort((a, b) => b.price
+                                                        .compareTo(a.price));
+                                                });
+                                                title = '높은 가격순';
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ),
+                                          const SizedBox(height: 14),
+                                          const Divider(),
+                                        ],
+                                      ),
+                                    ),
+                                  ]))
                             ],
-                          ),
-                        ),
-                      );
+                          ));
                     },
                   );
                 },
-                child: const Row(
+                child: Row(
                   children: [
-                    Text('가격',
+                    const Text('가격',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           letterSpacing: -0.18,
                           color: AppColor.textColor3,
                         )),
-                    Icon(
+                    const Icon(
                       Icons.keyboard_arrow_down,
                       size: 20,
                       color: AppColor.textColor3,
                     ),
-                    SizedBox(width: 10),
-                    Text('낮은 가격순',
-                        style: TextStyle(
+                    const SizedBox(width: 10),
+                    Text(title,
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           letterSpacing: -0.18,
                           color: AppColor.textColor3,
                         )),
-                    Icon(
+                    const Icon(
                       Icons.keyboard_arrow_down,
                       size: 20,
                       color: AppColor.textColor3,
