@@ -12,6 +12,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import 'page_folder/custom_page.dart';
+import 'page_folder/home_page_2.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,39 +22,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late final TabController tabController;
+  //late final TabController tabController;
 
   int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
-
-  static const List<Widget> widgetOptions = <Widget>[
+  static List<Widget> widgetOptions = <Widget>[
     //
+    HomePage2(),
+    const CustomPage(),
+    const CulturePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     void onItemTapped(int index) {
-      if (index == 1) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const CustomPage()));
-        return;
-      } else if (index == 2) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const CulturePage()));
-        return;
-      }
-
       setState(() {
         _selectedIndex = index;
       });
@@ -61,32 +43,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return Scaffold(
       //TabBarView를 따로 하나의 class로 만들어서 column으로 묶어보자
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 83),
-            child: TabBar(
-              controller: tabController,
-              indicatorColor: AppColor.navigationBarColor1,
-              labelColor: AppColor.textColor1,
-              unselectedLabelColor: AppColor.appBarColor2,
-              indicatorSize: TabBarIndicatorSize.tab,
-              tabs: const <Widget>[
-                Tab(child: Text('장소')),
-                Tab(child: Text('코스')),
-              ],
-            ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: const <Widget>[
-                PlacePage(),
-                CoursePage(),
-              ],
-            ),
-          ),
-        ],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: widgetOptions.map<Widget>((Widget widget) {
+          return Navigator(
+            onGenerateRoute: (RouteSettings settings) {
+              return MaterialPageRoute<void>(
+                settings: settings,
+                builder: (BuildContext context) => widget,
+              );
+            },
+          );
+        }).toList(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

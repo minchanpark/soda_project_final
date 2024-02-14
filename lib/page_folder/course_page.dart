@@ -10,47 +10,46 @@ class CoursePage extends StatefulWidget {
 }
 
 class _CoursePageState extends State<CoursePage> {
+  List<Card1> cards = [
+    const Card1(
+      title: '스트레스 받아?',
+      description: '매운거 먹고 소리 질러~',
+      price: 19000,
+      pictureName: 'card1',
+    ),
+    const Card1(
+      title: '추적추적 비올 땐',
+      description: '실내가 최고지',
+      price: 15400,
+      pictureName: 'card2',
+    ),
+    const Card1(
+      title: '야자 끝나고 어디가지?',
+      description: '떡볶이 먹고 노래방 고?',
+      price: 12500,
+      pictureName: 'card3',
+    ),
+    const Card1(
+      title: '오늘은 소녀처럼 놀고시퍼',
+      description: '파스타 먹고 티타임 가자 공주들아~',
+      price: 20500,
+      pictureName: 'card4',
+    ),
+    const Card1(
+      title: '예쁜곳 모음.zip',
+      description: '분위기 있고 인스타 감성 느낌~',
+      price: 22300,
+      pictureName: 'card5',
+    ),
+    const Card1(
+      title: '몸이 뻐근하네',
+      description: '총싸움 하고 놀아볼까?',
+      price: 22800,
+      pictureName: 'card6',
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
-    List<Card1> cards = [
-      const Card1(
-        title: '스트레스 받아?',
-        description: '매운거 먹고 소리 질러~',
-        price: 19000,
-        pictureName: 'card1',
-      ),
-      const Card1(
-        title: '추적추적 비올 땐',
-        description: '실내가 최고지',
-        price: 15400,
-        pictureName: 'card2',
-      ),
-      const Card1(
-        title: '야자 끝나고 어디가지?',
-        description: '떡볶이 먹고 노래방 고?',
-        price: 12500,
-        pictureName: 'card3',
-      ),
-      const Card1(
-        title: '오늘은 소녀처럼 놀고시퍼',
-        description: '파스타 먹고 티타임 가자 공주들아~',
-        price: 20500,
-        pictureName: 'card4',
-      ),
-      const Card1(
-        title: '예쁜곳 모음.zip',
-        description: '분위기 있고 인스타 감성 느낌~',
-        price: 22300,
-        pictureName: 'card5',
-      ),
-      const Card1(
-        title: '몸이 뻐근하네',
-        description: '총싸움 하고 놀아볼까?',
-        price: 22800,
-        pictureName: 'card6',
-      ),
-    ];
-
     return Column(
       children: [
         const SizedBox(height: 18),
@@ -75,8 +74,9 @@ class _CoursePageState extends State<CoursePage> {
                                 child: const Text('낮은 가격순 정렬'),
                                 onTap: () {
                                   setState(() {
-                                    cards.sort(
-                                        (a, b) => a.price.compareTo(b.price));
+                                    cards = List.from(cards)
+                                      ..sort(
+                                          (a, b) => a.price.compareTo(b.price));
                                   });
                                   Navigator.pop(context);
                                 },
@@ -86,8 +86,9 @@ class _CoursePageState extends State<CoursePage> {
                                 child: const Text('높은 가격순 정렬'),
                                 onTap: () {
                                   setState(() {
-                                    cards.sort(
-                                        (a, b) => b.price.compareTo(a.price));
+                                    cards = List.from(cards)
+                                      ..sort(
+                                          (a, b) => b.price.compareTo(a.price));
                                   });
                                   Navigator.pop(context);
                                 },
@@ -135,14 +136,18 @@ class _CoursePageState extends State<CoursePage> {
         ),
         const SizedBox(height: 10),
         Expanded(
-          child: GridView.count(
-            primary: false,
-            childAspectRatio: (1 / 1.35),
+          child: GridView.builder(
+            itemCount: cards.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: (1 / 1.35),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            itemBuilder: (BuildContext context, int index) {
+              return cards[index];
+            },
             padding: const EdgeInsets.only(left: 20, right: 20),
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            crossAxisCount: 2,
-            children: cards.map((card) => card).toList(),
           ),
         ),
       ],

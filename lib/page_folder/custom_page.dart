@@ -20,39 +20,8 @@ class CustomPage extends StatefulWidget {
 }
 
 class _HomePageState extends State<CustomPage> with TickerProviderStateMixin {
-  late final TabController tabController;
-
-  int _selectedIndex = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    void onItemTapped(int index) {
-      if (index == 0) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
-        return;
-      } else if (index == 2) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const CulturePage()));
-        return;
-      }
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -77,37 +46,6 @@ class _HomePageState extends State<CustomPage> with TickerProviderStateMixin {
       ),
       //TabBarView를 따로 하나의 class로 만들어서 column으로 묶어보자
       body: const PlacePageForCustom(),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: [
-          const BottomNavigationBarItem(
-            icon: Icon(FluentIcons.home_24_filled),
-            label: '홈',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(MdiIcons.pencil),
-            label: '커스텀',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(MdiIcons.ticket),
-            label: '문화',
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(
-              IconaMoon.profile,
-            ),
-            label: '마이페이지',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: AppColor.navigationBarColor3,
-        onTap: onItemTapped,
-        selectedLabelStyle: const TextStyle(
-            fontSize: 12,
-            fontStyle: FontStyle.normal,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0.4),
-      ),
     );
   }
 }
