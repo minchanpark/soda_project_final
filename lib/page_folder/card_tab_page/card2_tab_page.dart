@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:soda_project_final/app_color/app_color.dart';
 
+import '../pop_up_page/card2_popup.dart';
+
 class Card2TabPage extends StatelessWidget {
   const Card2TabPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text(
+          '코스',
+          style: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.w700,
+              height: 1.0,
+              letterSpacing: -0.49),
+        ),
+      ),
       body: ListView(
         children: [
           Image.asset('assets/card2_1.png'),
@@ -60,7 +71,7 @@ class Card2TabPage extends StatelessWidget {
               )
             ],
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 33, left: 28),
             child: Row(
               children: [
@@ -73,15 +84,30 @@ class Card2TabPage extends StatelessWidget {
                       color: AppColor.textColor6),
                 ),
                 Expanded(child: Text('')),
-                Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: Text(
-                    '세부정보 보기',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: AppColor.textColor2,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true, // 바깥 영역 터치시 닫을지 여부
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: AppColor.textColor4,
+                            content: const Card2PopUp(),
+                            insetPadding:
+                                const EdgeInsets.fromLTRB(0, 80, 0, 80),
+                          );
+                        });
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Text(
+                      '세부정보 보기',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: AppColor.textColor2,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

@@ -11,7 +11,7 @@ import 'package:iconamoon/iconamoon.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
-import 'page_folder/custom_page.dart';
+import 'page_folder/custompage/custom_page.dart';
 import 'page_folder/home_page_2.dart';
 
 class HomePage extends StatefulWidget {

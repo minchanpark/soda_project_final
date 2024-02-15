@@ -6,6 +6,7 @@ import 'package:soda_project_final/page_folder/cafe_page.dart';
 import 'package:soda_project_final/page_folder/entertainment_page.dart';
 import '../app_color/app_color.dart';
 import '../firestore_file/firestore_resturant.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class PlacePage extends StatefulWidget {
   const PlacePage({Key? key});
@@ -18,11 +19,41 @@ class _PlacePageState extends State<PlacePage> {
   final FirestoreServiseResturant firestoreService =
       FirestoreServiseResturant();
 
-  final FirestoreServiseEntertainment firestoreService2 =
-      FirestoreServiseEntertainment();
+  final storage = FirebaseStorage.instance;
 
   int? _value = 0;
   List<String> item = ['전체', '맛집', '카페', '놀거리'];
+
+  /*List<String> imageUrls = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getImageUrls();
+  }
+
+  Future<void> getImageUrls() async {
+    try {
+      List<String> paths = [];
+
+      // 각 카드의 인덱스를 기반으로 이미지 파일의 제목 생성
+      for (int i = 1; i <= 2; i++) {
+        paths.add('$i.png'); // 이미지 파일의 제목을 '인덱스.png'로 지정
+      }
+
+      for (var path in paths) {
+        final ref = storage.ref().child(path);
+        final url = await ref.getDownloadURL();
+        setState(() {
+          imageUrls.add(url);
+        });
+      }
+    } catch (e) {
+      print("Error getting image URLs: $e");
+    }
+  }
+
+  String? selectedCardId;*/
 
   @override
   Widget build(BuildContext context) {
@@ -176,16 +207,20 @@ class _PlacePageState extends State<PlacePage> {
                       String explain = data['explain'];
                       String location = data['location'];
 
+                      String url = data["URL"] ?? '기본 URL';
+
                       return SizedBox(
                         height: 162,
                         child: Card(
                           elevation: 0,
                           color: AppColor.backGroundColor2,
                           child: ListTile(
-                            leading: const SizedBox(
+                            leading: SizedBox(
                                 width: 113,
                                 height: 124,
-                                child: Icon(Icons.image)),
+                                child: Image(
+                                  image: NetworkImage(url),
+                                )),
                             title: Row(
                               children: [
                                 Text(

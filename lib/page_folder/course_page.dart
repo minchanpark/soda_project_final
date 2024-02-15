@@ -51,10 +51,12 @@ class _CoursePageState extends State<CoursePage> {
 
   late String title = '낮은 가격순';
 
-  double _currentSliderValue = 20000;
+  double _currentSliderValue = 60000;
 
   @override
   Widget build(BuildContext context) {
+    var filteredCards =
+        cards.where((card) => card.price <= _currentSliderValue).toList();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -115,6 +117,12 @@ class _CoursePageState extends State<CoursePage> {
                                         onChanged: (double value) {
                                           setState(() {
                                             _currentSliderValue = value;
+                                            // 카드를 필터링하여 업데이트된 카드 배열을 얻습니다.
+                                            filteredCards = cards
+                                                .where((card) =>
+                                                    card.price <=
+                                                    _currentSliderValue)
+                                                .toList();
                                           });
                                         },
                                       );
@@ -220,18 +228,22 @@ class _CoursePageState extends State<CoursePage> {
         ),
         const SizedBox(height: 10),
         Expanded(
-          child: GridView.builder(
-            itemCount: cards.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: (1 / 1.35),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              return cards[index];
+          child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return GridView.builder(
+                itemCount: filteredCards.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: (1 / 1.35),
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return filteredCards[index];
+                },
+                padding: const EdgeInsets.only(left: 20, right: 20),
+              );
             },
-            padding: const EdgeInsets.only(left: 20, right: 20),
           ),
         ),
       ],

@@ -3,6 +3,9 @@ import 'package:soda_project_final/app_color/app_color.dart';
 import '../card_tab_page/card1_tab_page.dart';
 import '../card_tab_page/card2_tab_page.dart';
 import '../card_tab_page/card3_tab_page.dart';
+import '../card_tab_page/card4_tab_page.dart';
+import '../card_tab_page/card5_tab_page.dart';
+import '../card_tab_page/card6_tab_page.dart';
 
 class Card1 extends StatelessWidget {
   final String title;
@@ -49,17 +52,17 @@ class Card1 extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Card3TabPage()));
+                            builder: (context) => const Card4TabPage()));
                   } else if (pictureName == 'card5') {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Card3TabPage()));
+                            builder: (context) => const Card5TabPage()));
                   } else if (pictureName == 'card6') {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Card3TabPage()));
+                            builder: (context) => const Card6TabPage()));
                   }
                 },
                 child: SizedBox(

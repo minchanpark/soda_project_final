@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:soda_project_final/app_color/app_color.dart';
 
-import '../pop_up_page/card1_popup.dart';
+import '../pop_up_page/card2_popup.dart';
+import '../pop_up_page/card6_popup.dart';
 
-class Card1TabPage extends StatelessWidget {
-  const Card1TabPage({super.key});
+class Card6TabPage extends StatelessWidget {
+  const Card6TabPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class Card1TabPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Image.asset('assets/card1_1.png'),
+          Image.asset('assets/card6_1.png'),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -31,7 +32,7 @@ class Card1TabPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: 17, left: 20),
                     child: Text(
-                      '스트레스 받아?',
+                      '몸이 뻐근하네',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
@@ -42,7 +43,7 @@ class Card1TabPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: Text(
-                      '매운거 먹고 소리 질러~',
+                      '총싸움 하고 놀아볼까?',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -92,7 +93,7 @@ class Card1TabPage extends StatelessWidget {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             backgroundColor: AppColor.textColor4,
-                            content: const Card1PopUp(),
+                            content: const Card6PopUp(),
                             insetPadding:
                                 const EdgeInsets.fromLTRB(0, 80, 0, 80),
                           );
@@ -124,12 +125,39 @@ class Card1TabPage extends StatelessWidget {
                       width: 55,
                       height: 55,
                       child: Image(
-                        image: AssetImage('assets/firechicken.png'),
+                        image: AssetImage('assets/laser.png'),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 46),
-                      child: Text('신세계 불닭발'),
+                      child: Text('레이저아레나'),
+                    ),
+                    Expanded(child: Text('')),
+                    Padding(
+                      padding: EdgeInsets.only(right: 19),
+                      child: Text('14,000원'),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 20, top: 58),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 55,
+                      height: 55,
+                      child: Image(
+                        image: AssetImage('assets/cong.png'),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 46),
+                      child: Text('전주콩나루콩나물국밥'),
                     ),
                     Expanded(child: Text('')),
                     Padding(
@@ -141,11 +169,6 @@ class Card1TabPage extends StatelessWidget {
               ],
             ),
           ),
-          const Row(
-            children: [
-              Divider(),
-            ],
-          ),
           const Padding(
             padding: EdgeInsets.only(left: 20, top: 58),
             child: Column(
@@ -156,18 +179,18 @@ class Card1TabPage extends StatelessWidget {
                       width: 55,
                       height: 55,
                       child: Image(
-                        image: AssetImage('assets/coin.png'),
+                        image: AssetImage('assets/bread.png'),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 46),
-                      child: Text('지니코인노래연습장'),
+                      child: Text('원더풀찹쌀꽈배기'),
                     ),
                     Expanded(child: Text('')),
                     Padding(
                       padding: EdgeInsets.only(right: 19),
-                      child: Text('5,000원'),
-                    )
+                      child: Text('800원'),
+                    ),
                   ],
                 ),
               ],
@@ -183,45 +206,18 @@ class Card1TabPage extends StatelessWidget {
                       width: 55,
                       height: 55,
                       child: Image(
-                        image: AssetImage('assets/walk.png'),
+                        image: AssetImage('assets/space.png'),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 46),
-                      child: Text('영일대 산책'),
+                      child: Text('스페이스워크'),
                     ),
                     Expanded(child: Text('')),
                     Padding(
                       padding: EdgeInsets.only(right: 19),
                       child: Text('0원'),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20, top: 58),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 55,
-                      height: 55,
-                      child: Image(
-                        image: AssetImage('assets/hay.png'),
-                      ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 46),
-                      child: Text('헤이안'),
-                    ),
-                    Expanded(child: Text('')),
-                    Padding(
-                      padding: EdgeInsets.only(right: 19),
-                      child: Text('6,000원'),
-                    )
                   ],
                 ),
               ],
@@ -233,7 +229,7 @@ class Card1TabPage extends StatelessWidget {
               children: [
                 Expanded(child: Text('')),
                 Text(
-                  '총 19,000원',
+                  '총 22,800원',
                   style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
