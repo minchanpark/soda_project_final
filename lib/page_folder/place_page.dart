@@ -20,40 +20,12 @@ class _PlacePageState extends State<PlacePage> {
       FirestoreServiseResturant();
 
   final storage = FirebaseStorage.instance;
+  String title = '낮은 가격순';
 
   int? _value = 0;
   List<String> item = ['전체', '맛집', '카페', '놀거리'];
 
-  /*List<String> imageUrls = [];
-
-  @override
-  void initState() {
-    super.initState();
-    getImageUrls();
-  }
-
-  Future<void> getImageUrls() async {
-    try {
-      List<String> paths = [];
-
-      // 각 카드의 인덱스를 기반으로 이미지 파일의 제목 생성
-      for (int i = 1; i <= 2; i++) {
-        paths.add('$i.png'); // 이미지 파일의 제목을 '인덱스.png'로 지정
-      }
-
-      for (var path in paths) {
-        final ref = storage.ref().child(path);
-        final url = await ref.getDownloadURL();
-        setState(() {
-          imageUrls.add(url);
-        });
-      }
-    } catch (e) {
-      print("Error getting image URLs: $e");
-    }
-  }
-
-  String? selectedCardId;*/
+  List<DocumentSnapshot> notesList = []; // 리스트를 상태 변수로 선언합니다.
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +33,7 @@ class _PlacePageState extends State<PlacePage> {
       stream: firestoreService.getNotesStream(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List notesList = snapshot.data!.docs;
+          notesList = snapshot.data!.docs; // 데이터가 변경될 때마다 리스트를 업데이트합니다.
 
           List<DocumentSnapshot> sortedNotesListLarge = List.from(notesList);
           sortedNotesListLarge.sort((a, b) {
@@ -76,6 +48,18 @@ class _PlacePageState extends State<PlacePage> {
             int priceB = b['price'];
             return priceA.compareTo(priceB);
           });
+
+          List<DocumentSnapshot> selectedList =
+              []; // 선택된 정렬 기준에 따라 사용할 리스트를 선언합니다.
+
+          // 선택된 정렬 기준에 따라 적절한 리스트를 할당합니다.
+          if (_value == 0) {
+            selectedList = notesList;
+          } else if (_value == 1) {
+            selectedList = sortedNotesListSmall;
+          } else if (_value == 2) {
+            // 다른 탭들에 대한 처리를 추가할 수 있습니다.
+          }
 
           return Column(
             children: [
@@ -136,34 +120,72 @@ class _PlacePageState extends State<PlacePage> {
                   const Expanded(child: Text('')),
                   GestureDetector(
                     onTap: () {
-                      print('tap');
                       showModalBottomSheet<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          return SizedBox(
+                          return Container(
+                            color: AppColor.textColor4,
                             height: 200,
                             child: Center(
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Row(
-                                      children: [
-                                        Text('가격 설정'),
-                                        Icon(
-                                          Icons.keyboard_arrow_down,
-                                          size: 20,
-                                          color: AppColor.textColor3,
+                                  const Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 40),
+                                        child: Text(
+                                          '정렬',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                      ],
+                                      ),
+                                      Divider()
+                                    ],
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        //여기서 listtile을 정렬하는 함수를 호출합니다.
+                                      });
+                                      title = '낮은 가격순';
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(left: 40),
+                                      child: Text(
+                                        '낮은 가격순',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    child: const Text('Close BottomSheet'),
-                                    onPressed: () => Navigator.pop(context),
+                                  const Divider(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        //여기서 listtile을 정렬하는 함수를 호출합니다.
+                                      });
+                                      title = '높은 가격순';
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(left: 40),
+                                      child: Text(
+                                        '높은 가격순',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
                                   ),
+                                  const Divider(),
                                 ],
                               ),
                             ),
@@ -171,16 +193,16 @@ class _PlacePageState extends State<PlacePage> {
                         },
                       );
                     },
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Text('낮은 가격순',
-                            style: TextStyle(
+                        Text(title,
+                            style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                               letterSpacing: -0.18,
                               color: AppColor.textColor3,
                             )),
-                        Icon(
+                        const Icon(
                           Icons.keyboard_arrow_down,
                           size: 20,
                           color: AppColor.textColor3,
@@ -196,8 +218,7 @@ class _PlacePageState extends State<PlacePage> {
                   child: ListView.builder(
                     itemCount: notesList.length,
                     itemBuilder: (context, index) {
-                      DocumentSnapshot documentSnapshot =
-                          sortedNotesListSmall[index];
+                      DocumentSnapshot documentSnapshot = selectedList[index];
 
                       Map<String, dynamic> data =
                           documentSnapshot.data() as Map<String, dynamic>;
@@ -207,7 +228,7 @@ class _PlacePageState extends State<PlacePage> {
                       String explain = data['explain'];
                       String location = data['location'];
 
-                      String url = data["URL"] ?? '기본 URL';
+                      String url = data["URL"];
 
                       return SizedBox(
                         height: 162,
@@ -216,9 +237,10 @@ class _PlacePageState extends State<PlacePage> {
                           color: AppColor.backGroundColor2,
                           child: ListTile(
                             leading: SizedBox(
-                                width: 113,
+                                width: 104,
                                 height: 124,
                                 child: Image(
+                                  fit: BoxFit.fill,
                                   image: NetworkImage(url),
                                 )),
                             title: Row(
