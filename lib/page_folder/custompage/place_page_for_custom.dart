@@ -206,7 +206,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
     }
 
     void updateTotalPrice(int price, bool isSelected) {
-      Trip tripinstance = appState.trip;
+      Trip? tripinstance = appState.trip;
       setState(() {
         if (isSelected) {
           sum += price;
@@ -215,7 +215,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
         }
       });
 
-      tripinstance.totalSum = sum;
+      tripinstance?.totalSum = sum;
 
       // Overlay 팝업 표시
       showOverlay(context);
@@ -780,7 +780,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                 StreamBuilder<QuerySnapshot>(
                   stream: firestoreAll.getNotesStream(),
                   builder: (context, snapshot) {
-                    tripInstance = appState.trip;
+                    tripInstance = appState.trip!;
 
                     if (snapshot.hasData && snapshot.data != null) {
                       List<DocumentSnapshot> notesList = snapshot.data!.docs;
