@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../app_color/app_color.dart';
+import '../../app_color/app_color.dart';
 import 'course_page.dart';
 import 'place_page.dart';
 

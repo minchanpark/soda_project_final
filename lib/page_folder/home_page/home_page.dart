@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:majesticons_flutter/majesticons_flutter.dart';
 import 'package:soda_project_final/app_color/app_color.dart';
 import 'package:soda_project_final/page_folder/culture_page.dart';
-import 'package:soda_project_final/page_folder/place_page.dart';
-import '../firestore_file/firestore_resturant.dart';
+import 'package:soda_project_final/page_folder/home_page/place_page.dart';
+import '../../firestore_file/firestore_resturant.dart';
 import 'course_page.dart';
 import 'package:iconamoon/iconamoon.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
-import 'custompage/custom_page.dart';
+import '../custompage/custom_page.dart';
 import 'home_page_2.dart';
-import 'my_page/my_page.dart';
+import '../my_page/my_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

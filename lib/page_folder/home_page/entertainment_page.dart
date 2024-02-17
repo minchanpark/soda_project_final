@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:soda_project_final/firestore_file/firestore_entertainment.dart';
 
-import '../app_color/app_color.dart';
-import '../firestore_file/firestore_cafes.dart';
+import '../../app_color/app_color.dart';
+import '../../provider/favorite_provider.dart';
 
 class EntertainmentPage extends StatefulWidget {
   const EntertainmentPage({super.key});
@@ -13,6 +14,11 @@ class EntertainmentPage extends StatefulWidget {
 }
 
 class _EntertainmentPageState extends State<EntertainmentPage> {
+  Icon favoriteIcon = const Icon(Icons.favorite_border);
+
+  bool _isSelected = false;
+
+  final Set<int> _selectedItems = {};
   @override
   Widget build(BuildContext context) {
     final FirestoreServiseEntertainment firestoreService =
@@ -43,13 +49,18 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
               itemBuilder: (context, index) {
                 DocumentSnapshot documentSnapshot = sortedNotesListSmall[index];
 
+                final isSelected = _selectedItems.contains(index);
+
                 Map<String, dynamic> data =
                     documentSnapshot.data() as Map<String, dynamic>;
 
                 String name = data['name'] ?? ''; // null인 경우 빈 문자열 반환
                 int price = data['price'] ?? 0; // null인 경우 0 반환
-                String explain = data['explain'] ?? ''; // null인 경우 빈 문자열 반환
+                String explain = data['explain'] ?? 'null'; // null인 경우 빈 문자열 반환
                 String location = data['location'] ?? ''; // null인 경우 빈 문자열 반환
+
+                FavoriteProvider favoriteProvider =
+                    Provider.of<FavoriteProvider>(context);
 
                 return SizedBox(
                   height: 162,
@@ -116,8 +127,31 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
                               ),
                               const Expanded(child: Text(' ')),
                               IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.favorite_border),
+                                isSelected: isSelected,
+                                onPressed: () {
+                                  setState(() {
+                                    _isSelected = !_isSelected;
+
+                                    if (isSelected) {
+                                      _selectedItems.remove(index);
+                                      favoriteProvider
+                                          .deleteFavoriteEntertainment(name);
+                                    } else {
+                                      _selectedItems.add(index);
+                                      favoriteProvider
+                                          .addFavoriteEntertainment(name);
+                                    }
+                                  });
+                                },
+                                icon: (isSelected)
+                                    ? Icon(Icons.favorite)
+                                    : favoriteIcon,
+                                style: ButtonStyle(
+                                  iconColor: MaterialStatePropertyAll(
+                                      AppColor.appBarColor1),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                      AppColor.backGroundColor1),
+                                ),
                               ),
                             ],
                           ),

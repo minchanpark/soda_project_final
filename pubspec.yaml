@@ -49,6 +49,10 @@ dependencies:
   fluentui_system_icons: ^1.1.226
 
   rxdart: ^0.27.1
+  onboarding: ^3.1.0
+  introduction_screen: ^3.1.12
+  onboarding_overlay: ^3.2.1
+  auto_size_text: ^3.0.0
   
 
 dev_dependencies:

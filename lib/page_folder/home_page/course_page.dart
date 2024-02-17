@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../app_color/app_color.dart';
-import 'card_in_course/card1.dart';
+import '../../app_color/app_color.dart';
+import '../card_in_course/card1.dart';
 
 class CoursePage extends StatefulWidget {
   const CoursePage({super.key});

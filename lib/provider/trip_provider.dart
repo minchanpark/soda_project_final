@@ -3,6 +3,7 @@ class Trip {
   List<String> selectedRestaurants = [];
   List<String> selectedCafes = [];
   List<String> selectedEntertainment = [];
+
   late int totalSum;
 
   Trip(this.name);

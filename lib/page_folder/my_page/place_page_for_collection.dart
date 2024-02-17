@@ -1,20 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:soda_project_final/firestore_file/firestore_all.dart';
+import 'package:soda_project_final/firestore_file/firestore_cafes.dart';
+import 'package:soda_project_final/firestore_file/firestore_entertainment.dart';
+import 'package:soda_project_final/firestore_file/firestore_resturant.dart';
+import 'package:soda_project_final/provider/favorite_provider.dart';
+import '../../app_color/app_color.dart';
 
-import '../app_color/app_color.dart';
-import '../firestore_file/firestore_cafes.dart';
-
-class CafePage extends StatelessWidget {
-  const CafePage({Key? key});
+class PlacePageForCollection extends StatelessWidget {
+  const PlacePageForCollection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final FirestoreServiseCafes firestoreService = FirestoreServiseCafes();
-    return StreamBuilder<QuerySnapshot>(
-      stream: firestoreService.getNotesStream(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData && snapshot.data != null) {
-          // 데이터가 null이 아닌지 검사
+    FirestoreSAll firestoreSAll = FirestoreSAll();
+
+    FavoriteProvider favoriteProvider = FavoriteProvider();
+
+    return StreamBuilder(
+        stream: firestoreSAll.getNotesStream(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator();
+          }
           List notesList = snapshot.data!.docs;
           List<DocumentSnapshot> sortedNotesListLarge = List.from(notesList);
           sortedNotesListLarge.sort((a, b) {
@@ -29,23 +38,32 @@ class CafePage extends StatelessWidget {
             int priceB = b['price'];
             return priceA.compareTo(priceB);
           });
+          notesList = snapshot.data!.docs;
 
-          return Expanded(
-            child: ListView.builder(
+          return ListView.builder(
               itemCount: notesList.length,
               itemBuilder: (context, index) {
-                DocumentSnapshot documentSnapshot = sortedNotesListSmall[index];
+                favoriteProvider = Provider.of<FavoriteProvider>(context);
 
+                DocumentSnapshot documentSnapshot = notesList[index];
                 Map<String, dynamic> data =
                     documentSnapshot.data() as Map<String, dynamic>;
 
                 String name = data['name'] ?? ''; // null인 경우 빈 문자열 반환
                 int price = data['price'] ?? 0; // null인 경우 0 반환
-                String explain = data['explain'] ?? ''; // null인 경우 빈 문자열 반환
+                String explain = data['explain'] ?? 'null'; // null인 경우 빈 문자열 반환
                 String location = data['location'] ?? ''; // null인 경우 빈 문자열 반환
 
-                return SizedBox(
-                  height: 162,
+                bool isSelected = favoriteProvider.selectedFavoriteRestraurant
+                        .contains(name) ||
+                    favoriteProvider.selectedFavoriteCafe.contains(name) ||
+                    favoriteProvider.selectedFavoriteEntertainment
+                        .contains(name);
+
+                double opacity = isSelected ? 1.0 : 0.1;
+
+                return Opacity(
+                  opacity: opacity,
                   child: Card(
                     elevation: 0,
                     color: AppColor.backGroundColor2,
@@ -110,7 +128,13 @@ class CafePage extends StatelessWidget {
                               const Expanded(child: Text(' ')),
                               IconButton(
                                 onPressed: () {},
-                                icon: const Icon(Icons.favorite_border),
+                                icon: Icon(Icons.favorite),
+                                style: ButtonStyle(
+                                  iconColor: MaterialStatePropertyAll(
+                                      AppColor.appBarColor1),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                      AppColor.backGroundColor1),
+                                ),
                               ),
                             ],
                           ),
@@ -119,17 +143,7 @@ class CafePage extends StatelessWidget {
                     ),
                   ),
                 );
-              },
-            ),
-          );
-        } else if (snapshot.hasError) {
-          // 에러가 발생한 경우 에러 메시지를 출력합니다.
-          return Text('Error: ${snapshot.error}');
-        } else {
-          // 데이터가 아직 수신되지 않은 경우 로딩 표시를 표시합니다.
-          return CircularProgressIndicator();
-        }
-      },
-    );
+              });
+        });
   }
 }

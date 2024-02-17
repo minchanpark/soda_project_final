@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:soda_project_final/firestore_file/firestore_cafes.dart';
-import 'package:soda_project_final/firestore_file/firestore_entertainment.dart';
-import 'package:soda_project_final/page_folder/cafe_page.dart';
-import 'package:soda_project_final/page_folder/entertainment_page.dart';
-import '../app_color/app_color.dart';
-import '../firestore_file/firestore_resturant.dart';
+import 'package:provider/provider.dart';
+import 'package:soda_project_final/page_folder/home_page/cafe_page.dart';
+import 'package:soda_project_final/page_folder/home_page/entertainment_page.dart';
+import 'package:soda_project_final/provider/favorite_provider.dart';
+import '../../app_color/app_color.dart';
+import '../../firestore_file/firestore_resturant.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class PlacePage extends StatefulWidget {
@@ -26,6 +26,12 @@ class _PlacePageState extends State<PlacePage> {
   List<String> item = ['전체', '맛집', '카페', '놀거리'];
 
   List<DocumentSnapshot> notesList = []; // 리스트를 상태 변수로 선언합니다.
+
+  Icon favoriteIcon = const Icon(Icons.favorite_border);
+
+  bool _isSelected = false;
+
+  final Set<int> _selectedItems = {};
 
   @override
   Widget build(BuildContext context) {
@@ -220,6 +226,8 @@ class _PlacePageState extends State<PlacePage> {
                     itemBuilder: (context, index) {
                       DocumentSnapshot documentSnapshot = selectedList[index];
 
+                      final isSelected = _selectedItems.contains(index);
+
                       Map<String, dynamic> data =
                           documentSnapshot.data() as Map<String, dynamic>;
 
@@ -227,8 +235,10 @@ class _PlacePageState extends State<PlacePage> {
                       int price = data['price'];
                       String explain = data['explain'];
                       String location = data['location'];
+                      String url = data["URL"] ?? '';
 
-                      String url = data["URL"];
+                      FavoriteProvider favoriteProvider =
+                          Provider.of<FavoriteProvider>(context);
 
                       return SizedBox(
                         height: 162,
@@ -300,8 +310,34 @@ class _PlacePageState extends State<PlacePage> {
                                     ),
                                     const Expanded(child: Text(' ')),
                                     IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(Icons.favorite_border),
+                                      isSelected: _isSelected,
+                                      //selectedIcon: Icon(Icons.favorite),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isSelected = !_isSelected;
+
+                                          if (isSelected) {
+                                            _selectedItems.remove(index);
+                                            favoriteProvider
+                                                .deleteFavoriteRestaraurant(
+                                                    name);
+                                          } else {
+                                            _selectedItems.add(index);
+                                            favoriteProvider
+                                                .addFavoriteRestaraurant(name);
+                                          }
+                                        });
+                                      },
+                                      icon: (isSelected)
+                                          ? Icon(Icons.favorite)
+                                          : favoriteIcon,
+                                      style: ButtonStyle(
+                                        iconColor: MaterialStatePropertyAll(
+                                            AppColor.appBarColor1),
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                AppColor.backGroundColor1),
+                                      ),
                                     ),
                                   ],
                                 ),

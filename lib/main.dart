@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:soda_project_final/firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_project_final/provider/appstate_provider.dart';
-import 'page_folder/home_page.dart';
+import 'package:soda_project_final/provider/favorite_provider.dart';
+import 'page_folder/home_page/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +18,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => MyAppState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FavoriteProvider(),
+        )
+      ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: HomePage(),

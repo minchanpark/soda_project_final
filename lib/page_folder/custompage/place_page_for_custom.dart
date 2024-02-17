@@ -371,7 +371,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                           documentSnapshot.data() as Map<String, dynamic>;
 
                       String name = data['name'] ?? '';
-                      String url = data['URL'];
+                      String url = data['URL'] ?? '';
                       String location = data['location'] ?? '';
 
                       return GestureDetector(
@@ -819,8 +819,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                               opacity: opacity,
                               child: Card(
                                 elevation: 0,
-                                color: AppColor
-                                    .backGroundColor2, // 색상 코드는 실제 프로젝트에 맞게 조정
+                                color: AppColor.backGroundColor2,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,

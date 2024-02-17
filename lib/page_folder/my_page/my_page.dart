@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soda_project_final/app_color/app_color.dart';
 
+import 'my_collection.dart';
 import 'my_custom_in_my_page.dart';
 
 class MyPage extends StatelessWidget {
@@ -26,7 +27,10 @@ class MyPage extends StatelessWidget {
         padding: const EdgeInsets.only(left: 40, top: 39),
         child: Column(children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyCollectionPage()));
+            },
             child: Container(
               width: 353,
               height: 302,
