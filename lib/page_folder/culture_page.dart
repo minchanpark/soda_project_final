@@ -31,8 +31,18 @@ class CulturePage extends StatelessWidget {
             unselectedLabelColor: AppColor.appBarColor2, // Unselected Tab Color
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: <Widget>[
-              Tab(text: '진행중인'),
-              Tab(text: '예정된'),
+              Tab(
+                child: Text(
+                  '진행중인',
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  '예정된',
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                ),
+              ),
             ],
           ),
         ),

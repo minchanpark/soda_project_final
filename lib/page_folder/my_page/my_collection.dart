@@ -20,8 +20,16 @@ class MyCollectionPage extends StatelessWidget {
             unselectedLabelColor: AppColor.appBarColor2, // Unselected Tab Color
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: <Widget>[
-              Tab(text: '장소'), // 텍스트 변경
-              Tab(text: '코스'), // 텍스트 변경
+              Tab(
+                  child: Text(
+                '장소',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+              )), // 텍스트 변경
+              Tab(
+                  child: Text(
+                '코스',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+              )), // 텍스트 변경
             ],
           ),
         ),
