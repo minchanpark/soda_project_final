@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:soda_project_final/firebase_options.dart';
 import 'package:provider/provider.dart';
+import 'package:soda_project_final/page_folder/custompage/custom_page.dart';
 import 'package:soda_project_final/provider/appstate_provider.dart';
 import 'package:soda_project_final/provider/favorite_provider.dart';
 import 'page_folder/home_page/home_page.dart';
@@ -27,7 +28,11 @@ class MyApp extends StatelessWidget {
           create: (_) => FavoriteProvider(),
         )
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        routes: {
+          '/custom': (context) => CustomPage(),
+          //'/'
+        },
         debugShowCheckedModeBanner: false,
         home: HomePage(),
       ),

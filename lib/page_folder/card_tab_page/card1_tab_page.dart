@@ -72,10 +72,10 @@ class Card1TabPage extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(top: 33, left: 28),
+            padding: const EdgeInsets.only(top: 33, left: 28),
             child: Row(
               children: [
-                Text(
+                const Text(
                   '코스 설명',
                   style: TextStyle(
                       fontSize: 18,
@@ -83,22 +83,21 @@ class Card1TabPage extends StatelessWidget {
                       height: 1.11,
                       color: AppColor.textColor6),
                 ),
-                Expanded(child: Text('')),
+                const Expanded(child: Text('')),
                 GestureDetector(
                   onTap: () {
                     showDialog(
                         context: context,
                         barrierDismissible: true, // 바깥 영역 터치시 닫을지 여부
                         builder: (BuildContext context) {
-                          return AlertDialog(
+                          return const AlertDialog(
                             backgroundColor: AppColor.textColor4,
-                            content: const Card1PopUp(),
-                            insetPadding:
-                                const EdgeInsets.fromLTRB(0, 80, 0, 80),
+                            content: Card1PopUp(),
+                            insetPadding: EdgeInsets.fromLTRB(0, 80, 0, 80),
                           );
                         });
                   },
-                  child: Padding(
+                  child: const Padding(
                     padding: EdgeInsets.only(right: 20),
                     child: Text(
                       '세부정보 보기',

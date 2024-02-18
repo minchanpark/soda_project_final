@@ -11,6 +11,7 @@ class HomePage2 extends StatelessWidget {
       length: 2, // Tab 갯수를 2개로 설정
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           bottom: const TabBar(
             indicatorColor: AppColor.navigationBarColor1, // Indicator Color
             labelColor: AppColor.textColor1, // Selected Tab Color

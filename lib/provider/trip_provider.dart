@@ -4,7 +4,7 @@ class Trip {
   List<String> selectedCafes = [];
   List<String> selectedEntertainment = [];
 
-  late int totalSum;
+  int? totalSum;
 
   Trip(this.name);
 

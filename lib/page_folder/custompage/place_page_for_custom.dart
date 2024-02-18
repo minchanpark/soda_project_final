@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_project_final/firestore_file/firestore_all.dart';
 import 'package:soda_project_final/firestore_file/firestore_entertainment.dart';
-import 'package:soda_project_final/page_folder/custompage/custom_page.dart';
 import 'package:soda_project_final/provider/trip_provider.dart';
 import '../../app_color/app_color.dart';
 import '../../firestore_file/firestore_cafes.dart';
 import '../../firestore_file/firestore_resturant.dart';
 import '../../provider/appstate_provider.dart';
-import 'package:rxdart/rxdart.dart';
-
 import '../my_page/my_custom_in_my_page.dart';
 
 class PlacePageForCustom extends StatefulWidget {
@@ -21,6 +18,8 @@ class PlacePageForCustom extends StatefulWidget {
 }
 
 class _PlacePageState extends State<PlacePageForCustom> {
+  String title = '낮은 가격순';
+
   final FirestoreServiseResturant firestoreService =
       FirestoreServiseResturant();
 
@@ -81,7 +80,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.only(left: 102),
+                        padding: EdgeInsets.only(left: 102, top: 10),
                         child: Text(
                           '나의 커스텀 이름 설정',
                           style: TextStyle(
@@ -101,7 +100,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                       hintText: '나만의 코스 이름을 설정해주세요.\n이름은 최소 한 글자 이상 입력해주세요. ',
                     ),
                   ),
-                  const SizedBox(height: 320),
+                  const SizedBox(height: 300),
                   Row(
                     children: [
                       Expanded(
@@ -243,7 +242,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
 
           return Column(
             children: [
-              const SizedBox(height: 20),
+              Divider(),
               LayoutBuilder(builder: (context, constraints) {
                 final spacing = (constraints.maxWidth - (140 * 3)) / 3;
                 return Wrap(
@@ -301,30 +300,69 @@ class _PlacePageState extends State<PlacePageForCustom> {
                       showModalBottomSheet<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          return SizedBox(
+                          return Container(
+                            color: AppColor.textColor4,
                             height: 200,
                             child: Center(
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Row(
-                                      children: [
-                                        Text('가격 설정'),
-                                        Icon(
-                                          Icons.keyboard_arrow_down,
-                                          size: 20,
-                                          color: AppColor.textColor3,
+                                  const Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 40),
+                                        child: Text(
+                                          '정렬',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                      ],
+                                      ),
+                                      Divider()
+                                    ],
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        //여기서 listtile을 정렬하는 함수를 호출합니다.
+                                      });
+                                      title = '낮은 가격순';
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(left: 40),
+                                      child: Text(
+                                        '낮은 가격순',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                    child: const Text('Close BottomSheet'),
-                                    onPressed: () => Navigator.pop(context),
+                                  const Divider(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        //여기서 listtile을 정렬하는 함수를 호출합니다.
+                                      });
+                                      title = '높은 가격순';
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(left: 40),
+                                      child: Text(
+                                        '높은 가격순',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
                                   ),
+                                  const Divider(),
                                 ],
                               ),
                             ),

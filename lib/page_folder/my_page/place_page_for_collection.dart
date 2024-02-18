@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:soda_project_final/firestore_file/firestore_all.dart';
-import 'package:soda_project_final/firestore_file/firestore_cafes.dart';
-import 'package:soda_project_final/firestore_file/firestore_entertainment.dart';
-import 'package:soda_project_final/firestore_file/firestore_resturant.dart';
 import 'package:soda_project_final/provider/favorite_provider.dart';
 import '../../app_color/app_color.dart';
 

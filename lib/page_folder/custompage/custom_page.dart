@@ -15,11 +15,14 @@ class _HomePageState extends State<CustomPage> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 10),
-              child: Text(
+        title: Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(width: 154),
+              const Text(
                 '커스텀하기',
                 style: TextStyle(
                   fontSize: 23,
@@ -29,8 +32,21 @@ class _HomePageState extends State<CustomPage> with TickerProviderStateMixin {
                   color: AppColor.textColor7,
                 ),
               ),
-            ),
-          ],
+              const Expanded(child: Text('')),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/custom');
+                },
+                child: const Text(
+                  '처음부터 설정하기',
+                  style: TextStyle(
+                    fontSize: 13,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: const PlacePageForCustom(),
