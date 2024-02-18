@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:soda_project_final/page_folder/custompage/custom_page.dart';
 import 'package:soda_project_final/provider/appstate_provider.dart';
 import 'package:soda_project_final/provider/favorite_provider.dart';
+import 'app_color/app_color.dart';
 import 'page_folder/home_page/home_page.dart';
 
 void main() async {

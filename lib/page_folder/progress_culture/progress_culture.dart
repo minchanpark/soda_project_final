@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:soda_project_final/page_folder/progress_culture/card_culture.dart';
 
+import '../../app_color/app_color.dart';
+
 class ProgressCulturePage extends StatefulWidget {
   const ProgressCulturePage({super.key});
 
@@ -59,20 +61,19 @@ class _CoursePageState extends State<ProgressCulturePage> {
       ),
     ];
 
-    return Column(
-      children: [
-        Expanded(
-          child: GridView.count(
-            primary: false,
-            childAspectRatio: (1 / 1.35),
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            crossAxisCount: 2,
-            children: cards.map((card) => card).toList(),
-          ),
-        ),
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.textColor4,
+      ),
+      child: GridView.count(
+        primary: false,
+        childAspectRatio: (1 / 1.35),
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        crossAxisCount: 2,
+        children: cards.map((card) => card).toList(),
+      ),
     );
   }
 }

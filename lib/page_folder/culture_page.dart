@@ -12,6 +12,7 @@ class CulturePage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: AppColor.textColor4,
           title: const Padding(
             padding: EdgeInsets.only(top: 38, bottom: 38),
             child: Text(

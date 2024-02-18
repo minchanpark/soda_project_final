@@ -11,19 +11,21 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          backgroundColor: AppColor.textColor4,
           title: const Column(
-        children: [
-          Text(
-            '마이 페이지',
-            style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.w700,
-                letterSpacing: -0.49,
-                height: 1.0),
-          ),
-        ],
-      )),
-      body: Padding(
+            children: [
+              Text(
+                '마이 페이지',
+                style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.49,
+                    height: 1.0),
+              ),
+            ],
+          )),
+      body: Container(
+        decoration: BoxDecoration(color: AppColor.textColor4),
         padding: const EdgeInsets.only(left: 40, top: 39),
         child: Column(children: [
           GestureDetector(

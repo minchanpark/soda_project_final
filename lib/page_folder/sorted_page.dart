@@ -99,6 +99,5 @@ class _SortedPageState extends State<SortedPage> {
         ),
       ),
     );
-    ;
   }
 }

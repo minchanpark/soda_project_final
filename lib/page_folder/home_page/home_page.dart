@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }).toList(),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppColor.textColor4,
         type: BottomNavigationBarType.fixed,
         items: [
           const BottomNavigationBarItem(

@@ -9,6 +9,7 @@ class CustomPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColor.textColor4,
         automaticallyImplyLeading: false,
         title: Padding(
           padding: const EdgeInsets.only(top: 20, bottom: 10),

@@ -1,4 +1,3 @@
-import 'package:rxdart/rxdart.dart';
 import 'package:flutter/material.dart';
 
 import '../../app_color/app_color.dart';
@@ -14,6 +13,7 @@ class MyCollectionPage extends StatelessWidget {
       length: 2, // Tab 갯수를 2개로 설정
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: AppColor.textColor4,
           bottom: const TabBar(
             indicatorColor: AppColor.navigationBarColor1, // Indicator Color
             labelColor: AppColor.textColor1, // Selected Tab Color
@@ -25,11 +25,14 @@ class MyCollectionPage extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
-          children: <Widget>[
-            PlacePageForCollection(), // 장소 페이지
-            CoursePageForCollection(), // 코스 페이지
-          ],
+        body: Container(
+          decoration: BoxDecoration(color: AppColor.textColor4),
+          child: const TabBarView(
+            children: <Widget>[
+              PlacePageForCollection(), // 장소 페이지
+              CoursePageForCollection(), // 코스 페이지
+            ],
+          ),
         ),
       ),
     );
