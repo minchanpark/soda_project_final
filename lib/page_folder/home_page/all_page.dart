@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:soda_project_final/firestore_file/firestore_all.dart';
 import 'package:soda_project_final/provider/favorite_provider.dart';
 import '../../app_color/app_color.dart';
-import '../../firestore_file/firestore_cafes.dart';
 
-class CafePage extends StatefulWidget {
-  const CafePage({Key? key});
+class AllPage extends StatefulWidget {
+  const AllPage({Key? key});
 
   @override
-  State<CafePage> createState() => _CafePageState();
+  State<AllPage> createState() => _CafePageState();
 }
 
-class _CafePageState extends State<CafePage> {
+class _CafePageState extends State<AllPage> {
   Icon favoriteIcon = const Icon(Icons.favorite_border);
 
   bool _isSelected = false;
@@ -20,10 +20,12 @@ class _CafePageState extends State<CafePage> {
   final Set<int> _selectedItems = {};
   @override
   Widget build(BuildContext context) {
-    final FirestoreServiseCafes firestoreService = FirestoreServiseCafes();
+    final FirestoreSAll firestoreService = FirestoreSAll();
     return StreamBuilder<QuerySnapshot>(
       stream: firestoreService.getNotesStream(),
       builder: (context, snapshot) {
+        FavoriteProvider favoriteProvider =
+            Provider.of<FavoriteProvider>(context);
         if (snapshot.hasData && snapshot.data != null) {
           // 데이터가 null이 아닌지 검사
           List notesList = snapshot.data!.docs;
@@ -57,9 +59,6 @@ class _CafePageState extends State<CafePage> {
                 String explain = data['explain'] ?? 'null'; // null인 경우 빈 문자열 반환
                 String location = data['location'] ?? ''; // null인 경우 빈 문자열 반환
                 String url = data["URL"] ?? 'null';
-
-                FavoriteProvider favoriteProvider =
-                    Provider.of<FavoriteProvider>(context);
 
                 return SizedBox(
                   height: 162,

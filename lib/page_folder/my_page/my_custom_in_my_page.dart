@@ -4,14 +4,38 @@ import '../../app_color/app_color.dart';
 import '../../provider/appstate_provider.dart';
 import '../../provider/trip_provider.dart';
 
-class MyCustomInMyPage extends StatefulWidget {
+class MyCustomInMyPage extends StatelessWidget {
   const MyCustomInMyPage({super.key});
 
-  @override
-  State<MyCustomInMyPage> createState() => _MyCustomInMyPageState();
-}
+  void showOverlay(BuildContext context) {
+    OverlayEntry overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        bottom: 40.0,
+        left: 10.0,
+        right: 10.0,
+        child: Material(
+          elevation: 0,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            color: Colors.white,
+            child: const Row(
+              children: [
+                Text('정상적으로 삭제되었습니다', style: TextStyle(fontSize: 20)),
+                Expanded(child: Text('')),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
 
-class _MyCustomInMyPageState extends State<MyCustomInMyPage> {
+    Overlay.of(context).insert(overlayEntry);
+
+    Future.delayed(const Duration(seconds: 1), () {
+      overlayEntry.remove();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MyAppState appState = Provider.of<MyAppState>(context);
@@ -118,6 +142,7 @@ class _MyCustomInMyPageState extends State<MyCustomInMyPage> {
                                                     onPressed: () {
                                                       appState.deleteTrip(
                                                           trip.name);
+                                                      showOverlay(context);
                                                       Navigator.pop(context);
                                                     },
                                                     child: const Text(

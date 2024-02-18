@@ -58,6 +58,7 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
                 int price = data['price'] ?? 0; // null인 경우 0 반환
                 String explain = data['explain'] ?? 'null'; // null인 경우 빈 문자열 반환
                 String location = data['location'] ?? ''; // null인 경우 빈 문자열 반환
+                String url = data["URL"] ?? '';
 
                 FavoriteProvider favoriteProvider =
                     Provider.of<FavoriteProvider>(context);
@@ -68,8 +69,13 @@ class _EntertainmentPageState extends State<EntertainmentPage> {
                     elevation: 0,
                     color: AppColor.backGroundColor2,
                     child: ListTile(
-                      leading: const SizedBox(
-                          width: 113, height: 124, child: Icon(Icons.image)),
+                      leading: SizedBox(
+                          width: 113,
+                          height: 124,
+                          child: Image(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(url),
+                          )),
                       title: Row(
                         children: [
                           Text(

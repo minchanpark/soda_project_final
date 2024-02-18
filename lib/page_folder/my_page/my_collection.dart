@@ -6,6 +6,8 @@ import 'course_page_for_collection.dart';
 import 'place_page_for_collection.dart';
 
 class MyCollectionPage extends StatelessWidget {
+  const MyCollectionPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

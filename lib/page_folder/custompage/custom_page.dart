@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:soda_project_final/app_color/app_color.dart';
 import 'place_page_for_custom.dart';
 
-class CustomPage extends StatefulWidget {
+class CustomPage extends StatelessWidget {
   const CustomPage({super.key});
 
-  @override
-  State<CustomPage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<CustomPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +33,7 @@ class _HomePageState extends State<CustomPage> with TickerProviderStateMixin {
                   Navigator.pushReplacementNamed(context, '/custom');
                 },
                 child: const Text(
-                  '처음부터 설정하기',
+                  '이름 설정하기',
                   style: TextStyle(
                     fontSize: 13,
                     decoration: TextDecoration.underline,

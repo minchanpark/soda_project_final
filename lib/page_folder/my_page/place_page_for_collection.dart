@@ -17,6 +17,7 @@ class PlacePageForCollection extends StatelessWidget {
     return StreamBuilder(
         stream: firestoreSAll.getNotesStream(),
         builder: (context, snapshot) {
+          favoriteProvider = Provider.of<FavoriteProvider>(context);
           if (!snapshot.hasData) {
             return CircularProgressIndicator();
           }
@@ -39,8 +40,6 @@ class PlacePageForCollection extends StatelessWidget {
           return ListView.builder(
               itemCount: notesList.length,
               itemBuilder: (context, index) {
-                favoriteProvider = Provider.of<FavoriteProvider>(context);
-
                 DocumentSnapshot documentSnapshot = notesList[index];
                 Map<String, dynamic> data =
                     documentSnapshot.data() as Map<String, dynamic>;
@@ -49,6 +48,7 @@ class PlacePageForCollection extends StatelessWidget {
                 int price = data['price'] ?? 0; // null인 경우 0 반환
                 String explain = data['explain'] ?? 'null'; // null인 경우 빈 문자열 반환
                 String location = data['location'] ?? ''; // null인 경우 빈 문자열 반환
+                String url = data["URL"] ?? '';
 
                 bool isSelected = favoriteProvider.selectedFavoriteRestraurant
                         .contains(name) ||
@@ -64,8 +64,14 @@ class PlacePageForCollection extends StatelessWidget {
                     elevation: 0,
                     color: AppColor.backGroundColor2,
                     child: ListTile(
-                      leading: const SizedBox(
-                          width: 113, height: 124, child: Icon(Icons.image)),
+                      leading: SizedBox(
+                        width: 113,
+                        height: 124,
+                        child: Image(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(url),
+                        ),
+                      ),
                       title: Row(
                         children: [
                           Text(

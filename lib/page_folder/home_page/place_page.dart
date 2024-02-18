@@ -23,7 +23,7 @@ class _PlacePageState extends State<PlacePage> {
   String title = '낮은 가격순';
 
   int? _value = 0;
-  List<String> item = ['전체', '맛집', '카페', '놀거리'];
+  List<String> item = [/*'전체',*/ '맛집', '카페', '놀거리'];
 
   List<DocumentSnapshot> notesList = []; // 리스트를 상태 변수로 선언합니다.
 
@@ -72,10 +72,11 @@ class _PlacePageState extends State<PlacePage> {
               const SizedBox(height: 20),
 
               LayoutBuilder(builder: (context, constraints) {
-                final spacing = (constraints.maxWidth - (110 * 3)) / 3;
+                //final spacing = (constraints.maxWidth - (110 * 3)) / 3;
+                final spacing = (constraints.maxWidth - (80 * 3)) / 3;
                 return Wrap(
                   spacing: spacing,
-                  children: List.generate(4, (index) {
+                  children: List.generate(3, (index) {
                     return SizedBox(
                       width: 80,
                       child: RawChip(
@@ -219,7 +220,8 @@ class _PlacePageState extends State<PlacePage> {
                   const SizedBox(width: 10),
                 ],
               ),
-              if (_value == 1) // 맛집이 선택되었을 때만 ListView를 보여줌
+              //if (_value == 0) AllPage(),
+              if (_value == 0) // 맛집이 선택되었을 때만 ListView를 보여줌
                 Expanded(
                   child: ListView.builder(
                     itemCount: notesList.length,
@@ -329,9 +331,9 @@ class _PlacePageState extends State<PlacePage> {
                                         });
                                       },
                                       icon: (isSelected)
-                                          ? Icon(Icons.favorite)
+                                          ? const Icon(Icons.favorite)
                                           : favoriteIcon,
-                                      style: ButtonStyle(
+                                      style: const ButtonStyle(
                                         iconColor: MaterialStatePropertyAll(
                                             AppColor.appBarColor1),
                                         backgroundColor:
@@ -349,9 +351,9 @@ class _PlacePageState extends State<PlacePage> {
                     },
                   ),
                 ),
-              if (_value == 2) //카페가 선택 되었을 때,
+              if (_value == 1) //카페가 선택 되었을 때,
                 const CafePage(),
-              if (_value == 3) //놀거리가 선택 되었을 때,
+              if (_value == 2) //놀거리가 선택 되었을 때,
                 const EntertainmentPage(),
               //Text('ddd'),
             ],

@@ -33,7 +33,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
   TextEditingController textEditingController = TextEditingController();
 
   int? _value = 0;
-  List<String> item = ['전체', '맛집', '카페', '놀거리', '나의 찜'];
+  List<String> item = [/*'전체',*/ '맛집', '카페', '놀거리', '나의 찜'];
 
   Color containerColor = AppColor.navigationBarColor5; // 기본 색상으로 초기화
 
@@ -166,19 +166,19 @@ class _PlacePageState extends State<PlacePageForCustom> {
                       width: 100,
                       height: 31,
                       child: ElevatedButton(
-                          onPressed: () async {
+                          onPressed: () {
                             removeOverlay();
-                            final result = await Navigator.push(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         const MyCustomInMyPage()));
                           },
-                          style: ButtonStyle(
+                          style: const ButtonStyle(
                               elevation: MaterialStatePropertyAll(0),
                               backgroundColor: MaterialStatePropertyAll(
                                   AppColor.navigationBarColor4)),
-                          child: Text(
+                          child: const Text(
                             '저장',
                             style: TextStyle(
                                 fontSize: 19,
@@ -205,7 +205,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
     }
 
     void updateTotalPrice(int price, bool isSelected) {
-      Trip? tripinstance = appState.trip;
+      final tripinstance = appState.trip;
       setState(() {
         if (isSelected) {
           sum += price;
@@ -242,12 +242,12 @@ class _PlacePageState extends State<PlacePageForCustom> {
 
           return Column(
             children: [
-              Divider(),
+              const Divider(),
               LayoutBuilder(builder: (context, constraints) {
-                final spacing = (constraints.maxWidth - (140 * 3)) / 3;
+                final spacing = (constraints.maxWidth - (120 * 3)) / 3;
                 return Wrap(
                   spacing: spacing,
-                  children: List.generate(5, (index) {
+                  children: List.generate(4, (index) {
                     return SizedBox(
                       width: 80,
                       child: RawChip(
@@ -390,7 +390,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                   const SizedBox(width: 10),
                 ],
               ),
-              if (_value == 1) // 맛집이 선택되었을 때만 ListView를 보여줌
+              if (_value == 0) // 맛집이 선택되었을 때만 ListView를 보여줌
                 Expanded(
                   child: GridView.builder(
                     gridDelegate:
@@ -507,7 +507,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                     },
                   ),
                 ),
-              if (_value == 2) //카페가 선택 되었을 때,
+              if (_value == 1) //카페가 선택 되었을 때,
                 StreamBuilder<QuerySnapshot>(
                   stream: firestoreService3.getNotesStream(),
                   builder: (context, snapshot) {
@@ -550,7 +550,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
 
                             String name = data['name'] ?? '';
                             int price = data['price'] ?? 0;
-
+                            String url = data["URL"] ?? '';
                             String location = data['location'] ?? '';
 
                             return GestureDetector(
@@ -581,6 +581,14 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Stack(children: [
+                                      SizedBox(
+                                        width: 172,
+                                        height: 154,
+                                        child: Image(
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(url),
+                                        ),
+                                      ),
                                       Positioned(
                                         top: 11,
                                         left: 139,
@@ -606,11 +614,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 172,
-                                        height: 154,
-                                        child: Icon(Icons.image),
                                       ),
                                     ]),
                                     Padding(
@@ -660,7 +663,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                     }
                   },
                 ),
-              if (_value == 3) //놀거리가 선택 되었을 때,
+              if (_value == 2) //놀거리가 선택 되었을 때,
                 StreamBuilder<QuerySnapshot>(
                   stream: firestoreService2.getNotesStream(),
                   builder: (context, snapshot) {
@@ -703,7 +706,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
 
                             String name = data['name'] ?? '';
                             int price = data['price'] ?? 0;
-
+                            String url = data["URL"] ?? '';
                             String location = data['location'] ?? '';
 
                             return GestureDetector(
@@ -734,6 +737,14 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Stack(children: [
+                                      SizedBox(
+                                        width: 172,
+                                        height: 154,
+                                        child: Image(
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(url),
+                                        ),
+                                      ),
                                       Positioned(
                                         top: 11,
                                         left: 139,
@@ -759,11 +770,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 172,
-                                        height: 154,
-                                        child: Icon(Icons.camera),
                                       ),
                                     ]),
                                     Padding(
@@ -813,11 +819,23 @@ class _PlacePageState extends State<PlacePageForCustom> {
                     }
                   },
                 ),
-              if (_value == 4)
+              if (_value == 3)
+
                 //나의 찜 체이지를 만드는데, 여기는 위에서 저장한 것들을 모두 다 보여주는 페이지입니다.
                 StreamBuilder<QuerySnapshot>(
                   stream: firestoreAll.getNotesStream(),
                   builder: (context, snapshot) {
+                    if (appState.trip == null) {
+                      return Container(
+                        padding: const EdgeInsets.only(top: 270),
+                        child: const Text(
+                          '커스텀 이름부터 설정해주세요',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        ),
+                      );
+                    }
+
                     tripInstance = appState.trip!;
 
                     if (snapshot.hasData && snapshot.data != null) {
@@ -842,6 +860,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
 
                             String name = data['name'] ?? '';
                             String location = data['location'] ?? '';
+                            String url = data["URL"] ?? '';
 
                             // 선택된 항목 중 하나와 일치하는지 확인
                             bool isSelected = tripInstance.selectedRestaurants
@@ -862,10 +881,13 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 172,
                                       height: 154,
-                                      child: Icon(Icons.image), // 실제 이미지로 대체
+                                      child: Image(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(url),
+                                      ), // 실제 이미지로 대체
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
@@ -905,10 +927,10 @@ class _PlacePageState extends State<PlacePageForCustom> {
                           },
                         ),
                       );
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasError || appState.trip == null) {
+                      return Container();
                     } else {
-                      return const CircularProgressIndicator();
+                      return Container();
                     }
                   },
                 ),
