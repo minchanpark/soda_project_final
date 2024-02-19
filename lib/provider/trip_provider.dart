@@ -1,8 +1,13 @@
 class Trip {
   String name;
   List<String> selectedRestaurants = [];
+  List<int> selectedRestaurantsPrice = [];
+
   List<String> selectedCafes = [];
+  List<int> selectedCafesPrice = [];
+
   List<String> selectedEntertainment = [];
+  List<int> selectedEntertainmentPrice = [];
 
   int? totalSum;
 

@@ -4,7 +4,7 @@ import 'package:soda_project_final/page_folder/culture_page.dart';
 import 'package:iconamoon/iconamoon.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import '../custompage/custom_page.dart';
+import '../custompage/custom_main_page.dart';
 import 'home_page_2.dart';
 import '../my_page/my_page.dart';
 
@@ -21,11 +21,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _selectedIndex = 0;
 
   static List<Widget> widgetOptions = <Widget>[
-    //
-    HomePage2(),
-    const CustomPage(),
+    const HomePage2(),
+    const CustomMainPage(),
     const CulturePage(),
-    MyPage()
+    const MyPage()
   ];
 
   @override
@@ -76,6 +75,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: AppColor.navigationBarColor3,
+        unselectedItemColor: const Color(0xffD1CDC8),
         onTap: onItemTapped,
         selectedLabelStyle: const TextStyle(
             fontSize: 12,

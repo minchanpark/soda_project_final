@@ -32,10 +32,22 @@ class MyAppState extends ChangeNotifier {
     print(trip!.totalSum);
   }
 
+  void addRestaurantPrice(int price) {
+    trip?.selectedRestaurantsPrice.add(price);
+    print(trip!.selectedRestaurantsPrice);
+    print(trip!.totalSum);
+  }
+
   void deleteRestaurant(String restaurantName) {
     trip!.selectedRestaurants.remove(restaurantName);
     print(trip?.selectedRestaurants);
     print(trip?.totalSum);
+  }
+
+  void deleteRestaurantPrice(int price) {
+    trip?.selectedRestaurantsPrice.remove(price);
+    print(trip!.selectedRestaurantsPrice);
+    print(trip!.totalSum);
   }
 
   // 코스에 카페 추가
@@ -45,10 +57,22 @@ class MyAppState extends ChangeNotifier {
     print(trip?.totalSum);
   }
 
+  void addCafePrice(int price) {
+    trip?.selectedCafesPrice.add(price);
+    print(trip!.selectedCafesPrice);
+    print(trip!.totalSum);
+  }
+
   void deleteCafe(String cafeName) {
     trip?.selectedCafes.remove(cafeName);
     print(trip?.selectedCafes);
     print(trip?.totalSum);
+  }
+
+  void deleteCafePrice(int price) {
+    trip?.selectedCafesPrice.remove(price);
+    print(trip!.selectedCafesPrice);
+    print(trip!.totalSum);
   }
 
   // 코스에 놀거리 추가
@@ -58,9 +82,21 @@ class MyAppState extends ChangeNotifier {
     print(trip?.totalSum);
   }
 
+  void addEntertainmentPrice(int price) {
+    trip?.selectedEntertainmentPrice.add(price);
+    print(trip!.selectedEntertainmentPrice);
+    print(trip!.totalSum);
+  }
+
   void deleteEntertainment(String entertainmentName) {
     trip?.selectedEntertainment.remove(entertainmentName);
     print(trip?.selectedEntertainment);
     print(trip?.totalSum);
+  }
+
+  void deleteEntertainmentPrice(int price) {
+    trip?.selectedEntertainmentPrice.remove(price);
+    print(trip!.selectedEntertainmentPrice);
+    print(trip!.totalSum);
   }
 }

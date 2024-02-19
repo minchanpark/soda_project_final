@@ -1,11 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:soda_project_final/page_folder/home_page/tab_page2.dart';
+import 'package:soda_project_final/page_folder/home_page/tab_page3.dart';
+import 'package:soda_project_final/page_folder/home_page/tab_page5.dart';
 import '../../app_color/app_color.dart';
 import '../../firestore_file/firestore_cafes.dart';
 import '../../firestore_file/firestore_entertainment.dart';
 import '../../firestore_file/firestore_resturant.dart';
 import '../card_in_course/card1.dart';
+import 'tab_page4.dart';
+import 'tap_page1.dart';
 
 class HomePage2 extends StatefulWidget {
   const HomePage2({super.key});
@@ -391,14 +396,68 @@ class _HomePage2State extends State<HomePage2> {
                                                 color:
                                                     AppColor.backGroundColor2,
                                                 child: ListTile(
-                                                  leading: SizedBox(
-                                                      width: 104,
-                                                      height: 124,
-                                                      child: Image(
-                                                        fit: BoxFit.fill,
-                                                        image:
-                                                            NetworkImage(url),
-                                                      )),
+                                                  leading: GestureDetector(
+                                                    onTap: () {
+                                                      if (url ==
+                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/2.png?alt=media&token=e9d6e755-f659-4b31-841f-caed9f5cad4f') {
+                                                        //
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const TapPage1()));
+                                                      }
+                                                      if (url ==
+                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/1.png?alt=media&token=d04bd2f8-ad06-4818-94c8-895f01f4e5b5') {
+                                                        //
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const TapPage2()));
+                                                      }
+                                                      if (url ==
+                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/20.png?alt=media&token=26ac0b20-2349-4ef9-bdd4-db0740cb425e') {
+                                                        //
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const TapPage3()));
+                                                      }
+                                                      if (url ==
+                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20142.png?alt=media&token=2754d11c-e1a7-45a5-81e8-12207348196b') {
+                                                        //
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const TapPage4()));
+                                                      }
+                                                      if (url ==
+                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/chicken.png?alt=media&token=13281834-d813-4ab4-972c-fad75ece2ec8') {
+                                                        //
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const TapPage5()));
+                                                      }
+                                                    },
+                                                    child: SizedBox(
+                                                        width: 104,
+                                                        height: 124,
+                                                        child: Image(
+                                                          fit: BoxFit.fill,
+                                                          image:
+                                                              NetworkImage(url),
+                                                        )),
+                                                  ),
                                                   title: Row(
                                                     children: [
                                                       Text(

@@ -43,9 +43,9 @@ class MyCustomInMyPage extends StatelessWidget {
   }
 
   double calculateHeight(int itemCount) {
-    double itemHeight = 25.0; // 각 항목의 높이
+    double itemHeight = 40.0; // 각 항목의 높이
     double separatorHeight = 0; // 항목 사이의 구분선 높이 (필요한 경우)
-    int separatorCount = itemCount; // 구분선의 총 개수
+    int separatorCount = 1; // 구분선의 총 개수
 
     // 전체 높이 = (항목의 높이 * 항목의 개수) + (구분선의 높이 * 구분선의 개수)
     return (itemHeight * itemCount) + (separatorHeight * separatorCount);
@@ -84,7 +84,7 @@ class MyCustomInMyPage extends StatelessWidget {
           ),
         ),
         body: Container(
-          decoration: BoxDecoration(color: AppColor.textColor4),
+          decoration: const BoxDecoration(color: AppColor.textColor4),
           child: Column(
             children: [
               const Divider(),
@@ -120,9 +120,14 @@ class MyCustomInMyPage extends StatelessWidget {
                                         builder: (BuildContext context) =>
                                             Dialog(
                                           elevation: 0,
-                                          child: SizedBox(
+                                          child: Container(
                                             width: 272,
                                             height: 100,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              color: AppColor.textColor4,
+                                            ),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               mainAxisAlignment:
@@ -205,84 +210,182 @@ class MyCustomInMyPage extends StatelessWidget {
                                     if (trip.selectedRestaurants.isNotEmpty ||
                                         trip.selectedCafes.isNotEmpty ||
                                         trip.selectedEntertainment.isNotEmpty) {
-                                      return SingleChildScrollView(
-                                        // SingleChildScrollView 추가
-                                        padding:
-                                            const EdgeInsets.only(left: 150),
-                                        child: Column(
-                                          children: [
-                                            if (trip
-                                                .selectedRestaurants.isNotEmpty)
-                                              SizedBox(
-                                                height: calculateHeight(trip
-                                                    .selectedRestaurants
-                                                    .length),
-                                                child: ListView.builder(
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(), // 스크롤 비활성화
-                                                  itemCount: trip
-                                                      .selectedRestaurants
-                                                      .length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Text(
-                                                      trip.selectedRestaurants[
-                                                          index],
-                                                      style: const TextStyle(
-                                                          fontSize: 17,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    );
-                                                  },
+                                      return Container(
+                                        decoration: const BoxDecoration(
+                                            color: AppColor.textColor4,
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(30),
+                                                topRight: Radius.circular(30))),
+                                        child: SingleChildScrollView(
+                                          // SingleChildScrollView 추가
+
+                                          padding: const EdgeInsets.only(
+                                              left: 10, top: 28),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              if (trip.selectedRestaurants
+                                                  .isNotEmpty)
+                                                SizedBox(
+                                                  height: trip
+                                                          .selectedRestaurants
+                                                          .length *
+                                                      20 *
+                                                      3,
+                                                  child: ListView.builder(
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(), // 스크롤 비활성화
+                                                    itemCount: trip
+                                                        .selectedRestaurants
+                                                        .length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 55,
+                                                            height: 55,
+                                                            child: Image(
+                                                                image: AssetImage(
+                                                                    'assets/courseimage.png')),
+                                                          ),
+                                                          SizedBox(width: 40),
+                                                          Text(
+                                                            trip.selectedRestaurants[
+                                                                index],
+                                                            style: const TextStyle(
+                                                                fontSize: 17,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                          const Expanded(
+                                                              child: Text('')),
+                                                          Text(
+                                                            trip.selectedRestaurantsPrice[
+                                                                    index]
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 17,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 19),
+                                                        ],
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
-                                              ),
-                                            if (trip.selectedCafes.isNotEmpty)
-                                              SizedBox(
-                                                height: calculateHeight(
-                                                    trip.selectedCafes.length),
-                                                child: ListView.builder(
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(), // 스크롤 비활성화
-                                                  itemCount:
-                                                      trip.selectedCafes.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Text(
-                                                      trip.selectedCafes[index],
-                                                      style: const TextStyle(
-                                                          fontSize: 17,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    );
-                                                  },
+                                              if (trip.selectedCafes.isNotEmpty)
+                                                SizedBox(
+                                                  height: trip.selectedCafes
+                                                          .length *
+                                                      20 *
+                                                      3,
+                                                  child: ListView.builder(
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(), // 스크롤 비활성화
+                                                    itemCount: trip
+                                                        .selectedCafes.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 55,
+                                                            height: 55,
+                                                            child: Image(
+                                                                image: AssetImage(
+                                                                    'assets/courseimage.png')),
+                                                          ),
+                                                          SizedBox(width: 40),
+                                                          Text(
+                                                            trip.selectedCafes[
+                                                                index],
+                                                            style: const TextStyle(
+                                                                fontSize: 17,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                          const Expanded(
+                                                              child: Text('')),
+                                                          Text(
+                                                            trip.selectedCafesPrice[
+                                                                    index]
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 17,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 19),
+                                                        ],
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
-                                              ),
-                                            if (trip.selectedEntertainment
-                                                .isNotEmpty)
-                                              SizedBox(
-                                                height: calculateHeight(trip
-                                                    .selectedEntertainment
-                                                    .length),
-                                                child: ListView.builder(
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(), // 스크롤 비활성화
-                                                  itemCount: trip
-                                                      .selectedEntertainment
-                                                      .length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Text(
-                                                      trip.selectedEntertainment[
-                                                          index],
-                                                      style: const TextStyle(
-                                                          fontSize: 17,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    );
-                                                  },
+                                              if (trip.selectedEntertainment
+                                                  .isNotEmpty)
+                                                SizedBox(
+                                                  height: trip
+                                                          .selectedEntertainment
+                                                          .length *
+                                                      20 *
+                                                      3,
+                                                  child: ListView.builder(
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(), // 스크롤 비활성화
+                                                    itemCount: trip
+                                                        .selectedEntertainment
+                                                        .length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Row(
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 55,
+                                                            height: 55,
+                                                            child: Image(
+                                                                image: AssetImage(
+                                                                    'assets/courseimage.png')),
+                                                          ),
+                                                          SizedBox(width: 40),
+                                                          Text(
+                                                            trip.selectedEntertainment[
+                                                                index],
+                                                            style: const TextStyle(
+                                                                fontSize: 17,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                          const Expanded(
+                                                              child: Text('')),
+                                                          Text(
+                                                            trip.selectedEntertainmentPrice[
+                                                                    index]
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 17,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 19),
+                                                        ],
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
-                                              ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       );
                                     }
@@ -348,7 +451,7 @@ class MyCustomInMyPage extends StatelessWidget {
           backgroundColor: AppColor.textColor4,
         ),
         body: Container(
-          decoration: BoxDecoration(color: AppColor.textColor4),
+          decoration: const BoxDecoration(color: AppColor.textColor4),
           child: const Center(
               child: Text(
             '커스텀 페이지에서 코스를 먼저 만들어주세요',

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:soda_project_final/app_color/app_color.dart';
-import '../../provider/course_provider.dart';
 import '../card_tab_page/card1_tab_page.dart';
 import '../card_tab_page/card2_tab_page.dart';
 import '../card_tab_page/card3_tab_page.dart';
@@ -31,8 +30,6 @@ class Card1 extends StatefulWidget {
 
 class _Card1State extends State<Card1> {
   bool _isFavorited = false;
-
-  final CourseProvider _courseProvider = CourseProvider();
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -130,7 +127,6 @@ class _Card1State extends State<Card1> {
                                 .collection("course")
                                 .doc('course${widget.index}')
                                 .delete();
-                            _courseProvider.deleteCourseCard(widget.title);
                           }
 
                           //파베에 정보 넘기기

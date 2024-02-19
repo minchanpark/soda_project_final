@@ -66,84 +66,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
     selectedCardIndicesEnter = List<bool>.filled(cardCount, false);
     selectedCardIndices = List<bool>.filled(cardCount, false);
     selectedCardIndicesCafe = List<bool>.filled(cardCount, false);
-
-    // WidgetsBinding을 사용하여 initState 완료 후 모달을 표시
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showModalBottomSheet<void>(
-        context: context,
-        builder: (BuildContext context) {
-          MyAppState appState = Provider.of<MyAppState>(context);
-          return Container(
-            color: AppColor.textColor4,
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const SizedBox(
-                          width: 27,
-                          height: 24,
-                          child: Image(image: AssetImage('assets/cancel.png')),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 102, top: 10),
-                        child: Text(
-                          '나의 커스텀 이름 설정',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Divider(),
-                  TextField(
-                    controller: textEditingController,
-                    minLines: 1, // 최소 높이를 1줄로 설정
-                    maxLines: 2, // 최대 높이를 3줄로 설정
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 31),
-                      border: InputBorder.none,
-                      hintText: '나만의 코스 이름을 설정해주세요.\n이름은 최소 한 글자 이상 입력해주세요. ',
-                    ),
-                  ),
-                  const SizedBox(height: 300),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: TextButton(
-                              style: const ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      AppColor.appBarColor1),
-                                  shape: MaterialStatePropertyAll(
-                                      BeveledRectangleBorder(
-                                          side: BorderSide.none))),
-                              onPressed: () {
-                                appState.addTrip(textEditingController.text);
-                                Navigator.pop(context);
-                              },
-                              child: const Text(
-                                '저장하기',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.5,
-                                    color: AppColor.textColor1),
-                              ))),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          );
-        },
-      );
-    });
   }
 
   OverlayEntry? overlayEntry; // 팝업 내용을 담을 OverlayEntry
@@ -151,6 +73,58 @@ class _PlacePageState extends State<PlacePageForCustom> {
   @override
   Widget build(BuildContext context) {
     MyAppState appState = Provider.of<MyAppState>(context);
+
+    void showOverlay2(BuildContext context) {
+      OverlayEntry overlayEntry2 = OverlayEntry(
+        builder: (context) => Positioned(
+          bottom: 0,
+          left: 10.0,
+          right: 10.0,
+          child: Material(
+            elevation: 0,
+            child: Container(
+              width: 393,
+              height: 58,
+              padding: const EdgeInsets.all(20),
+              color: AppColor.backGroundColor2,
+              child: Row(
+                children: [
+                  const Text('나의 커스텀에 코스가 저장 되었어요',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: -0.24,
+                          color: Color(0xff5f5c5b))),
+                  const Expanded(child: Text('')),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyCustomInMyPage()));
+                    },
+                    child: const Text('보러가기',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: -0.24,
+                            color: AppColor.appBarColor1,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColor.appBarColor1)),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      Overlay.of(context).insert(overlayEntry2);
+
+      Future.delayed(const Duration(seconds: 3), () {
+        overlayEntry2.remove();
+      });
+    }
 
     void removeOverlay() {
       overlayEntry?.remove(); // Overlay에서 OverlayEntry 제거
@@ -184,11 +158,12 @@ class _PlacePageState extends State<PlacePageForCustom> {
                       child: ElevatedButton(
                           onPressed: () {
                             removeOverlay();
-                            Navigator.push(
+                            /*Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const MyCustomInMyPage()));
+                                        const MyCustomInMyPage()));*/
+                            showOverlay2(context);
                           },
                           style: const ButtonStyle(
                               elevation: MaterialStatePropertyAll(0),
@@ -488,6 +463,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                       if (selectedCardIndices[index]) {
                                         // 선택됐다면 추가
                                         appState.addRestaurant(name);
+                                        appState.addRestaurantPrice(price);
                                         firestore
                                             .collection("collection")
                                             .doc('collection$index')
@@ -503,6 +479,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                       } else {
                                         // 선택 해제됐다면 삭제
                                         appState.deleteRestaurant(name);
+                                        appState.deleteRestaurantPrice(price);
                                         firestore
                                             .collection("collection")
                                             .doc('collection$index')
@@ -822,6 +799,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                 index]) {
                                               // 선택됐다면 추가
                                               appState.addCafe(name);
+                                              appState.addCafePrice(price);
 
                                               firestore
                                                   .collection("collection")
@@ -838,6 +816,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             } else {
                                               // 선택 해제됐다면 삭제
                                               appState.deleteCafe(name);
+                                              appState.deleteCafePrice(price);
 
                                               firestore
                                                   .collection("collection")
@@ -1181,6 +1160,9 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             if (selectedCardIndicesEnter[
                                                 index]) {
                                               // 선택됐다면 추가
+                                              appState.addEntertainment(name);
+                                              appState
+                                                  .addEntertainmentPrice(price);
 
                                               firestore
                                                   .collection("collection")
@@ -1198,6 +1180,10 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                               );
                                             } else {
                                               // 선택 해제됐다면 삭제
+                                              appState
+                                                  .deleteEntertainment(name);
+                                              appState.deleteEntertainmentPrice(
+                                                  price);
 
                                               firestore
                                                   .collection("collection")
