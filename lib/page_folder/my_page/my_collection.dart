@@ -34,7 +34,7 @@ class MyCollectionPage extends StatelessWidget {
           ),
         ),
         body: Container(
-          decoration: BoxDecoration(color: AppColor.textColor4),
+          decoration: const BoxDecoration(color: AppColor.textColor4),
           child: const TabBarView(
             children: <Widget>[
               PlacePageForCollection(), // 장소 페이지

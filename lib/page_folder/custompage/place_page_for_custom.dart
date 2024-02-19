@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:soda_project_final/firestore_file/firestore_all.dart';
+import 'package:soda_project_final/firestore_file/firestore_custom.dart';
 import 'package:soda_project_final/firestore_file/firestore_entertainment.dart';
 import 'package:soda_project_final/provider/trip_provider.dart';
 import '../../app_color/app_color.dart';
@@ -47,13 +48,19 @@ class _PlacePageState extends State<PlacePageForCustom> {
   late Trip tripInstance;
 
   List<DocumentSnapshot> selectedList = [];
-  //List<DocumentSnapshot> selectedListCafe = [];
 
   List<DocumentSnapshot> notesList = [];
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  final firestoreServiseCustom = FirestoreServiceCustom();
 
   @override
   void initState() {
     super.initState();
+
+    //firestoreServiseCustom.clearCachedNotes();
+    firestore.collection("collection").doc().delete();
 
     // 카드 개수에 맞게 리스트를 초기화
     selectedCardIndicesEnter = List<bool>.filled(cardCount, false);
@@ -209,8 +216,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
         // OverlayEntry가 이미 존재한다면, 가격 정보만 업데이트
         overlayEntry!.markNeedsBuild();
       }
-
-      //tripinstance.totalSum = sum;
     }
 
     void updateTotalPrice(int price, bool isSelected) {
@@ -464,6 +469,10 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                 String name = data['name'] ?? '';
                                 String url = data['URL'] ?? '';
                                 String location = data['location'] ?? '';
+                                int price = data['price'];
+
+                                FirebaseFirestore firestore =
+                                    FirebaseFirestore.instance;
 
                                 return GestureDetector(
                                   onTap: () {
@@ -479,9 +488,25 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                       if (selectedCardIndices[index]) {
                                         // 선택됐다면 추가
                                         appState.addRestaurant(name);
+                                        firestore
+                                            .collection("collection")
+                                            .doc('collection$index')
+                                            .set(
+                                          {
+                                            "name": name,
+                                            "URL": url,
+                                            'location': location,
+                                            'timestamp': DateTime.now(),
+                                            'price': price
+                                          },
+                                        );
                                       } else {
                                         // 선택 해제됐다면 삭제
                                         appState.deleteRestaurant(name);
+                                        firestore
+                                            .collection("collection")
+                                            .doc('collection$index')
+                                            .delete();
                                       }
                                     });
                                   },
@@ -775,9 +800,12 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                               as Map<String, dynamic>;
 
                                       String name = data['name'] ?? '';
-
+                                      int price = data['price'];
                                       String url = data["URL"] ?? '';
                                       String location = data['location'] ?? '';
+
+                                      FirebaseFirestore firestore =
+                                          FirebaseFirestore.instance;
 
                                       return GestureDetector(
                                         onTap: () {
@@ -794,9 +822,27 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                 index]) {
                                               // 선택됐다면 추가
                                               appState.addCafe(name);
+
+                                              firestore
+                                                  .collection("collection")
+                                                  .doc('collectionCafe$index')
+                                                  .set(
+                                                {
+                                                  "name": name,
+                                                  "URL": url,
+                                                  'location': location,
+                                                  'timestamp': DateTime.now(),
+                                                  'price': price
+                                                },
+                                              );
                                             } else {
                                               // 선택 해제됐다면 삭제
                                               appState.deleteCafe(name);
+
+                                              firestore
+                                                  .collection("collection")
+                                                  .doc('collectionCafe$index')
+                                                  .delete();
                                             }
                                           });
                                         },
@@ -1111,9 +1157,12 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                               as Map<String, dynamic>;
 
                                       String name = data['name'] ?? '';
-
+                                      int price = data['price'];
                                       String url = data["URL"] ?? '';
                                       String location = data['location'] ?? '';
+
+                                      FirebaseFirestore firestore =
+                                          FirebaseFirestore.instance;
 
                                       return GestureDetector(
                                         onTap: () {
@@ -1132,11 +1181,29 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             if (selectedCardIndicesEnter[
                                                 index]) {
                                               // 선택됐다면 추가
-                                              appState.addEntertainment(name);
+
+                                              firestore
+                                                  .collection("collection")
+                                                  .doc(
+                                                      'collectionEntertainment$index')
+                                                  .set(
+                                                {
+                                                  "name": name,
+                                                  "URL": url,
+                                                  'location': location,
+                                                  'timestamp': DateTime.now(),
+                                                  'price': price,
+                                                  'index': index,
+                                                },
+                                              );
                                             } else {
                                               // 선택 해제됐다면 삭제
-                                              appState
-                                                  .deleteEntertainment(name);
+
+                                              firestore
+                                                  .collection("collection")
+                                                  .doc(
+                                                      'collectionEntertainment$index')
+                                                  .delete();
                                             }
                                           });
                                         },
@@ -1249,11 +1316,11 @@ class _PlacePageState extends State<PlacePageForCustom> {
 
                   //나의 찜 체이지를 만드는데, 여기는 위에서 저장한 것들을 모두 다 보여주는 페이지입니다.
                   StreamBuilder<QuerySnapshot>(
-                    stream: firestoreAll.getNotesStream(),
+                    stream: firestoreServiseCustom.getNotesStream(),
                     builder: (context, snapshot) {
                       if (appState.trip == null) {
                         return Container(
-                          padding: const EdgeInsets.only(top: 270),
+                          padding: const EdgeInsets.only(top: 300),
                           child: const Text(
                             '커스텀 이름부터 설정해주세요',
                             style: TextStyle(
@@ -1288,67 +1355,53 @@ class _PlacePageState extends State<PlacePageForCustom> {
                               String location = data['location'] ?? '';
                               String url = data["URL"] ?? '';
 
-                              // 선택된 항목 중 하나와 일치하는지 확인
-                              bool isSelected = tripInstance.selectedRestaurants
-                                      .contains(name) ||
-                                  tripInstance.selectedCafes.contains(name) ||
-                                  tripInstance.selectedEntertainment
-                                      .contains(name);
-
-                              // 선택되지 않은 항목의 투명도를 조정
-                              double opacity = isSelected ? 1.0 : 0.1;
-
-                              return Opacity(
-                                opacity: opacity,
-                                child: Card(
-                                  elevation: 0,
-                                  color: AppColor.backGroundColor2,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 172,
-                                        height: 154,
-                                        child: Image(
-                                          fit: BoxFit.fill,
-                                          image: NetworkImage(url),
-                                        ), // 실제 이미지로 대체
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.09, top: 12),
-                                        child: Text(
-                                          name,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: -0.24,
-                                          ),
+                              return Card(
+                                elevation: 0,
+                                color: AppColor.backGroundColor2,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 172,
+                                      height: 154,
+                                      child: Image(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(url),
+                                      ), // 실제 이미지로 대체
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.09, top: 12),
+                                      child: Text(
+                                        name,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: -0.24,
                                         ),
                                       ),
-                                      const SizedBox(height: 19),
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.location_on_outlined,
-                                              color: Color(0xff61646b)),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.37),
-                                            child: Text(
-                                              location,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w400,
-                                                letterSpacing: -0.18,
-                                              ),
+                                    ),
+                                    const SizedBox(height: 19),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.location_on_outlined,
+                                            color: Color(0xff61646b)),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.37),
+                                          child: Text(
+                                            location,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: -0.18,
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               );
                             },

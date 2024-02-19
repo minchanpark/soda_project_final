@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../app_color/app_color.dart';
 import '../../firestore_file/firestore_cafes.dart';
 import '../../firestore_file/firestore_entertainment.dart';
 import '../../firestore_file/firestore_resturant.dart';
-import '../../provider/favorite_provider.dart';
 import '../card_in_course/card1.dart';
 
 class HomePage2 extends StatefulWidget {
+  const HomePage2({super.key});
+
   @override
   State<HomePage2> createState() => _HomePage2State();
 }
@@ -17,40 +17,52 @@ class HomePage2 extends StatefulWidget {
 class _HomePage2State extends State<HomePage2> {
   List<Card1> cards = [
     const Card1(
+      index: 0,
       title: '스트레스 받아?',
       description: '매운거 먹고 소리 질러~',
       price: 19000,
-      pictureName: 'card1',
+      pictureurl:
+          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20141.png?alt=media&token=39c330ee-4aaf-44ed-ad67-b17eefd5d1b8',
     ),
     const Card1(
+      index: 1,
       title: '추적추적 비올 땐',
       description: '실내가 최고지',
       price: 15400,
-      pictureName: 'card2',
+      pictureurl:
+          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20141%20%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB.png?alt=media&token=9f522e16-6069-40a2-b77d-3c72dcd160c7',
     ),
     const Card1(
+      index: 2,
       title: '야자 끝나고 어디가지?',
       description: '떡볶이 먹고 노래방 고?',
       price: 12500,
-      pictureName: 'card3',
+      pictureurl:
+          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%201413.png?alt=media&token=fd5bc6cf-e10e-4d5d-a31a-e2c913005bda',
     ),
     const Card1(
+      index: 3,
       title: '오늘은 소녀처럼 놀고시퍼',
       description: '파스타 먹고 티타임 가자 공주들아~',
       price: 20500,
-      pictureName: 'card4',
+      pictureurl:
+          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%201414.png?alt=media&token=794d88e5-7946-4f46-809c-1b45d0dd71e5',
     ),
     const Card1(
+      index: 4,
       title: '예쁜곳 모음.zip',
       description: '분위기 있고 인스타 감성 느낌~',
       price: 22300,
-      pictureName: 'card5',
+      pictureurl:
+          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%201415.png?alt=media&token=34331bb1-b8dc-43b4-9afd-a32ae7567cd4',
     ),
     const Card1(
+      index: 5,
       title: '몸이 뻐근하네',
       description: '총싸움 하고 놀아볼까?',
       price: 22800,
-      pictureName: 'card6',
+      pictureurl:
+          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%201416.png?alt=media&token=76101246-4371-41d4-877d-5f0e004f9e37',
     ),
   ];
 
@@ -70,15 +82,21 @@ class _HomePage2State extends State<HomePage2> {
   //String title = '낮은 가격순';
 
   int? _value = 0;
-  List<String> item = [/*'전체',*/ '맛집', '카페', '놀거리'];
+  List<String> item = ['맛집', '카페', '놀거리'];
 
   List<DocumentSnapshot> notesList = []; // 리스트를 상태 변수로 선언합니다.
 
   Icon favoriteIcon = const Icon(Icons.favorite_border);
 
   bool _isSelected = false;
+  bool _isSelectedCafe = false;
+  bool _isSelectedEntertainment = false;
 
   final Set<int> _selectedItems = {};
+  final Set<int> _selectedItemsCafe = {};
+  final Set<int> _selectedItemsEntertainment = {};
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -364,10 +382,6 @@ class _HomePage2State extends State<HomePage2> {
                                         String location = data['location'];
                                         String url = data["URL"] ?? '';
 
-                                        FavoriteProvider favoriteProvider =
-                                            Provider.of<FavoriteProvider>(
-                                                context);
-
                                         return Column(
                                           children: [
                                             SizedBox(
@@ -462,6 +476,7 @@ class _HomePage2State extends State<HomePage2> {
                                                               ),
                                                             ),
                                                           ),
+                                                          //맛집 선택하는 코드
                                                           const Expanded(
                                                               child: Text(' ')),
                                                           IconButton(
@@ -477,16 +492,40 @@ class _HomePage2State extends State<HomePage2> {
                                                                   _selectedItems
                                                                       .remove(
                                                                           index);
-                                                                  favoriteProvider
-                                                                      .deleteFavoriteRestaraurant(
-                                                                          name);
+
+                                                                  firestore
+                                                                      .collection(
+                                                                          "favorite")
+                                                                      .doc(
+                                                                          'favorite$index')
+                                                                      .delete();
                                                                 } else {
                                                                   _selectedItems
                                                                       .add(
                                                                           index);
-                                                                  favoriteProvider
-                                                                      .addFavoriteRestaraurant(
-                                                                          name);
+
+                                                                  firestore
+                                                                      .collection(
+                                                                          "favorite")
+                                                                      .doc(
+                                                                          'favorite$index')
+                                                                      .set(
+                                                                    {
+                                                                      "name":
+                                                                          name,
+                                                                      "explain":
+                                                                          explain,
+                                                                      "price":
+                                                                          price,
+                                                                      "URL":
+                                                                          url,
+                                                                      'location':
+                                                                          location,
+                                                                      'timestamp':
+                                                                          DateTime
+                                                                              .now(),
+                                                                    },
+                                                                  );
                                                                 }
                                                               });
                                                             },
@@ -725,8 +764,8 @@ class _HomePage2State extends State<HomePage2> {
                                                     documentSnapshot =
                                                     selectedListCafe[index];
 
-                                                final isSelected =
-                                                    _selectedItems
+                                                final isSelectedCafe =
+                                                    _selectedItemsCafe
                                                         .contains(index);
 
                                                 Map<String, dynamic> data =
@@ -745,11 +784,6 @@ class _HomePage2State extends State<HomePage2> {
                                                         ''; // null인 경우 빈 문자열 반환
                                                 String url =
                                                     data["URL"] ?? 'null';
-
-                                                FavoriteProvider
-                                                    favoriteProvider = Provider
-                                                        .of<FavoriteProvider>(
-                                                            context);
 
                                                 return SizedBox(
                                                   height: 162,
@@ -858,30 +892,53 @@ class _HomePage2State extends State<HomePage2> {
                                                                       ' ')),
                                                               IconButton(
                                                                 isSelected:
-                                                                    _isSelected,
+                                                                    _isSelectedCafe,
                                                                 onPressed: () {
                                                                   setState(() {
-                                                                    _isSelected =
-                                                                        !_isSelected;
+                                                                    _isSelectedCafe =
+                                                                        !_isSelectedCafe;
 
-                                                                    if (isSelected) {
-                                                                      _selectedItems
+                                                                    if (isSelectedCafe) {
+                                                                      _selectedItemsCafe
                                                                           .remove(
                                                                               index);
-                                                                      favoriteProvider
-                                                                          .deleteFavoriteCafe(
-                                                                              name);
+
+                                                                      firestore
+                                                                          .collection(
+                                                                              "favorite")
+                                                                          .doc(
+                                                                              'favoriteCafe$index')
+                                                                          .delete();
                                                                     } else {
-                                                                      _selectedItems
+                                                                      _selectedItemsCafe
                                                                           .add(
                                                                               index);
-                                                                      favoriteProvider
-                                                                          .addFavoriteCafe(
-                                                                              name);
+
+                                                                      firestore
+                                                                          .collection(
+                                                                              "favorite")
+                                                                          .doc(
+                                                                              'favoriteCafe$index')
+                                                                          .set(
+                                                                        {
+                                                                          "name":
+                                                                              name,
+                                                                          "explain":
+                                                                              explain,
+                                                                          "price":
+                                                                              price,
+                                                                          "URL":
+                                                                              url,
+                                                                          'location':
+                                                                              location,
+                                                                          'timestamp':
+                                                                              DateTime.now(),
+                                                                        },
+                                                                      );
                                                                     }
                                                                   });
                                                                 },
-                                                                icon: (isSelected)
+                                                                icon: (isSelectedCafe)
                                                                     ? const Icon(
                                                                         Icons
                                                                             .favorite)
@@ -1134,8 +1191,8 @@ class _HomePage2State extends State<HomePage2> {
                                                     selectedListEntertainment[
                                                         index];
 
-                                                final isSelected =
-                                                    _selectedItems
+                                                final isSelectedEntertainment =
+                                                    _selectedItemsEntertainment
                                                         .contains(index);
 
                                                 Map<String, dynamic> data =
@@ -1154,11 +1211,6 @@ class _HomePage2State extends State<HomePage2> {
                                                         ''; // null인 경우 빈 문자열 반환
                                                 String url =
                                                     data["URL"] ?? 'null';
-
-                                                FavoriteProvider
-                                                    favoriteProvider = Provider
-                                                        .of<FavoriteProvider>(
-                                                            context);
 
                                                 return SizedBox(
                                                   height: 162,
@@ -1267,30 +1319,55 @@ class _HomePage2State extends State<HomePage2> {
                                                                       ' ')),
                                                               IconButton(
                                                                 isSelected:
-                                                                    _isSelected,
+                                                                    _isSelectedEntertainment,
                                                                 onPressed: () {
                                                                   setState(() {
-                                                                    _isSelected =
-                                                                        !_isSelected;
+                                                                    _isSelectedEntertainment =
+                                                                        !_isSelectedEntertainment;
 
-                                                                    if (isSelected) {
-                                                                      _selectedItems
+                                                                    if (isSelectedEntertainment) {
+                                                                      _selectedItemsEntertainment
                                                                           .remove(
                                                                               index);
-                                                                      favoriteProvider
-                                                                          .deleteFavoriteCafe(
-                                                                              name);
+
+                                                                      firestore
+                                                                          .collection(
+                                                                              "favorite")
+                                                                          .doc(
+                                                                              'favoriteEntertainment$index')
+                                                                          .delete();
                                                                     } else {
-                                                                      _selectedItems
+                                                                      _selectedItemsEntertainment
                                                                           .add(
                                                                               index);
-                                                                      favoriteProvider
-                                                                          .addFavoriteCafe(
-                                                                              name);
+
+                                                                      firestore
+                                                                          .collection(
+                                                                              "favorite")
+                                                                          .doc(
+                                                                              'favoriteEntertainment$index')
+                                                                          .set(
+                                                                        {
+                                                                          "name":
+                                                                              name,
+                                                                          "explain":
+                                                                              explain,
+                                                                          "price":
+                                                                              price,
+                                                                          "URL":
+                                                                              url,
+                                                                          'location':
+                                                                              location,
+                                                                          'timestamp':
+                                                                              DateTime.now(),
+                                                                          'index':
+                                                                              index
+                                                                        },
+                                                                      );
                                                                     }
                                                                   });
                                                                 },
-                                                                icon: (isSelected)
+                                                                icon: (isSelectedEntertainment)
                                                                     ? const Icon(
                                                                         Icons
                                                                             .favorite)
@@ -1338,7 +1415,8 @@ class _HomePage2State extends State<HomePage2> {
                     return const Text('No notes...');
                   }
                 },
-              ), // 장소 페이지
+              ), // 여기까지 장소 페이지
+              //아래부터는 코스 페이지
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -1354,8 +1432,8 @@ class _HomePage2State extends State<HomePage2> {
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
-                                  decoration:
-                                      BoxDecoration(color: AppColor.textColor4),
+                                  decoration: const BoxDecoration(
+                                      color: AppColor.textColor4),
                                   child: DefaultTabController(
                                       length: 2,
                                       child: Column(
