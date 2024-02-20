@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:soda_project_final/firestore_file/firestore_all.dart';
 import 'package:soda_project_final/firestore_file/firestore_custom.dart';
 import 'package:soda_project_final/firestore_file/firestore_entertainment.dart';
 import 'package:soda_project_final/provider/trip_provider.dart';
@@ -28,8 +27,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
       FirestoreServiseEntertainment();
 
   final FirestoreServiseCafes firestoreService3 = FirestoreServiseCafes();
-
-  final FirestoreSAll firestoreAll = FirestoreSAll();
 
   TextEditingController textEditingController = TextEditingController();
 
@@ -476,6 +473,17 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             'price': price
                                           },
                                         );
+
+                                        firestore
+                                            .collection("collectionImage")
+                                            .doc('collectionImage$index')
+                                            .set(
+                                          {
+                                            "name": name,
+                                            "URL": url,
+                                            'timestamp': DateTime.now(),
+                                          },
+                                        );
                                       } else {
                                         // 선택 해제됐다면 삭제
                                         appState.deleteRestaurant(name);
@@ -483,6 +491,11 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                         firestore
                                             .collection("collection")
                                             .doc('collection$index')
+                                            .delete();
+
+                                        firestore
+                                            .collection("collectionImage")
+                                            .doc('collectionImage$index')
                                             .delete();
                                       }
                                     });
@@ -813,6 +826,18 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   'price': price
                                                 },
                                               );
+
+                                              firestore
+                                                  .collection("collectionImage")
+                                                  .doc(
+                                                      'collectionImageCafe$index')
+                                                  .set(
+                                                {
+                                                  "name": name,
+                                                  "URL": url,
+                                                  'timestamp': DateTime.now(),
+                                                },
+                                              );
                                             } else {
                                               // 선택 해제됐다면 삭제
                                               appState.deleteCafe(name);
@@ -821,6 +846,12 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                               firestore
                                                   .collection("collection")
                                                   .doc('collectionCafe$index')
+                                                  .delete();
+
+                                              firestore
+                                                  .collection("collectionImage")
+                                                  .doc(
+                                                      'collectionImageCafe$index')
                                                   .delete();
                                             }
                                           });
@@ -1178,6 +1209,18 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   'index': index,
                                                 },
                                               );
+
+                                              firestore
+                                                  .collection("collectionImage")
+                                                  .doc(
+                                                      'collectionImageEnter$index')
+                                                  .set(
+                                                {
+                                                  "name": name,
+                                                  "URL": url,
+                                                  'timestamp': DateTime.now(),
+                                                },
+                                              );
                                             } else {
                                               // 선택 해제됐다면 삭제
                                               appState
@@ -1189,6 +1232,12 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   .collection("collection")
                                                   .doc(
                                                       'collectionEntertainment$index')
+                                                  .delete();
+
+                                              firestore
+                                                  .collection("collectionImage")
+                                                  .doc(
+                                                      'collectionImageEnter$index')
                                                   .delete();
                                             }
                                           });

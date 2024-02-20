@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestoreSAll {
+class FirestoreServiseImage {
   final CollectionReference notes =
-      FirebaseFirestore.instance.collection('all');
+      FirebaseFirestore.instance.collection('collectionImage');
 
   //READ: get notes from database
   Stream<QuerySnapshot> getNotesStream() {
