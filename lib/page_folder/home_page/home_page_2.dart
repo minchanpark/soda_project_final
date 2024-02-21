@@ -1127,11 +1127,11 @@ class _HomePage2State extends State<HomePage2> {
                                                                               if (isSelectedCafe) {
                                                                                 _selectedItemsCafe.remove(index);
 
-                                                                                firestore.collection("favorite").doc('favorite$index').delete();
+                                                                                firestore.collection("favorite").doc('favoriteCafe$index').delete();
                                                                               } else {
                                                                                 _selectedItemsCafe.add(index);
 
-                                                                                firestore.collection("favorite").doc('favorite$index').set(
+                                                                                firestore.collection("favorite").doc('favoriteCafe$index').set(
                                                                                   {
                                                                                     "name": name,
                                                                                     "explain": explain,
@@ -1640,11 +1640,11 @@ class _HomePage2State extends State<HomePage2> {
                                                                               if (isSelectedEntertainment) {
                                                                                 _selectedItemsEntertainment.remove(index);
 
-                                                                                firestore.collection("favorite").doc('favorite$index').delete();
+                                                                                firestore.collection("favorite").doc('favoriteEnter$index').delete();
                                                                               } else {
                                                                                 _selectedItemsEntertainment.add(index);
 
-                                                                                firestore.collection("favorite").doc('favorite$index').set(
+                                                                                firestore.collection("favorite").doc('favoriteEnter$index').set(
                                                                                   {
                                                                                     "name": name,
                                                                                     "explain": explain,

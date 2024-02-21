@@ -634,6 +634,17 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             'price': price
                                           },
                                         );
+
+                                        /*firestore
+                                            .collection("collectionImage")
+                                            .doc('collectionImage$index')
+                                            .set(
+                                          {
+                                            "name": name,
+                                            "URL": url,
+                                            'timestamp': DateTime.now(),
+                                          },
+                                        );*/
                                       } else {
                                         // 선택 해제됐다면 삭제
                                         appState.deleteRestaurant(name);
@@ -642,6 +653,11 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             .collection("collection")
                                             .doc('collection$index')
                                             .delete();
+
+                                        /*firestore
+                                            .collection("collectionImage")
+                                            .doc('collectionImage$index')
+                                            .delete();*/
                                       }
                                     });
                                   },
@@ -984,6 +1000,18 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   'price': price
                                                 },
                                               );
+
+                                              /*firestore
+                                                  .collection("collectionImage")
+                                                  .doc(
+                                                      'collectionImageCafe$index')
+                                                  .set(
+                                                {
+                                                  "name": name,
+                                                  "URL": url,
+                                                  'timestamp': DateTime.now(),
+                                                },
+                                              );*/
                                             } else {
                                               // 선택 해제됐다면 삭제
                                               appState.deleteCafe(name);
@@ -993,6 +1021,12 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   .collection("collection")
                                                   .doc('collectionCafe$index')
                                                   .delete();
+
+                                              /* firestore
+                                                  .collection("collectionImage")
+                                                  .doc(
+                                                      'collectionImageCafe$index')
+                                                  .delete();*/
                                             }
                                           });
                                         },
@@ -1362,6 +1396,18 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   'index': index,
                                                 },
                                               );
+
+                                              /*firestore
+                                                  .collection("collectionImage")
+                                                  .doc(
+                                                      'collectionImageEnter$index')
+                                                  .set(
+                                                {
+                                                  "name": name,
+                                                  "URL": url,
+                                                  'timestamp': DateTime.now(),
+                                                },
+                                              );*/
                                             } else {
                                               // 선택 해제됐다면 삭제
                                               appState
@@ -1374,6 +1420,12 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   .doc(
                                                       'collectionEntertainment$index')
                                                   .delete();
+
+                                              /*firestore
+                                                  .collection("collectionImage")
+                                                  .doc(
+                                                      'collectionImageEnter$index')
+                                                  .delete();*/
                                             }
                                           });
                                         },
