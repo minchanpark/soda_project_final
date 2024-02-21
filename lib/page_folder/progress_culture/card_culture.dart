@@ -17,7 +17,7 @@ class CardCulture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 0),
       child: Card(
         elevation: 0,
         color: AppColor.backGroundColor2,
@@ -31,11 +31,17 @@ class CardCulture extends StatelessWidget {
                     //사진 누르면 링크 연결
                   },
                   child: SizedBox(
-                    width: 180,
+                    width: 186,
                     height: 154,
-                    child: Image(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/$pictureName.png'),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                      child: Image(
+                        image: AssetImage('assets/$pictureName.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ),

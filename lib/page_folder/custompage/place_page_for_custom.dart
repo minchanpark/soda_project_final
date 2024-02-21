@@ -31,7 +31,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
   TextEditingController textEditingController = TextEditingController();
 
   int? _value = 0;
-  List<String> item = [/*'전체',*/ '맛집', '카페', '놀거리', '나의 찜'];
+  List<String> item = ['맛집', '카페', '놀거리', '나의 찜'];
 
   Color containerColor = AppColor.navigationBarColor5; // 기본 색상으로 초기화
 
@@ -155,11 +155,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                       child: ElevatedButton(
                           onPressed: () {
                             removeOverlay();
-                            /*Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MyCustomInMyPage()));*/
+
                             showOverlay2(context);
                           },
                           style: const ButtonStyle(
@@ -511,10 +507,18 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                       children: [
                                         Stack(children: [
                                           SizedBox(
-                                            width: 172,
+                                            width: 182,
                                             height: 154,
-                                            child: Image.network(url,
-                                                fit: BoxFit.cover),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
+                                              ),
+                                              child: Image(
+                                                image: NetworkImage(url),
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
                                           ),
                                           Positioned(
                                             top: 11,
@@ -560,14 +564,19 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                         const SizedBox(height: 19),
                                         Row(
                                           children: [
-                                            const Icon(
-                                                Icons.location_on_outlined,
-                                                color: Color(0xff61646b)),
+                                            const SizedBox(width: 8),
+                                            const SizedBox(
+                                              width: 17,
+                                              height: 17,
+                                              child: Image(
+                                                  image: AssetImage(
+                                                      'assets/Vector.png')),
+                                            ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.37),
                                               child: Text(
-                                                location,
+                                                '${price.toString()}원',
                                                 style: const TextStyle(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w400,
@@ -867,11 +876,20 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             children: [
                                               Stack(children: [
                                                 SizedBox(
-                                                  width: 172,
+                                                  width: 182,
                                                   height: 154,
-                                                  child: Image(
-                                                    fit: BoxFit.fill,
-                                                    image: NetworkImage(url),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(10),
+                                                      topRight:
+                                                          Radius.circular(10),
+                                                    ),
+                                                    child: Image(
+                                                      image: NetworkImage(url),
+                                                      fit: BoxFit.fill,
+                                                    ),
                                                   ),
                                                 ),
                                                 Positioned(
@@ -921,16 +939,20 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                               const SizedBox(height: 19),
                                               Row(
                                                 children: [
-                                                  const Icon(
-                                                      Icons
-                                                          .location_on_outlined,
-                                                      color: Color(0xff61646b)),
+                                                  const SizedBox(width: 8),
+                                                  const SizedBox(
+                                                    width: 17,
+                                                    height: 17,
+                                                    child: Image(
+                                                        image: AssetImage(
+                                                            'assets/Vector.png')),
+                                                  ),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
                                                             left: 8.37),
                                                     child: Text(
-                                                      location,
+                                                      '${price.toString()}원',
                                                       style: const TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -1253,11 +1275,20 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             children: [
                                               Stack(children: [
                                                 SizedBox(
-                                                  width: 172,
+                                                  width: 182,
                                                   height: 154,
-                                                  child: Image(
-                                                    fit: BoxFit.fill,
-                                                    image: NetworkImage(url),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(10),
+                                                      topRight:
+                                                          Radius.circular(10),
+                                                    ),
+                                                    child: Image(
+                                                      image: NetworkImage(url),
+                                                      fit: BoxFit.fill,
+                                                    ),
                                                   ),
                                                 ),
                                                 Positioned(
@@ -1307,16 +1338,23 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                               const SizedBox(height: 19),
                                               Row(
                                                 children: [
-                                                  const Icon(
-                                                      Icons
-                                                          .location_on_outlined,
-                                                      color: Color(0xff61646b)),
+                                                  /*const Icon(
+                                                      min,
+                                                      color: Color(0xff61646b)),*/
+                                                  const SizedBox(width: 8),
+                                                  const SizedBox(
+                                                    width: 17,
+                                                    height: 17,
+                                                    child: Image(
+                                                        image: AssetImage(
+                                                            'assets/Vector.png')),
+                                                  ),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
                                                             left: 8.37),
                                                     child: Text(
-                                                      location,
+                                                      '${price.toString()}원',
                                                       style: const TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -1370,76 +1408,98 @@ class _PlacePageState extends State<PlacePageForCustom> {
                         List<DocumentSnapshot> notesList = snapshot.data!.docs;
 
                         return Expanded(
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: (1 / 1.35),
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                            ),
-                            itemCount: notesList.length,
-                            padding: const EdgeInsets.only(left: 20, right: 20),
-                            itemBuilder: (context, index) {
-                              DocumentSnapshot documentSnapshot =
-                                  notesList[index];
-                              Map<String, dynamic> data = documentSnapshot
-                                  .data() as Map<String, dynamic>;
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              Expanded(
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: (1 / 1.35),
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10,
+                                  ),
+                                  itemCount: notesList.length,
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  itemBuilder: (context, index) {
+                                    DocumentSnapshot documentSnapshot =
+                                        notesList[index];
+                                    Map<String, dynamic> data = documentSnapshot
+                                        .data() as Map<String, dynamic>;
 
-                              String name = data['name'] ?? '';
-                              String location = data['location'] ?? '';
-                              String url = data["URL"] ?? '';
+                                    String name = data['name'] ?? '';
+                                    int price = data['price'] ?? '';
+                                    String url = data["URL"] ?? '';
 
-                              return Card(
-                                elevation: 0,
-                                color: AppColor.backGroundColor2,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 172,
-                                      height: 154,
-                                      child: Image(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(url),
-                                      ), // 실제 이미지로 대체
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.09, top: 12),
-                                      child: Text(
-                                        name,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: -0.24,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 19),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.location_on_outlined,
-                                            color: Color(0xff61646b)),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.37),
-                                          child: Text(
-                                            location,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              letterSpacing: -0.18,
+                                    return Card(
+                                      elevation: 0,
+                                      color: AppColor.backGroundColor2,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: 182,
+                                            height: 154,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
+                                              ),
+                                              child: Image(
+                                                image: NetworkImage(url),
+                                                fit: BoxFit.fill,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.09, top: 12),
+                                            child: Text(
+                                              name,
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: -0.24,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 19),
+                                          Row(
+                                            children: [
+                                              const SizedBox(width: 8),
+                                              const SizedBox(
+                                                width: 17,
+                                                height: 17,
+                                                child: Image(
+                                                    image: AssetImage(
+                                                        'assets/Vector.png')),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 8.37),
+                                                child: Text(
+                                                  '${price.toString()}원',
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                    letterSpacing: -0.18,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                            ],
                           ),
                         );
                       } else if (snapshot.hasError || appState.trip == null) {

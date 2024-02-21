@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:soda_project_final/page_folder/home_page/tab4_enter_page.dart';
 import 'package:soda_project_final/page_folder/home_page/tab_page2.dart';
 import 'package:soda_project_final/page_folder/home_page/tab_page3.dart';
 import 'package:soda_project_final/page_folder/home_page/tab_page5.dart';
@@ -9,6 +10,15 @@ import '../../firestore_file/firestore_cafes.dart';
 import '../../firestore_file/firestore_entertainment.dart';
 import '../../firestore_file/firestore_resturant.dart';
 import '../card_in_course/card1.dart';
+import 'tab1_cafe_page.dart';
+import 'tab1_enter_page.dart';
+import 'tab2_cafe_page.dart';
+import 'tab2_enter_page.dart';
+import 'tab3_cafe-page.dart';
+import 'tab3_enter_page.dart';
+import 'tab4_cafe_page.dart';
+import 'tab5_cafe_page.dart';
+import 'tab5_enter_page.dart';
 import 'tab_page4.dart';
 import 'tap_page1.dart';
 
@@ -103,6 +113,9 @@ class _HomePage2State extends State<HomePage2> {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  bool isSelectedPriceHigh = false;
+  bool isSelectedPriceLow = false;
+
   @override
   Widget build(BuildContext context) {
     var filteredCards =
@@ -155,11 +168,6 @@ class _HomePage2State extends State<HomePage2> {
                         []; // 선택된 정렬 기준에 따라 사용할 리스트를 선언합니다.
 
                     // 선택된 정렬 기준에 따라 적절한 리스트를 할당합니다.
-                    if (_value == 0) {
-                      selectedList = notesList;
-                    } else if (_value == 1) {
-                      selectedList = notesList;
-                    }
 
                     return StatefulBuilder(
                         builder: (BuildContext context, StateSetter setState) {
@@ -171,6 +179,12 @@ class _HomePage2State extends State<HomePage2> {
                             //final spacing = (constraints.maxWidth - (110 * 3)) / 3;
                             final spacing =
                                 (constraints.maxWidth - (80 * 3)) / 3;
+
+                            if (_value == 0) {
+                              selectedList = notesList;
+                            } else if (_value == 1) {
+                              selectedList = notesList;
+                            }
                             return Wrap(
                               spacing: spacing,
                               children: List.generate(3, (index) {
@@ -223,400 +237,435 @@ class _HomePage2State extends State<HomePage2> {
                           //if (_value == 0) AllPage(),
                           if (_value == 0) // 맛집이 선택되었을 때만 ListView를 보여줌
                             Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Expanded(child: Text('')),
-                                      GestureDetector(
-                                        onTap: () {
-                                          showModalBottomSheet<void>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return Container(
-                                                color: AppColor.textColor4,
-                                                height: 200,
-                                                child: Center(
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: <Widget>[
-                                                      const Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Padding(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Expanded(child: Text('')),
+                                        GestureDetector(
+                                          onTap: () {
+                                            showModalBottomSheet<void>(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return Container(
+                                                  height: 261,
+                                                  decoration: const BoxDecoration(
+                                                      color:
+                                                          AppColor.textColor4,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(30),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      30))),
+                                                  child: Center(
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        const Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      left: 40),
+                                                              child: Text(
+                                                                '정렬',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 24,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Divider()
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              // 낮은 가격순으로 notesList를 정렬
+                                                              sortedNotesListSmall
+                                                                  .sort((a, b) {
+                                                                int priceA =
+                                                                    a['price'];
+                                                                int priceB =
+                                                                    b['price'];
+                                                                return priceA
+                                                                    .compareTo(
+                                                                        priceB);
+                                                              });
+                                                              selectedList =
+                                                                  sortedNotesListSmall; // 정렬된 리스트를 selectedList에 할당
+                                                              title =
+                                                                  '낮은 가격순'; // 타이틀 업데이트
+                                                            });
+                                                            Navigator.pop(
+                                                                context); // 모달 바텀 시트 닫기
+                                                          },
+                                                          child: const Padding(
                                                             padding:
                                                                 EdgeInsets.only(
-                                                                    left: 40),
+                                                              left: 40,
+                                                            ),
                                                             child: Text(
-                                                              '정렬',
+                                                              '낮은 가격순',
                                                               style: TextStyle(
-                                                                fontSize: 24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                              ),
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
                                                             ),
                                                           ),
-                                                          Divider()
-                                                        ],
-                                                      ),
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            // 낮은 가격순으로 notesList를 정렬
-                                                            sortedNotesListSmall
-                                                                .sort((a, b) {
-                                                              int priceA =
-                                                                  a['price'];
-                                                              int priceB =
-                                                                  b['price'];
-                                                              return priceA
-                                                                  .compareTo(
-                                                                      priceB);
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        const Divider(),
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              // 높은 가격순으로 notesList를 정렬
+                                                              sortedNotesListLarge
+                                                                  .sort((a, b) {
+                                                                int priceA =
+                                                                    a['price'];
+                                                                int priceB =
+                                                                    b['price'];
+                                                                return priceB
+                                                                    .compareTo(
+                                                                        priceA);
+                                                              });
+                                                              selectedList =
+                                                                  sortedNotesListLarge; // 정렬된 리스트를 selectedList에 할당
+                                                              title =
+                                                                  '높은 가격순'; // 타이틀 업데이트
                                                             });
-                                                            selectedList =
-                                                                sortedNotesListSmall; // 정렬된 리스트를 selectedList에 할당
-                                                            title =
-                                                                '낮은 가격순'; // 타이틀 업데이트
-                                                          });
-                                                          Navigator.pop(
-                                                              context); // 모달 바텀 시트 닫기
-                                                        },
-                                                        child: const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 40),
-                                                          child: Text(
-                                                            '낮은 가격순',
-                                                            style: TextStyle(
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                            Navigator.pop(
+                                                                context); // 모달 바텀 시트 닫기
+                                                          },
+                                                          child: const Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                              left: 40,
+                                                            ),
+                                                            child: Text(
+                                                              '높은 가격순',
+                                                              style: TextStyle(
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      const Divider(),
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            // 높은 가격순으로 notesList를 정렬
-                                                            sortedNotesListLarge
-                                                                .sort((a, b) {
-                                                              int priceA =
-                                                                  a['price'];
-                                                              int priceB =
-                                                                  b['price'];
-                                                              return priceB
-                                                                  .compareTo(
-                                                                      priceA);
-                                                            });
-                                                            selectedList =
-                                                                sortedNotesListLarge; // 정렬된 리스트를 selectedList에 할당
-                                                            title =
-                                                                '높은 가격순'; // 타이틀 업데이트
-                                                          });
-                                                          Navigator.pop(
-                                                              context); // 모달 바텀 시트 닫기
-                                                        },
-                                                        child: const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 40),
-                                                          child: Text(
-                                                            '높은 가격순',
-                                                            style: TextStyle(
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Divider(),
-                                                    ],
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        const Divider(),
+                                                        const SizedBox(
+                                                            height: 11),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Text(title,
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: -0.18,
-                                                  color: AppColor.textColor3,
-                                                )),
-                                            const Icon(
-                                              Icons.keyboard_arrow_down,
-                                              size: 20,
-                                              color: AppColor.textColor3,
-                                            ),
-                                          ],
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(title,
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: -0.18,
+                                                    color: AppColor.textColor3,
+                                                  )),
+                                              const Icon(
+                                                Icons.keyboard_arrow_down,
+                                                size: 20,
+                                                color: AppColor.textColor3,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                    ],
-                                  ),
-                                  Expanded(
-                                    child: ListView.builder(
-                                      itemCount: notesList.length,
-                                      itemBuilder: (context, index) {
-                                        DocumentSnapshot documentSnapshot =
-                                            selectedList[index];
+                                        const SizedBox(width: 10),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: ListView.builder(
+                                        itemCount: notesList.length,
+                                        itemBuilder: (context, index) {
+                                          DocumentSnapshot documentSnapshot =
+                                              selectedList[index];
 
-                                        final isSelected =
-                                            _selectedItems.contains(index);
+                                          final isSelected =
+                                              _selectedItems.contains(index);
 
-                                        Map<String, dynamic> data =
-                                            documentSnapshot.data()
-                                                as Map<String, dynamic>;
+                                          Map<String, dynamic> data =
+                                              documentSnapshot.data()
+                                                  as Map<String, dynamic>;
 
-                                        String name = data['name'];
-                                        int price = data['price'];
-                                        String explain = data['explain'];
-                                        String location = data['location'];
-                                        String url = data["URL"] ?? '';
+                                          String name = data['name'];
+                                          int price = data['price'];
+                                          String explain = data['explain'];
+                                          String location = data['location'];
+                                          String url = data["URL"] ?? '';
 
-                                        return Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 162,
-                                              child: Card(
-                                                elevation: 0,
-                                                color:
-                                                    AppColor.backGroundColor2,
-                                                child: ListTile(
-                                                  leading: GestureDetector(
-                                                    onTap: () {
-                                                      if (url ==
-                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/2.png?alt=media&token=e9d6e755-f659-4b31-841f-caed9f5cad4f') {
-                                                        //
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const TapPage1()));
-                                                      }
-                                                      if (url ==
-                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/1.png?alt=media&token=d04bd2f8-ad06-4818-94c8-895f01f4e5b5') {
-                                                        //
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const TapPage2()));
-                                                      }
-                                                      if (url ==
-                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/20.png?alt=media&token=26ac0b20-2349-4ef9-bdd4-db0740cb425e') {
-                                                        //
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const TapPage3()));
-                                                      }
-                                                      if (url ==
-                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20142.png?alt=media&token=2754d11c-e1a7-45a5-81e8-12207348196b') {
-                                                        //
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const TapPage4()));
-                                                      }
-                                                      if (url ==
-                                                          'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/chicken.png?alt=media&token=13281834-d813-4ab4-972c-fad75ece2ec8') {
-                                                        //
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const TapPage5()));
-                                                      }
-                                                    },
-                                                    child: SizedBox(
+                                          return Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 162,
+                                                child: Card(
+                                                  elevation: 0,
+                                                  color:
+                                                      AppColor.backGroundColor2,
+                                                  child: ListTile(
+                                                    leading: GestureDetector(
+                                                      onTap: () {
+                                                        if (url ==
+                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/2.png?alt=media&token=e9d6e755-f659-4b31-841f-caed9f5cad4f') {
+                                                          //
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const TapPage1()));
+                                                        }
+                                                        if (url ==
+                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/1.png?alt=media&token=d04bd2f8-ad06-4818-94c8-895f01f4e5b5') {
+                                                          //
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const TapPage2()));
+                                                        }
+                                                        if (url ==
+                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/20.png?alt=media&token=26ac0b20-2349-4ef9-bdd4-db0740cb425e') {
+                                                          //
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const TapPage3()));
+                                                        }
+                                                        if (url ==
+                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20142.png?alt=media&token=2754d11c-e1a7-45a5-81e8-12207348196b') {
+                                                          //
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const TapPage4()));
+                                                        }
+                                                        if (url ==
+                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/chicken.png?alt=media&token=13281834-d813-4ab4-972c-fad75ece2ec8') {
+                                                          //
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const TapPage5()));
+                                                        }
+                                                      },
+                                                      child: SizedBox(
                                                         width: 104,
                                                         height: 124,
-                                                        child: Image(
-                                                          fit: BoxFit.fill,
-                                                          image:
-                                                              NetworkImage(url),
-                                                        )),
-                                                  ),
-                                                  title: Row(
-                                                    children: [
-                                                      Text(
-                                                        name,
-                                                        style: const TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          letterSpacing: -0.24,
+                                                        child: ClipRRect(
+                                                          child: Image(
+                                                            image: NetworkImage(
+                                                                url),
+                                                            fit: BoxFit.fill,
+                                                          ),
                                                         ),
                                                       ),
-                                                      const Text(' '),
-                                                      Text(
-                                                        location,
-                                                        style: const TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          letterSpacing: -0.18,
+                                                    ),
+                                                    title: Row(
+                                                      children: [
+                                                        Text(
+                                                          name,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            letterSpacing:
+                                                                -0.24,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 10),
-                                                    ],
-                                                  ),
-                                                  subtitle: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        explain,
-                                                        style: const TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          letterSpacing: -0.18,
+                                                        const Text(' '),
+                                                        Text(
+                                                          location,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            letterSpacing:
+                                                                -0.18,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      const SizedBox(
-                                                          height: 56),
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                            width: 75,
-                                                            height: 20,
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    top: 0),
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          13),
-                                                              color: AppColor
-                                                                  .appBarColor1,
-                                                            ),
-                                                            child: Text(
-                                                              '${price.toString()}원~',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                letterSpacing:
-                                                                    -0.18,
+                                                        const SizedBox(
+                                                            height: 10),
+                                                      ],
+                                                    ),
+                                                    subtitle: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          explain,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            letterSpacing:
+                                                                -0.18,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 56),
+                                                        Row(
+                                                          children: [
+                                                            Container(
+                                                              width: 75,
+                                                              height: 20,
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      top: 0),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            13),
                                                                 color: AppColor
-                                                                    .textColor4,
+                                                                    .appBarColor1,
+                                                              ),
+                                                              child: Text(
+                                                                '${price.toString()}원~',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  letterSpacing:
+                                                                      -0.18,
+                                                                  color: AppColor
+                                                                      .textColor4,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          //맛집 선택하는 코드
-                                                          const Expanded(
-                                                              child: Text(' ')),
-                                                          IconButton(
-                                                            isSelected:
-                                                                _isSelected,
-                                                            //selectedIcon: Icon(Icons.favorite),
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                _isSelected =
-                                                                    !_isSelected;
+                                                            //맛집 선택하는 코드
+                                                            const Expanded(
+                                                                child:
+                                                                    Text(' ')),
+                                                            IconButton(
+                                                              isSelected:
+                                                                  _isSelected,
+                                                              //selectedIcon: Icon(Icons.favorite),
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  _isSelected =
+                                                                      !_isSelected;
 
-                                                                if (isSelected) {
-                                                                  _selectedItems
-                                                                      .remove(
-                                                                          index);
+                                                                  if (isSelected) {
+                                                                    _selectedItems
+                                                                        .remove(
+                                                                            index);
 
-                                                                  firestore
-                                                                      .collection(
-                                                                          "favorite")
-                                                                      .doc(
-                                                                          'favorite$index')
-                                                                      .delete();
-                                                                } else {
-                                                                  _selectedItems
-                                                                      .add(
-                                                                          index);
+                                                                    firestore
+                                                                        .collection(
+                                                                            "favorite")
+                                                                        .doc(
+                                                                            'favorite$index')
+                                                                        .delete();
+                                                                  } else {
+                                                                    _selectedItems
+                                                                        .add(
+                                                                            index);
 
-                                                                  firestore
-                                                                      .collection(
-                                                                          "favorite")
-                                                                      .doc(
-                                                                          'favorite$index')
-                                                                      .set(
-                                                                    {
-                                                                      "name":
-                                                                          name,
-                                                                      "explain":
-                                                                          explain,
-                                                                      "price":
-                                                                          price,
-                                                                      "URL":
-                                                                          url,
-                                                                      'location':
-                                                                          location,
-                                                                      'timestamp':
-                                                                          DateTime
-                                                                              .now(),
-                                                                    },
-                                                                  );
-                                                                }
-                                                              });
-                                                            },
-                                                            icon: (isSelected)
-                                                                ? const Icon(Icons
-                                                                    .favorite)
-                                                                : favoriteIcon,
-                                                            style:
-                                                                const ButtonStyle(
-                                                              iconColor:
-                                                                  MaterialStatePropertyAll(
-                                                                      AppColor
-                                                                          .appBarColor1),
-                                                              backgroundColor:
-                                                                  MaterialStatePropertyAll(
-                                                                      AppColor
-                                                                          .backGroundColor1),
+                                                                    firestore
+                                                                        .collection(
+                                                                            "favorite")
+                                                                        .doc(
+                                                                            'favorite$index')
+                                                                        .set(
+                                                                      {
+                                                                        "name":
+                                                                            name,
+                                                                        "explain":
+                                                                            explain,
+                                                                        "price":
+                                                                            price,
+                                                                        "URL":
+                                                                            url,
+                                                                        'location':
+                                                                            location,
+                                                                        'timestamp':
+                                                                            DateTime.now(),
+                                                                      },
+                                                                    );
+                                                                  }
+                                                                });
+                                                              },
+                                                              icon: (isSelected)
+                                                                  ? const Icon(Icons
+                                                                      .favorite)
+                                                                  : favoriteIcon,
+                                                              style:
+                                                                  const ButtonStyle(
+                                                                iconColor:
+                                                                    MaterialStatePropertyAll(
+                                                                        AppColor
+                                                                            .appBarColor1),
+                                                                backgroundColor:
+                                                                    MaterialStatePropertyAll(
+                                                                        AppColor
+                                                                            .backGroundColor1),
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        );
-                                      },
+                                            ],
+                                          );
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           if (_value == 1) //카페가 선택 되었을 때,
@@ -659,372 +708,449 @@ class _HomePage2State extends State<HomePage2> {
                                       (BuildContext context,
                                           StateSetter setState) {
                                     return Expanded(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Expanded(child: Text('')),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  showModalBottomSheet<void>(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Container(
-                                                        color:
-                                                            AppColor.textColor4,
-                                                        height: 200,
-                                                        child: Center(
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: <Widget>[
-                                                              const Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Padding(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Expanded(child: Text('')),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    showModalBottomSheet<void>(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Container(
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .textColor4,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          30),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          30))),
+                                                          height: 261,
+                                                          child: Center(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: <Widget>[
+                                                                const Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsets.only(
+                                                                          left:
+                                                                              40),
+                                                                      child:
+                                                                          Text(
+                                                                        '정렬',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                24,
+                                                                            fontWeight:
+                                                                                FontWeight.w700),
+                                                                      ),
+                                                                    ),
+                                                                    Divider()
+                                                                  ],
+                                                                ),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    setState(
+                                                                        () {
+                                                                      // 낮은 가격순으로 notesList를 정렬
+                                                                      sortedNotesListSmallCafe
+                                                                          .sort((a,
+                                                                              b) {
+                                                                        int priceA =
+                                                                            a['price'];
+                                                                        int priceB =
+                                                                            b['price'];
+                                                                        return priceA
+                                                                            .compareTo(priceB);
+                                                                      });
+                                                                      selectedListCafe =
+                                                                          sortedNotesListSmallCafe; // 정렬된 리스트를 selectedList에 할당
+                                                                      title =
+                                                                          '낮은 가격순'; // 타이틀 업데이트
+                                                                    });
+                                                                    Navigator.pop(
+                                                                        context); // 모달 바텀 시트 닫기
+                                                                  },
+                                                                  child:
+                                                                      const Padding(
                                                                     padding: EdgeInsets
                                                                         .only(
                                                                             left:
                                                                                 40),
                                                                     child: Text(
-                                                                      '정렬',
+                                                                      '낮은 가격순',
                                                                       style: TextStyle(
                                                                           fontSize:
-                                                                              24,
+                                                                              20,
                                                                           fontWeight:
-                                                                              FontWeight.w700),
+                                                                              FontWeight.w500),
                                                                     ),
                                                                   ),
-                                                                  Divider()
-                                                                ],
-                                                              ),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    // 낮은 가격순으로 notesList를 정렬
-                                                                    sortedNotesListSmallCafe
-                                                                        .sort((a,
-                                                                            b) {
-                                                                      int priceA =
-                                                                          a['price'];
-                                                                      int priceB =
-                                                                          b['price'];
-                                                                      return priceA
-                                                                          .compareTo(
-                                                                              priceB);
+                                                                ),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                const Divider(),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    setState(
+                                                                        () {
+                                                                      // 높은 가격순으로 notesList를 정렬
+                                                                      sortedNotesListLargeCafe
+                                                                          .sort((a,
+                                                                              b) {
+                                                                        int priceA =
+                                                                            a['price'];
+                                                                        int priceB =
+                                                                            b['price'];
+                                                                        return priceB
+                                                                            .compareTo(priceA);
+                                                                      });
+                                                                      selectedListCafe =
+                                                                          sortedNotesListLargeCafe; // 정렬된 리스트를 selectedList에 할당
+                                                                      title =
+                                                                          '높은 가격순'; // 타이틀 업데이트
                                                                     });
-                                                                    selectedListCafe =
-                                                                        sortedNotesListSmallCafe; // 정렬된 리스트를 selectedList에 할당
-                                                                    title =
-                                                                        '낮은 가격순'; // 타이틀 업데이트
-                                                                  });
-                                                                  Navigator.pop(
-                                                                      context); // 모달 바텀 시트 닫기
-                                                                },
-                                                                child:
-                                                                    const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          left:
-                                                                              40),
-                                                                  child: Text(
-                                                                    '낮은 가격순',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            20,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
+                                                                    Navigator.pop(
+                                                                        context); // 모달 바텀 시트 닫기
+                                                                  },
+                                                                  child:
+                                                                      const Padding(
+                                                                    padding: EdgeInsets
+                                                                        .only(
+                                                                            left:
+                                                                                40),
+                                                                    child: Text(
+                                                                      '높은 가격순',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              20,
+                                                                          fontWeight:
+                                                                              FontWeight.w500),
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              const Divider(),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    // 높은 가격순으로 notesList를 정렬
-                                                                    sortedNotesListLargeCafe
-                                                                        .sort((a,
-                                                                            b) {
-                                                                      int priceA =
-                                                                          a['price'];
-                                                                      int priceB =
-                                                                          b['price'];
-                                                                      return priceB
-                                                                          .compareTo(
-                                                                              priceA);
-                                                                    });
-                                                                    selectedListCafe =
-                                                                        sortedNotesListLargeCafe; // 정렬된 리스트를 selectedList에 할당
-                                                                    title =
-                                                                        '높은 가격순'; // 타이틀 업데이트
-                                                                  });
-                                                                  Navigator.pop(
-                                                                      context); // 모달 바텀 시트 닫기
-                                                                },
-                                                                child:
-                                                                    const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          left:
-                                                                              40),
-                                                                  child: Text(
-                                                                    '높은 가격순',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            20,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              const Divider(),
-                                                            ],
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                const Divider(),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                              ],
+                                                            ),
                                                           ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Text(title,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            letterSpacing:
+                                                                -0.18,
+                                                            color: AppColor
+                                                                .textColor3,
+                                                          )),
+                                                      const Icon(
+                                                        Icons
+                                                            .keyboard_arrow_down,
+                                                        size: 20,
+                                                        color:
+                                                            AppColor.textColor3,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                              ],
+                                            ),
+                                            Expanded(
+                                              child: ListView.builder(
+                                                itemCount: notesListCafe.length,
+                                                itemBuilder: (context, index) {
+                                                  DocumentSnapshot
+                                                      documentSnapshot =
+                                                      selectedListCafe[index];
+
+                                                  final isSelectedCafe =
+                                                      _selectedItemsCafe
+                                                          .contains(index);
+
+                                                  Map<String, dynamic> data =
+                                                      documentSnapshot.data()
+                                                          as Map<String,
+                                                              dynamic>;
+
+                                                  String name = data['name'] ??
+                                                      ''; // null인 경우 빈 문자열 반환
+                                                  int price = data['price'] ??
+                                                      0; // null인 경우 0 반환
+                                                  String explain = data[
+                                                          'explain'] ??
+                                                      'null'; // null인 경우 빈 문자열 반환
+                                                  String location = data[
+                                                          'location'] ??
+                                                      ''; // null인 경우 빈 문자열 반환
+                                                  String url =
+                                                      data["URL"] ?? 'null';
+
+                                                  return SizedBox(
+                                                    height: 162,
+                                                    child: Card(
+                                                      elevation: 0,
+                                                      color: AppColor
+                                                          .backGroundColor2,
+                                                      child: ListTile(
+                                                        leading:
+                                                            GestureDetector(
+                                                          onTap: () {
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/greg.png?alt=media&token=de989507-658d-420f-b983-0fa71384a0f0') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage1Cafe()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/cafetita.png?alt=media&token=9d37404f-229d-449a-a163-09e7fb303b82') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage2Cafe()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/frank.png?alt=media&token=5f5725c6-b2b2-4611-a794-f92a2f5b3689') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage3Cafe()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/plant.png?alt=media&token=70724d65-e275-4c49-a631-da534ffabeac') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage4Cafe()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20142.png?alt=media&token=2a271f25-8494-41da-9aff-1deb6bf0520c') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage5Cafe()));
+                                                            }
+                                                          },
+                                                          child: SizedBox(
+                                                              width: 113,
+                                                              height: 124,
+                                                              child: Image(
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                image:
+                                                                    NetworkImage(
+                                                                        url),
+                                                              )),
                                                         ),
-                                                      );
-                                                    },
+                                                        title: Row(
+                                                          children: [
+                                                            Text(
+                                                              name,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                letterSpacing:
+                                                                    -0.24,
+                                                              ),
+                                                            ),
+                                                            const Text(' '),
+                                                            Text(
+                                                              location,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                letterSpacing:
+                                                                    -0.18,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 10),
+                                                          ],
+                                                        ),
+                                                        subtitle: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              explain,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                letterSpacing:
+                                                                    -0.18,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 56),
+                                                            Row(
+                                                              children: [
+                                                                Container(
+                                                                  width: 75,
+                                                                  height: 20,
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              0),
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            13),
+                                                                    color: AppColor
+                                                                        .appBarColor1,
+                                                                  ),
+                                                                  child: Text(
+                                                                    '${price.toString()}원~',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      letterSpacing:
+                                                                          -0.18,
+                                                                      color: AppColor
+                                                                          .textColor4,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                const Expanded(
+                                                                    child: Text(
+                                                                        ' ')),
+                                                                IconButton(
+                                                                  isSelected:
+                                                                      _isSelectedCafe,
+                                                                  onPressed:
+                                                                      () {
+                                                                    setState(
+                                                                        () {
+                                                                      _isSelectedCafe =
+                                                                          !_isSelectedCafe;
+
+                                                                      if (isSelectedCafe) {
+                                                                        _selectedItemsCafe
+                                                                            .remove(index);
+
+                                                                        firestore
+                                                                            .collection("favorite")
+                                                                            .doc('favoriteCafe$index')
+                                                                            .delete();
+                                                                      } else {
+                                                                        _selectedItemsCafe
+                                                                            .add(index);
+
+                                                                        firestore
+                                                                            .collection("favorite")
+                                                                            .doc('favoriteCafe$index')
+                                                                            .set(
+                                                                          {
+                                                                            "name":
+                                                                                name,
+                                                                            "explain":
+                                                                                explain,
+                                                                            "price":
+                                                                                price,
+                                                                            "URL":
+                                                                                url,
+                                                                            'location':
+                                                                                location,
+                                                                            'timestamp':
+                                                                                DateTime.now(),
+                                                                          },
+                                                                        );
+                                                                      }
+                                                                    });
+                                                                  },
+                                                                  icon: (isSelectedCafe)
+                                                                      ? const Icon(
+                                                                          Icons
+                                                                              .favorite)
+                                                                      : favoriteIcon,
+                                                                  style:
+                                                                      const ButtonStyle(
+                                                                    iconColor: MaterialStatePropertyAll(
+                                                                        AppColor
+                                                                            .appBarColor1),
+                                                                    backgroundColor:
+                                                                        MaterialStatePropertyAll(
+                                                                            AppColor.backGroundColor1),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
                                                   );
                                                 },
-                                                child: Row(
-                                                  children: [
-                                                    Text(title,
-                                                        style: const TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          letterSpacing: -0.18,
-                                                          color: AppColor
-                                                              .textColor3,
-                                                        )),
-                                                    const Icon(
-                                                      Icons.keyboard_arrow_down,
-                                                      size: 20,
-                                                      color:
-                                                          AppColor.textColor3,
-                                                    ),
-                                                  ],
-                                                ),
                                               ),
-                                              const SizedBox(width: 10),
-                                            ],
-                                          ),
-                                          Expanded(
-                                            child: ListView.builder(
-                                              itemCount: notesListCafe.length,
-                                              itemBuilder: (context, index) {
-                                                DocumentSnapshot
-                                                    documentSnapshot =
-                                                    selectedListCafe[index];
-
-                                                final isSelectedCafe =
-                                                    _selectedItemsCafe
-                                                        .contains(index);
-
-                                                Map<String, dynamic> data =
-                                                    documentSnapshot.data()
-                                                        as Map<String, dynamic>;
-
-                                                String name = data['name'] ??
-                                                    ''; // null인 경우 빈 문자열 반환
-                                                int price = data['price'] ??
-                                                    0; // null인 경우 0 반환
-                                                String explain = data[
-                                                        'explain'] ??
-                                                    'null'; // null인 경우 빈 문자열 반환
-                                                String location =
-                                                    data['location'] ??
-                                                        ''; // null인 경우 빈 문자열 반환
-                                                String url =
-                                                    data["URL"] ?? 'null';
-
-                                                return SizedBox(
-                                                  height: 162,
-                                                  child: Card(
-                                                    elevation: 0,
-                                                    color: AppColor
-                                                        .backGroundColor2,
-                                                    child: ListTile(
-                                                      leading: SizedBox(
-                                                          width: 113,
-                                                          height: 124,
-                                                          child: Image(
-                                                            fit: BoxFit.fill,
-                                                            image: NetworkImage(
-                                                                url),
-                                                          )),
-                                                      title: Row(
-                                                        children: [
-                                                          Text(
-                                                            name,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              letterSpacing:
-                                                                  -0.24,
-                                                            ),
-                                                          ),
-                                                          const Text(' '),
-                                                          Text(
-                                                            location,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              letterSpacing:
-                                                                  -0.18,
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 10),
-                                                        ],
-                                                      ),
-                                                      subtitle: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            explain,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              letterSpacing:
-                                                                  -0.18,
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 56),
-                                                          Row(
-                                                            children: [
-                                                              Container(
-                                                                width: 75,
-                                                                height: 20,
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        top: 0),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              13),
-                                                                  color: AppColor
-                                                                      .appBarColor1,
-                                                                ),
-                                                                child: Text(
-                                                                  '${price.toString()}원~',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    letterSpacing:
-                                                                        -0.18,
-                                                                    color: AppColor
-                                                                        .textColor4,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              const Expanded(
-                                                                  child: Text(
-                                                                      ' ')),
-                                                              IconButton(
-                                                                isSelected:
-                                                                    _isSelectedCafe,
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    _isSelectedCafe =
-                                                                        !_isSelectedCafe;
-
-                                                                    if (isSelectedCafe) {
-                                                                      _selectedItemsCafe
-                                                                          .remove(
-                                                                              index);
-
-                                                                      firestore
-                                                                          .collection(
-                                                                              "favorite")
-                                                                          .doc(
-                                                                              'favoriteCafe$index')
-                                                                          .delete();
-                                                                    } else {
-                                                                      _selectedItemsCafe
-                                                                          .add(
-                                                                              index);
-
-                                                                      firestore
-                                                                          .collection(
-                                                                              "favorite")
-                                                                          .doc(
-                                                                              'favoriteCafe$index')
-                                                                          .set(
-                                                                        {
-                                                                          "name":
-                                                                              name,
-                                                                          "explain":
-                                                                              explain,
-                                                                          "price":
-                                                                              price,
-                                                                          "URL":
-                                                                              url,
-                                                                          'location':
-                                                                              location,
-                                                                          'timestamp':
-                                                                              DateTime.now(),
-                                                                        },
-                                                                      );
-                                                                    }
-                                                                  });
-                                                                },
-                                                                icon: (isSelectedCafe)
-                                                                    ? const Icon(
-                                                                        Icons
-                                                                            .favorite)
-                                                                    : favoriteIcon,
-                                                                style:
-                                                                    const ButtonStyle(
-                                                                  iconColor:
-                                                                      MaterialStatePropertyAll(
-                                                                          AppColor
-                                                                              .appBarColor1),
-                                                                  backgroundColor:
-                                                                      MaterialStatePropertyAll(
-                                                                          AppColor
-                                                                              .backGroundColor1),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     );
                                   });
@@ -1084,376 +1210,452 @@ class _HomePage2State extends State<HomePage2> {
                                       (BuildContext context,
                                           StateSetter setState) {
                                     return Expanded(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Expanded(child: Text('')),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  showModalBottomSheet<void>(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Container(
-                                                        color:
-                                                            AppColor.textColor4,
-                                                        height: 200,
-                                                        child: Center(
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: <Widget>[
-                                                              const Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Padding(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Expanded(child: Text('')),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    showModalBottomSheet<void>(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Container(
+                                                          decoration: const BoxDecoration(
+                                                              color: AppColor
+                                                                  .textColor4,
+                                                              borderRadius: BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          30),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          30))),
+                                                          height: 261,
+                                                          child: Center(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: <Widget>[
+                                                                const Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsets.only(
+                                                                          left:
+                                                                              40),
+                                                                      child:
+                                                                          Text(
+                                                                        '정렬',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                24,
+                                                                            fontWeight:
+                                                                                FontWeight.w700),
+                                                                      ),
+                                                                    ),
+                                                                    Divider()
+                                                                  ],
+                                                                ),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    setState(
+                                                                        () {
+                                                                      // 낮은 가격순으로 notesList를 정렬
+                                                                      sortedNotesListSmallEntertainment
+                                                                          .sort((a,
+                                                                              b) {
+                                                                        int priceA =
+                                                                            a['price'];
+                                                                        int priceB =
+                                                                            b['price'];
+                                                                        return priceA
+                                                                            .compareTo(priceB);
+                                                                      });
+                                                                      selectedListEntertainment =
+                                                                          sortedNotesListSmallEntertainment; // 정렬된 리스트를 selectedList에 할당
+                                                                      title =
+                                                                          '낮은 가격순'; // 타이틀 업데이트
+                                                                    });
+                                                                    Navigator.pop(
+                                                                        context); // 모달 바텀 시트 닫기
+                                                                  },
+                                                                  child:
+                                                                      const Padding(
                                                                     padding: EdgeInsets
                                                                         .only(
                                                                             left:
                                                                                 40),
                                                                     child: Text(
-                                                                      '정렬',
+                                                                      '낮은 가격순',
                                                                       style: TextStyle(
                                                                           fontSize:
-                                                                              24,
+                                                                              20,
                                                                           fontWeight:
-                                                                              FontWeight.w700),
+                                                                              FontWeight.w500),
                                                                     ),
                                                                   ),
-                                                                  Divider()
-                                                                ],
-                                                              ),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    // 낮은 가격순으로 notesList를 정렬
-                                                                    sortedNotesListSmallEntertainment
-                                                                        .sort((a,
-                                                                            b) {
-                                                                      int priceA =
-                                                                          a['price'];
-                                                                      int priceB =
-                                                                          b['price'];
-                                                                      return priceA
-                                                                          .compareTo(
-                                                                              priceB);
+                                                                ),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                const Divider(),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    setState(
+                                                                        () {
+                                                                      // 높은 가격순으로 notesList를 정렬
+                                                                      sortedNotesListLargeEntertainment
+                                                                          .sort((a,
+                                                                              b) {
+                                                                        int priceA =
+                                                                            a['price'];
+                                                                        int priceB =
+                                                                            b['price'];
+                                                                        return priceB
+                                                                            .compareTo(priceA);
+                                                                      });
+                                                                      selectedListEntertainment =
+                                                                          sortedNotesListLargeEntertainment; // 정렬된 리스트를 selectedList에 할당
+                                                                      title =
+                                                                          '높은 가격순'; // 타이틀 업데이트
                                                                     });
-                                                                    selectedListEntertainment =
-                                                                        sortedNotesListSmallEntertainment; // 정렬된 리스트를 selectedList에 할당
-                                                                    title =
-                                                                        '낮은 가격순'; // 타이틀 업데이트
-                                                                  });
-                                                                  Navigator.pop(
-                                                                      context); // 모달 바텀 시트 닫기
-                                                                },
-                                                                child:
-                                                                    const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          left:
-                                                                              40),
-                                                                  child: Text(
-                                                                    '낮은 가격순',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            20,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
+                                                                    Navigator.pop(
+                                                                        context); // 모달 바텀 시트 닫기
+                                                                  },
+                                                                  child:
+                                                                      const Padding(
+                                                                    padding: EdgeInsets
+                                                                        .only(
+                                                                            left:
+                                                                                40),
+                                                                    child: Text(
+                                                                      '높은 가격순',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              20,
+                                                                          fontWeight:
+                                                                              FontWeight.w500),
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                              const Divider(),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    // 높은 가격순으로 notesList를 정렬
-                                                                    sortedNotesListLargeEntertainment
-                                                                        .sort((a,
-                                                                            b) {
-                                                                      int priceA =
-                                                                          a['price'];
-                                                                      int priceB =
-                                                                          b['price'];
-                                                                      return priceB
-                                                                          .compareTo(
-                                                                              priceA);
-                                                                    });
-                                                                    selectedListEntertainment =
-                                                                        sortedNotesListLargeEntertainment; // 정렬된 리스트를 selectedList에 할당
-                                                                    title =
-                                                                        '높은 가격순'; // 타이틀 업데이트
-                                                                  });
-                                                                  Navigator.pop(
-                                                                      context); // 모달 바텀 시트 닫기
-                                                                },
-                                                                child:
-                                                                    const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          left:
-                                                                              40),
-                                                                  child: Text(
-                                                                    '높은 가격순',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            20,
-                                                                        fontWeight:
-                                                                            FontWeight.w500),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              const Divider(),
-                                                            ],
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                const Divider(),
+                                                              ],
+                                                            ),
                                                           ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Text(title,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            letterSpacing:
+                                                                -0.18,
+                                                            color: AppColor
+                                                                .textColor3,
+                                                          )),
+                                                      const Icon(
+                                                        Icons
+                                                            .keyboard_arrow_down,
+                                                        size: 20,
+                                                        color:
+                                                            AppColor.textColor3,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                              ],
+                                            ),
+                                            Expanded(
+                                              child: ListView.builder(
+                                                itemCount:
+                                                    notesListEntertainment
+                                                        .length,
+                                                itemBuilder: (context, index) {
+                                                  DocumentSnapshot
+                                                      documentSnapshot =
+                                                      selectedListEntertainment[
+                                                          index];
+
+                                                  final isSelectedEntertainment =
+                                                      _selectedItemsEntertainment
+                                                          .contains(index);
+
+                                                  Map<String, dynamic> data =
+                                                      documentSnapshot.data()
+                                                          as Map<String,
+                                                              dynamic>;
+
+                                                  String name = data['name'] ??
+                                                      ''; // null인 경우 빈 문자열 반환
+                                                  int price = data['price'] ??
+                                                      0; // null인 경우 0 반환
+                                                  String explain = data[
+                                                          'explain'] ??
+                                                      'null'; // null인 경우 빈 문자열 반환
+                                                  String location = data[
+                                                          'location'] ??
+                                                      ''; // null인 경우 빈 문자열 반환
+                                                  String url =
+                                                      data["URL"] ?? 'null';
+
+                                                  return SizedBox(
+                                                    height: 162,
+                                                    child: Card(
+                                                      elevation: 0,
+                                                      color: AppColor
+                                                          .backGroundColor2,
+                                                      child: ListTile(
+                                                        leading:
+                                                            GestureDetector(
+                                                          onTap: () {
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/ballingimage.png?alt=media&token=bf0de6ed-0dee-4b46-a4b0-b8b561fccf49') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage1Enter()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/manhwacoffee.png?alt=media&token=9e0ef1ee-00b6-4c9d-96a0-ba3f7f5bb5c6') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage2Enter()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/laser.png?alt=media&token=9cabb440-a147-416d-bf34-cfecb17d3c16') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage3Enter()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/spacespace.png?alt=media&token=c7f461fd-fc1d-4d29-97c5-43c8e0cc669a') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage4Enter()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/boardboard.png?alt=media&token=4fd86757-d051-4c4f-a809-6aae822eecda') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage5Enter()));
+                                                            }
+                                                          },
+                                                          child: SizedBox(
+                                                              width: 113,
+                                                              height: 124,
+                                                              child: Image(
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                image:
+                                                                    NetworkImage(
+                                                                        url),
+                                                              )),
                                                         ),
-                                                      );
-                                                    },
+                                                        title: Row(
+                                                          children: [
+                                                            Text(
+                                                              name,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                letterSpacing:
+                                                                    -0.24,
+                                                              ),
+                                                            ),
+                                                            const Text(' '),
+                                                            Text(
+                                                              location,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                letterSpacing:
+                                                                    -0.18,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 10),
+                                                          ],
+                                                        ),
+                                                        subtitle: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              explain,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                letterSpacing:
+                                                                    -0.18,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 56),
+                                                            Row(
+                                                              children: [
+                                                                Container(
+                                                                  width: 75,
+                                                                  height: 20,
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              0),
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            13),
+                                                                    color: AppColor
+                                                                        .appBarColor1,
+                                                                  ),
+                                                                  child: Text(
+                                                                    '${price.toString()}원~',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      letterSpacing:
+                                                                          -0.18,
+                                                                      color: AppColor
+                                                                          .textColor4,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                const Expanded(
+                                                                    child: Text(
+                                                                        ' ')),
+                                                                IconButton(
+                                                                  isSelected:
+                                                                      _isSelectedEntertainment,
+                                                                  onPressed:
+                                                                      () {
+                                                                    setState(
+                                                                        () {
+                                                                      _isSelectedEntertainment =
+                                                                          !_isSelectedEntertainment;
+
+                                                                      if (isSelectedEntertainment) {
+                                                                        _selectedItemsEntertainment
+                                                                            .remove(index);
+
+                                                                        firestore
+                                                                            .collection("favorite")
+                                                                            .doc('favoriteEntertainment$index')
+                                                                            .delete();
+                                                                      } else {
+                                                                        _selectedItemsEntertainment
+                                                                            .add(index);
+
+                                                                        firestore
+                                                                            .collection("favorite")
+                                                                            .doc('favoriteEntertainment$index')
+                                                                            .set(
+                                                                          {
+                                                                            "name":
+                                                                                name,
+                                                                            "explain":
+                                                                                explain,
+                                                                            "price":
+                                                                                price,
+                                                                            "URL":
+                                                                                url,
+                                                                            'location':
+                                                                                location,
+                                                                            'timestamp':
+                                                                                DateTime.now(),
+                                                                            'index':
+                                                                                index
+                                                                          },
+                                                                        );
+                                                                      }
+                                                                    });
+                                                                  },
+                                                                  icon: (isSelectedEntertainment)
+                                                                      ? const Icon(
+                                                                          Icons
+                                                                              .favorite)
+                                                                      : favoriteIcon,
+                                                                  style:
+                                                                      const ButtonStyle(
+                                                                    iconColor: MaterialStatePropertyAll(
+                                                                        AppColor
+                                                                            .appBarColor1),
+                                                                    backgroundColor:
+                                                                        MaterialStatePropertyAll(
+                                                                            AppColor.backGroundColor1),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
                                                   );
                                                 },
-                                                child: Row(
-                                                  children: [
-                                                    Text(title,
-                                                        style: const TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          letterSpacing: -0.18,
-                                                          color: AppColor
-                                                              .textColor3,
-                                                        )),
-                                                    const Icon(
-                                                      Icons.keyboard_arrow_down,
-                                                      size: 20,
-                                                      color:
-                                                          AppColor.textColor3,
-                                                    ),
-                                                  ],
-                                                ),
                                               ),
-                                              const SizedBox(width: 10),
-                                            ],
-                                          ),
-                                          Expanded(
-                                            child: ListView.builder(
-                                              itemCount:
-                                                  notesListEntertainment.length,
-                                              itemBuilder: (context, index) {
-                                                DocumentSnapshot
-                                                    documentSnapshot =
-                                                    selectedListEntertainment[
-                                                        index];
-
-                                                final isSelectedEntertainment =
-                                                    _selectedItemsEntertainment
-                                                        .contains(index);
-
-                                                Map<String, dynamic> data =
-                                                    documentSnapshot.data()
-                                                        as Map<String, dynamic>;
-
-                                                String name = data['name'] ??
-                                                    ''; // null인 경우 빈 문자열 반환
-                                                int price = data['price'] ??
-                                                    0; // null인 경우 0 반환
-                                                String explain = data[
-                                                        'explain'] ??
-                                                    'null'; // null인 경우 빈 문자열 반환
-                                                String location =
-                                                    data['location'] ??
-                                                        ''; // null인 경우 빈 문자열 반환
-                                                String url =
-                                                    data["URL"] ?? 'null';
-
-                                                return SizedBox(
-                                                  height: 162,
-                                                  child: Card(
-                                                    elevation: 0,
-                                                    color: AppColor
-                                                        .backGroundColor2,
-                                                    child: ListTile(
-                                                      leading: SizedBox(
-                                                          width: 113,
-                                                          height: 124,
-                                                          child: Image(
-                                                            fit: BoxFit.fill,
-                                                            image: NetworkImage(
-                                                                url),
-                                                          )),
-                                                      title: Row(
-                                                        children: [
-                                                          Text(
-                                                            name,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              letterSpacing:
-                                                                  -0.24,
-                                                            ),
-                                                          ),
-                                                          const Text(' '),
-                                                          Text(
-                                                            location,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              letterSpacing:
-                                                                  -0.18,
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 10),
-                                                        ],
-                                                      ),
-                                                      subtitle: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            explain,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              letterSpacing:
-                                                                  -0.18,
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 56),
-                                                          Row(
-                                                            children: [
-                                                              Container(
-                                                                width: 75,
-                                                                height: 20,
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        top: 0),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              13),
-                                                                  color: AppColor
-                                                                      .appBarColor1,
-                                                                ),
-                                                                child: Text(
-                                                                  '${price.toString()}원~',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    letterSpacing:
-                                                                        -0.18,
-                                                                    color: AppColor
-                                                                        .textColor4,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              const Expanded(
-                                                                  child: Text(
-                                                                      ' ')),
-                                                              IconButton(
-                                                                isSelected:
-                                                                    _isSelectedEntertainment,
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    _isSelectedEntertainment =
-                                                                        !_isSelectedEntertainment;
-
-                                                                    if (isSelectedEntertainment) {
-                                                                      _selectedItemsEntertainment
-                                                                          .remove(
-                                                                              index);
-
-                                                                      firestore
-                                                                          .collection(
-                                                                              "favorite")
-                                                                          .doc(
-                                                                              'favoriteEntertainment$index')
-                                                                          .delete();
-                                                                    } else {
-                                                                      _selectedItemsEntertainment
-                                                                          .add(
-                                                                              index);
-
-                                                                      firestore
-                                                                          .collection(
-                                                                              "favorite")
-                                                                          .doc(
-                                                                              'favoriteEntertainment$index')
-                                                                          .set(
-                                                                        {
-                                                                          "name":
-                                                                              name,
-                                                                          "explain":
-                                                                              explain,
-                                                                          "price":
-                                                                              price,
-                                                                          "URL":
-                                                                              url,
-                                                                          'location':
-                                                                              location,
-                                                                          'timestamp':
-                                                                              DateTime.now(),
-                                                                          'index':
-                                                                              index
-                                                                        },
-                                                                      );
-                                                                    }
-                                                                  });
-                                                                },
-                                                                icon: (isSelectedEntertainment)
-                                                                    ? const Icon(
-                                                                        Icons
-                                                                            .favorite)
-                                                                    : favoriteIcon,
-                                                                style:
-                                                                    const ButtonStyle(
-                                                                  iconColor:
-                                                                      MaterialStatePropertyAll(
-                                                                          AppColor
-                                                                              .appBarColor1),
-                                                                  backgroundColor:
-                                                                      MaterialStatePropertyAll(
-                                                                          AppColor
-                                                                              .backGroundColor1),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     );
                                   });
@@ -1491,8 +1693,13 @@ class _HomePage2State extends State<HomePage2> {
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
+                                  width: double.infinity,
+                                  height: 261,
                                   decoration: const BoxDecoration(
-                                      color: AppColor.textColor4),
+                                      color: AppColor.textColor4,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          topRight: Radius.circular(30))),
                                   child: DefaultTabController(
                                       length: 2,
                                       child: Column(
@@ -1520,120 +1727,108 @@ class _HomePage2State extends State<HomePage2> {
                                             labelColor: AppColor.textColor1,
                                             indicator: BoxDecoration(),
                                           ),
-                                          SizedBox(
-                                              width: 393,
-                                              height: 261,
-                                              child: TabBarView(children: [
-                                                StatefulBuilder(builder:
-                                                    (BuildContext context,
-                                                        StateSetter setState) {
-                                                  return Slider(
-                                                    thumbColor:
-                                                        AppColor.appBarColor1,
-                                                    activeColor:
-                                                        AppColor.appBarColor1,
-                                                    inactiveColor:
-                                                        AppColor.appBarColor1,
-                                                    value: _currentSliderValue,
-                                                    min: 0,
-                                                    max: 60000,
-                                                    divisions: 3,
-                                                    label: _currentSliderValue
-                                                        .round()
-                                                        .toString(),
-                                                    onChanged: (double value) {
-                                                      setState(() {
-                                                        _currentSliderValue =
-                                                            value;
-                                                        // 카드를 필터링하여 업데이트된 카드 배열을 얻습니다.
-                                                        filteredCards = cards
-                                                            .where((card) =>
-                                                                card.price <=
-                                                                _currentSliderValue)
-                                                            .toList();
-                                                      });
-                                                    },
-                                                  );
-                                                }),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 21),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: <Widget>[
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(left: 39),
-                                                        child: GestureDetector(
-                                                          child: const Text(
-                                                            '낮은 가격순',
-                                                            style: TextStyle(
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
-                                                          onTap: () {
-                                                            setState(() {
-                                                              cards = List.from(
-                                                                  cards)
-                                                                ..sort((a, b) => a
-                                                                    .price
-                                                                    .compareTo(b
-                                                                        .price));
-                                                            });
-                                                            title = '낮은 가격순';
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
+                                          Expanded(
+                                            child: TabBarView(children: [
+                                              StatefulBuilder(builder:
+                                                  (BuildContext context,
+                                                      StateSetter setState) {
+                                                return Slider(
+                                                  thumbColor:
+                                                      AppColor.appBarColor1,
+                                                  activeColor:
+                                                      AppColor.appBarColor1,
+                                                  inactiveColor:
+                                                      AppColor.appBarColor1,
+                                                  value: _currentSliderValue,
+                                                  min: 0,
+                                                  max: 60000,
+                                                  divisions: 3,
+                                                  label: _currentSliderValue
+                                                      .round()
+                                                      .toString(),
+                                                  onChanged: (double value) {
+                                                    setState(() {
+                                                      _currentSliderValue =
+                                                          value;
+                                                      // 카드를 필터링하여 업데이트된 카드 배열을 얻습니다.
+                                                      filteredCards = cards
+                                                          .where((card) =>
+                                                              card.price <=
+                                                              _currentSliderValue)
+                                                          .toList();
+                                                    });
+                                                  },
+                                                );
+                                              }),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 21),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 39),
+                                                      child: GestureDetector(
+                                                        child: const Text(
+                                                          '낮은 가격순',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
                                                         ),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            cards = List.from(
+                                                                cards)
+                                                              ..sort((a, b) => a
+                                                                  .price
+                                                                  .compareTo(
+                                                                      b.price));
+                                                          });
+                                                          title = '낮은 가격순';
+                                                        },
                                                       ),
-                                                      const SizedBox(
-                                                          height: 12),
-                                                      const Divider(),
-                                                      const SizedBox(
-                                                          height: 10),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(left: 39),
-                                                        child: GestureDetector(
-                                                          child: const Text(
-                                                            '높은 가격순',
-                                                            style: TextStyle(
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
-                                                          onTap: () {
-                                                            setState(() {
-                                                              cards = List.from(
-                                                                  cards)
-                                                                ..sort((a, b) => b
-                                                                    .price
-                                                                    .compareTo(a
-                                                                        .price));
-                                                            });
-                                                            title = '높은 가격순';
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    const Divider(),
+                                                    const SizedBox(height: 10),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 39),
+                                                      child: GestureDetector(
+                                                        child: const Text(
+                                                          '높은 가격순',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
                                                         ),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            cards = List.from(
+                                                                cards)
+                                                              ..sort((a, b) => b
+                                                                  .price
+                                                                  .compareTo(
+                                                                      a.price));
+                                                          });
+                                                          title = '높은 가격순';
+                                                        },
                                                       ),
-                                                      const SizedBox(
-                                                          height: 14),
-                                                      const Divider(),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    const Divider(),
+                                                  ],
                                                 ),
-                                              ]))
+                                              ),
+                                            ]),
+                                          )
                                         ],
                                       )),
                                 );
@@ -1670,7 +1865,7 @@ class _HomePage2State extends State<HomePage2> {
                             ],
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        //const SizedBox(width: 10),
                       ],
                     ),
                   ),

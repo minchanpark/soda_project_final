@@ -20,105 +20,125 @@ class PlacePageForCollection extends StatelessWidget {
           List notesList = snapshot.data!.docs;
 
           notesList = snapshot.data!.docs;
+          if (notesList.isNotEmpty) {
+            return Column(
+              children: [
+                SizedBox(height: 9),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: notesList.length,
+                      itemBuilder: (context, index) {
+                        DocumentSnapshot documentSnapshot = notesList[index];
+                        Map<String, dynamic> data =
+                            documentSnapshot.data() as Map<String, dynamic>;
 
-          return ListView.builder(
-              itemCount: notesList.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot documentSnapshot = notesList[index];
-                Map<String, dynamic> data =
-                    documentSnapshot.data() as Map<String, dynamic>;
+                        String name = data['name'] ?? ''; // null인 경우 빈 문자열 반환
+                        int price = data['price'] ?? 0; // null인 경우 0 반환
+                        String explain =
+                            data['explain'] ?? 'null'; // null인 경우 빈 문자열 반환
+                        String location =
+                            data['location'] ?? ''; // null인 경우 빈 문자열 반환
+                        String url = data["URL"] ?? '';
 
-                String name = data['name'] ?? ''; // null인 경우 빈 문자열 반환
-                int price = data['price'] ?? 0; // null인 경우 0 반환
-                String explain = data['explain'] ?? 'null'; // null인 경우 빈 문자열 반환
-                String location = data['location'] ?? ''; // null인 경우 빈 문자열 반환
-                String url = data["URL"] ?? '';
-
-                return Card(
-                  elevation: 0,
-                  color: AppColor.backGroundColor2,
-                  child: ListTile(
-                    leading: SizedBox(
-                      width: 113,
-                      height: 124,
-                      child: Image(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(url),
-                      ),
-                    ),
-                    title: Row(
-                      children: [
-                        Text(
-                          name,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: -0.24,
-                          ),
-                        ),
-                        const Text(' '),
-                        Text(
-                          location,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: -0.18,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          explain,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: -0.18,
-                          ),
-                        ),
-                        const SizedBox(height: 56),
-                        Row(
-                          children: [
-                            Container(
-                              width: 75,
-                              height: 20,
-                              padding: const EdgeInsets.only(top: 0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(13),
-                                color: AppColor.appBarColor1,
-                              ),
-                              child: Text(
-                                '${price.toString()}원~',
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: -0.18,
-                                  color: AppColor.textColor4,
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              top: 3, right: 21, left: 20),
+                          child: Card(
+                            elevation: 0,
+                            color: AppColor.backGroundColor2,
+                            child: ListTile(
+                              leading: SizedBox(
+                                width: 113,
+                                height: 124,
+                                child: Image(
+                                  fit: BoxFit.fill,
+                                  image: NetworkImage(url),
                                 ),
                               ),
-                            ),
-                            const Expanded(child: Text(' ')),
-                            /*IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.favorite),
-                              style: const ButtonStyle(
-                                iconColor: MaterialStatePropertyAll(
-                                    AppColor.appBarColor1),
-                                backgroundColor: MaterialStatePropertyAll(
-                                    AppColor.backGroundColor1),
+                              title: Row(
+                                children: [
+                                  Text(
+                                    name,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: -0.24,
+                                    ),
+                                  ),
+                                  const Text(' '),
+                                  Text(
+                                    location,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: -0.18,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                ],
                               ),
-                            ),*/
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              });
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    explain,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.18,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 56),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 75,
+                                        height: 20,
+                                        padding: const EdgeInsets.only(top: 0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(13),
+                                          color: AppColor.appBarColor1,
+                                        ),
+                                        child: Text(
+                                          '${price.toString()}원~',
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: -0.18,
+                                            color: AppColor.textColor4,
+                                          ),
+                                        ),
+                                      ),
+                                      const Expanded(child: Text(' ')),
+                                      /*IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.favorite),
+                                      style: const ButtonStyle(
+                                        iconColor: MaterialStatePropertyAll(
+                                            AppColor.appBarColor1),
+                                        backgroundColor: MaterialStatePropertyAll(
+                                            AppColor.backGroundColor1),
+                                      ),
+                                    ),*/
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            );
+          } else {
+            return const Center(
+                child: Text('장소 페이지에서 찜 먼저 해주세요',
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.w600)));
+          }
         });
   }
 }

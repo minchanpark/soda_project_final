@@ -26,7 +26,7 @@ class MyPage extends StatelessWidget {
           )),
       body: Container(
         decoration: BoxDecoration(color: AppColor.textColor4),
-        padding: const EdgeInsets.only(left: 40, top: 39),
+        padding: const EdgeInsets.only(left: 40, top: 39, right: 20),
         child: Column(children: [
           GestureDetector(
             onTap: () {

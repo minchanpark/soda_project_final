@@ -68,9 +68,9 @@ class _CoursePageState extends State<ScheduledCulturePage> {
       child: GridView.count(
         primary: false,
         childAspectRatio: (1 / 1.35),
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+        crossAxisSpacing: 0,
+        mainAxisSpacing: 0,
         crossAxisCount: 2,
         children: cards.map((card) => card).toList(),
       ),

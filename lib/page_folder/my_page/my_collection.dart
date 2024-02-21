@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../app_color/app_color.dart';
 import 'course_page_for_collection.dart';
 import 'place_page_for_collection.dart';
