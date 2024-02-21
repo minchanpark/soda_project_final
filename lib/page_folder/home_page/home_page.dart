@@ -67,9 +67,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             label: '문화',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(
-              IconaMoon.profile,
-            ),
+            icon: Icon(Icons.person),
             label: '마이페이지',
           ),
         ],

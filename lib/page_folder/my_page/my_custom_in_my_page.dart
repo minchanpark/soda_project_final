@@ -5,6 +5,7 @@ import 'package:soda_project_final/firestore_file/firestore_custom.dart';
 import '../../app_color/app_color.dart';
 import '../../provider/appstate_provider.dart';
 import '../../provider/trip_provider.dart';
+import 'package:intl/intl.dart';
 
 class MyCustomInMyPage extends StatelessWidget {
   const MyCustomInMyPage({super.key});
@@ -65,7 +66,7 @@ class MyCustomInMyPage extends StatelessWidget {
 
     tripInstance?.totalSum ??= 0;
 
-    //FirebaseFirestore firestore = FirebaseFirestore.instance;
+    var f = NumberFormat('###,###,###,###');
 
     if (tripInstance != null) {
       return Scaffold(
@@ -242,8 +243,6 @@ class MyCustomInMyPage extends StatelessWidget {
                                           padding: const EdgeInsets.only(
                                               left: 10, top: 28),
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
                                             children: [
                                               if (trip.selectedRestaurants
                                                   .isNotEmpty)
@@ -251,7 +250,7 @@ class MyCustomInMyPage extends StatelessWidget {
                                                   height: trip
                                                           .selectedRestaurants
                                                           .length *
-                                                      20 *
+                                                      30 *
                                                       3,
                                                   child: ListView.builder(
                                                     physics:
@@ -261,59 +260,67 @@ class MyCustomInMyPage extends StatelessWidget {
                                                         .length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return Row(
+                                                      return Column(
                                                         children: [
-                                                          Container(
-                                                            decoration:
-                                                                const BoxDecoration(
+                                                          Row(
+                                                            children: [
+                                                              Container(
+                                                                decoration: const BoxDecoration(
                                                                     shape: BoxShape
                                                                         .circle),
-                                                            width: 55,
-                                                            height: 55,
-                                                            child:
-                                                                const ClipOval(
-                                                              child: Image(
-                                                                  image: AssetImage(
-                                                                      'assets/travel.png'),
-                                                                  fit: BoxFit
-                                                                      .fill),
-                                                            ),
+                                                                width: 55,
+                                                                height: 55,
+                                                                child:
+                                                                    const ClipOval(
+                                                                  child: Image(
+                                                                      image: AssetImage(
+                                                                          'assets/travel.png'),
+                                                                      fit: BoxFit
+                                                                          .fill),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 40),
+                                                              Text(
+                                                                trip.selectedRestaurants[
+                                                                    index],
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        17,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                              ),
+                                                              const Expanded(
+                                                                  child:
+                                                                      Text('')),
+                                                              Text(
+                                                                '${f.format(trip.selectedRestaurantsPrice[index])}원',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    letterSpacing:
+                                                                        -0.24),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 19),
+                                                            ],
                                                           ),
-                                                          const SizedBox(
-                                                              width: 40),
-                                                          Text(
-                                                            trip.selectedRestaurants[
-                                                                index],
-                                                            style: const TextStyle(
-                                                                fontSize: 17,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                          ),
-                                                          const Expanded(
-                                                              child: Text('')),
-                                                          Text(
-                                                            '${trip.selectedRestaurantsPrice[index].toString()}원',
-                                                            style: const TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                letterSpacing:
-                                                                    -0.24),
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 19),
+                                                          SizedBox(height: 43),
                                                         ],
                                                       );
                                                     },
                                                   ),
                                                 ),
+                                              SizedBox(height: 20),
                                               if (trip.selectedCafes.isNotEmpty)
                                                 SizedBox(
                                                   height: trip.selectedCafes
                                                           .length *
-                                                      20 *
+                                                      30 *
                                                       3,
                                                   child: ListView.builder(
                                                     physics:
@@ -322,63 +329,70 @@ class MyCustomInMyPage extends StatelessWidget {
                                                         .selectedCafes.length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return Row(
+                                                      return Column(
                                                         children: [
-                                                          Container(
-                                                            decoration:
-                                                                const BoxDecoration(
+                                                          Row(
+                                                            children: [
+                                                              Container(
+                                                                decoration: const BoxDecoration(
                                                                     shape: BoxShape
                                                                         .circle),
-                                                            width: 55,
-                                                            height: 55,
-                                                            child:
-                                                                const ClipOval(
-                                                              child: Image(
-                                                                  image: AssetImage(
-                                                                      'assets/travel.png'),
-                                                                  fit: BoxFit
-                                                                      .fill),
-                                                            ),
+                                                                width: 55,
+                                                                height: 55,
+                                                                child:
+                                                                    const ClipOval(
+                                                                  child: Image(
+                                                                      image: AssetImage(
+                                                                          'assets/travel.png'),
+                                                                      fit: BoxFit
+                                                                          .fill),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 40),
+                                                              Text(
+                                                                trip.selectedCafes[
+                                                                    index],
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 17,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                              ),
+                                                              const Expanded(
+                                                                  child:
+                                                                      Text('')),
+                                                              Text(
+                                                                '${f.format(trip.selectedCafesPrice[index])}원',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    letterSpacing:
+                                                                        -0.24),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 19),
+                                                            ],
                                                           ),
-                                                          const SizedBox(
-                                                              width: 40),
-                                                          Text(
-                                                            trip.selectedCafes[
-                                                                index],
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 17,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            ),
-                                                          ),
-                                                          const Expanded(
-                                                              child: Text('')),
-                                                          Text(
-                                                            '${trip.selectedCafesPrice[index].toString()}원',
-                                                            style: const TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                letterSpacing:
-                                                                    -0.24),
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 19),
+                                                          SizedBox(height: 43),
                                                         ],
                                                       );
                                                     },
                                                   ),
                                                 ),
+                                              SizedBox(height: 20),
                                               if (trip.selectedEntertainment
                                                   .isNotEmpty)
                                                 SizedBox(
                                                   height: trip
                                                           .selectedEntertainment
                                                           .length *
-                                                      20 *
+                                                      30 *
                                                       3,
                                                   child: ListView.builder(
                                                     physics:
@@ -388,49 +402,56 @@ class MyCustomInMyPage extends StatelessWidget {
                                                         .length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return Row(
+                                                      return Column(
                                                         children: [
-                                                          Container(
-                                                            decoration:
-                                                                const BoxDecoration(
+                                                          Row(
+                                                            children: [
+                                                              Container(
+                                                                decoration: const BoxDecoration(
                                                                     shape: BoxShape
                                                                         .circle),
-                                                            width: 55,
-                                                            height: 55,
-                                                            child:
-                                                                const ClipOval(
-                                                              child: Image(
-                                                                  image: AssetImage(
-                                                                      'assets/travel.png'),
-                                                                  fit: BoxFit
-                                                                      .fill),
-                                                            ),
+                                                                width: 55,
+                                                                height: 55,
+                                                                child:
+                                                                    const ClipOval(
+                                                                  child: Image(
+                                                                      image: AssetImage(
+                                                                          'assets/travel.png'),
+                                                                      fit: BoxFit
+                                                                          .fill),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 40),
+                                                              Text(
+                                                                trip.selectedEntertainment[
+                                                                    index],
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        17,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                              ),
+                                                              const Expanded(
+                                                                  child:
+                                                                      Text('')),
+                                                              Text(
+                                                                '${f.format(trip.selectedEntertainmentPrice[index])}원',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    letterSpacing:
+                                                                        -0.24),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 19),
+                                                            ],
                                                           ),
-                                                          const SizedBox(
-                                                              width: 40),
-                                                          Text(
-                                                            trip.selectedEntertainment[
-                                                                index],
-                                                            style: const TextStyle(
-                                                                fontSize: 17,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                          ),
-                                                          const Expanded(
-                                                              child: Text('')),
-                                                          Text(
-                                                            '${trip.selectedEntertainmentPrice[index].toString()}원',
-                                                            style: const TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                letterSpacing:
-                                                                    -0.24),
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 19),
+                                                          SizedBox(height: 43),
                                                         ],
                                                       );
                                                     },
@@ -448,7 +469,7 @@ class MyCustomInMyPage extends StatelessWidget {
                                                             right: 32,
                                                             top: 10),
                                                     child: Text(
-                                                        '총 ${trip.totalSum}원',
+                                                        '총 ${f.format(trip.totalSum)}원',
                                                         style: const TextStyle(
                                                             fontSize: 22,
                                                             fontWeight:
@@ -499,7 +520,7 @@ class MyCustomInMyPage extends StatelessWidget {
                                     padding: const EdgeInsets.only(
                                         left: 10, right: 10),
                                     child: Text(
-                                      '${trip.totalSum.toString()}원~',
+                                      '${f.format(trip.totalSum)}원',
                                       style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,

@@ -8,6 +8,7 @@ import '../card_tab_page/card2_tab_page.dart';
 import '../card_tab_page/card4_tab_page.dart';
 import '../card_tab_page/card5_tab_page.dart';
 import '../card_tab_page/card6_tab_page.dart';
+import 'package:intl/intl.dart';
 
 class CoursePageForCollection extends StatefulWidget {
   const CoursePageForCollection({super.key});
@@ -31,6 +32,8 @@ class _CoursePageForCollectionState extends State<CoursePageForCollection> {
           List notesList = snapshot.data!.docs;
 
           notesList = snapshot.data!.docs;
+
+          var f = NumberFormat('###,###,###,###');
 
           if (notesList.isNotEmpty) {
             return Column(
@@ -141,7 +144,7 @@ class _CoursePageForCollectionState extends State<CoursePageForCollection> {
                                                   height: 20,
                                                 ),
                                                 Text(
-                                                  '${price.toInt()}원~',
+                                                  '${f.format(price.toInt())}원~',
                                                   style: const TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
@@ -303,9 +306,23 @@ class _CoursePageForCollectionState extends State<CoursePageForCollection> {
             );
           } else {
             return const Center(
-                child: Text('코스 페이지에서 찜 먼저 해주세요',
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w600)));
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('찜한 코스가 없어요',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xff1f1e1d))),
+                SizedBox(height: 10),
+                Text('하트를 눌러 마음에 드는 코스를 찜해보세요.',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff83817d))),
+              ],
+            ));
           }
         });
   }

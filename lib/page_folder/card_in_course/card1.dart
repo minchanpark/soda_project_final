@@ -7,6 +7,7 @@ import '../card_tab_page/card3_tab_page.dart';
 import '../card_tab_page/card4_tab_page.dart';
 import '../card_tab_page/card5_tab_page.dart';
 import '../card_tab_page/card6_tab_page.dart';
+import 'package:intl/intl.dart';
 
 class Card1 extends StatefulWidget {
   final String title;
@@ -32,6 +33,7 @@ class _Card1State extends State<Card1> {
   bool _isFavorited = false;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  var f = NumberFormat('###,###,###,###');
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +121,7 @@ class _Card1State extends State<Card1> {
                                   height: 20,
                                 ),
                                 Text(
-                                  '${widget.price.toInt()}원~',
+                                  '${f.format(widget.price.toInt())}원~',
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,

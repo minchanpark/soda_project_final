@@ -21,6 +21,7 @@ import 'tab5_cafe_page.dart';
 import 'tab5_enter_page.dart';
 import 'tab_page4.dart';
 import 'tap_page1.dart';
+import 'package:intl/intl.dart';
 
 class HomePage2 extends StatefulWidget {
   const HomePage2({super.key});
@@ -80,6 +81,8 @@ class _HomePage2State extends State<HomePage2> {
           'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%201416.png?alt=media&token=76101246-4371-41d4-877d-5f0e004f9e37',
     ),
   ];
+
+  var f = NumberFormat('###,###,###,###');
 
   late String title = '낮은 가격순';
 
@@ -429,235 +432,240 @@ class _HomePage2State extends State<HomePage2> {
                                           return Column(
                                             children: [
                                               SizedBox(
-                                                height: 162,
+                                                height: 148,
+                                                width: 400,
                                                 child: Card(
-                                                  elevation: 0,
-                                                  color:
-                                                      AppColor.backGroundColor2,
-                                                  child: ListTile(
-                                                    leading: GestureDetector(
-                                                      onTap: () {
-                                                        if (url ==
-                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/2.png?alt=media&token=e9d6e755-f659-4b31-841f-caed9f5cad4f') {
-                                                          //
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const TapPage1()));
-                                                        }
-                                                        if (url ==
-                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/1.png?alt=media&token=d04bd2f8-ad06-4818-94c8-895f01f4e5b5') {
-                                                          //
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const TapPage2()));
-                                                        }
-                                                        if (url ==
-                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/20.png?alt=media&token=26ac0b20-2349-4ef9-bdd4-db0740cb425e') {
-                                                          //
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const TapPage3()));
-                                                        }
-                                                        if (url ==
-                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20142.png?alt=media&token=2754d11c-e1a7-45a5-81e8-12207348196b') {
-                                                          //
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const TapPage4()));
-                                                        }
-                                                        if (url ==
-                                                            'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/chicken.png?alt=media&token=13281834-d813-4ab4-972c-fad75ece2ec8') {
-                                                          //
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const TapPage5()));
-                                                        }
-                                                      },
-                                                      child: SizedBox(
-                                                        width: 104,
-                                                        height: 124,
-                                                        child: ClipRRect(
-                                                          child: Image(
-                                                            image: NetworkImage(
-                                                                url),
-                                                            fit: BoxFit.fill,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    title: Row(
+                                                    elevation: 0,
+                                                    color: AppColor
+                                                        .backGroundColor2,
+                                                    child: Row(
                                                       children: [
-                                                        Text(
-                                                          name,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing:
-                                                                -0.24,
-                                                          ),
-                                                        ),
-                                                        const Text(' '),
-                                                        Text(
-                                                          location,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            letterSpacing:
-                                                                -0.18,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 10),
-                                                      ],
-                                                    ),
-                                                    subtitle: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          explain,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            letterSpacing:
-                                                                -0.18,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 56),
-                                                        Row(
-                                                          children: [
-                                                            Container(
-                                                              width: 75,
-                                                              height: 20,
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      top: 0),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            13),
-                                                                color: AppColor
-                                                                    .appBarColor1,
+                                                        SizedBox(width: 9.24),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/2.png?alt=media&token=e9d6e755-f659-4b31-841f-caed9f5cad4f') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage1()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/1.png?alt=media&token=d04bd2f8-ad06-4818-94c8-895f01f4e5b5') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage2()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/20.png?alt=media&token=26ac0b20-2349-4ef9-bdd4-db0740cb425e') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage3()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20142.png?alt=media&token=2754d11c-e1a7-45a5-81e8-12207348196b') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage4()));
+                                                            }
+                                                            if (url ==
+                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/chicken.png?alt=media&token=13281834-d813-4ab4-972c-fad75ece2ec8') {
+                                                              //
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const TapPage5()));
+                                                            }
+                                                          },
+                                                          child: Container(
+                                                            width: 104,
+                                                            height: 124,
+                                                            child: ClipRRect(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          10)),
+                                                              child: Image(
+                                                                image:
+                                                                    NetworkImage(
+                                                                        url),
+                                                                fit:
+                                                                    BoxFit.fill,
                                                               ),
-                                                              child: Text(
-                                                                '${price.toString()}원~',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                            left: 12.36,
+                                                            top: 12,
+                                                          ),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                name,
                                                                 style:
                                                                     const TextStyle(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  letterSpacing:
+                                                                      -0.24,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 10),
+                                                              Text(
+                                                                location,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  color: Color(
+                                                                      0xff696969),
                                                                   fontSize: 12,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
                                                                   letterSpacing:
                                                                       -0.18,
-                                                                  color: AppColor
-                                                                      .textColor4,
                                                                 ),
                                                               ),
-                                                            ),
-                                                            //맛집 선택하는 코드
-                                                            const Expanded(
-                                                                child:
-                                                                    Text(' ')),
-                                                            IconButton(
-                                                              isSelected:
-                                                                  _isSelected,
-                                                              //selectedIcon: Icon(Icons.favorite),
-                                                              onPressed: () {
-                                                                setState(() {
-                                                                  _isSelected =
-                                                                      !_isSelected;
-
-                                                                  if (isSelected) {
-                                                                    _selectedItems
-                                                                        .remove(
-                                                                            index);
-
-                                                                    firestore
-                                                                        .collection(
-                                                                            "favorite")
-                                                                        .doc(
-                                                                            'favorite$index')
-                                                                        .delete();
-                                                                  } else {
-                                                                    _selectedItems
-                                                                        .add(
-                                                                            index);
-
-                                                                    firestore
-                                                                        .collection(
-                                                                            "favorite")
-                                                                        .doc(
-                                                                            'favorite$index')
-                                                                        .set(
-                                                                      {
-                                                                        "name":
-                                                                            name,
-                                                                        "explain":
-                                                                            explain,
-                                                                        "price":
-                                                                            price,
-                                                                        "URL":
-                                                                            url,
-                                                                        'location':
-                                                                            location,
-                                                                        'timestamp':
-                                                                            DateTime.now(),
-                                                                      },
-                                                                    );
-                                                                  }
-                                                                });
-                                                              },
-                                                              icon: (isSelected)
-                                                                  ? const Icon(Icons
-                                                                      .favorite)
-                                                                  : favoriteIcon,
-                                                              style:
-                                                                  const ButtonStyle(
-                                                                iconColor:
-                                                                    MaterialStatePropertyAll(
-                                                                        AppColor
-                                                                            .appBarColor1),
-                                                                backgroundColor:
-                                                                    MaterialStatePropertyAll(
-                                                                        AppColor
-                                                                            .backGroundColor1),
+                                                              SizedBox(
+                                                                  height: 10),
+                                                              Text(
+                                                                explain,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  letterSpacing:
+                                                                      -0.18,
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ],
+                                                              SizedBox(
+                                                                  height: 1),
+                                                              //버튼
+                                                              Row(
+                                                                children: [
+                                                                  Container(
+                                                                    width: 75,
+                                                                    height: 20,
+                                                                    padding: const EdgeInsets
+                                                                        .only(
+                                                                        top: 0),
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              13),
+                                                                      color: AppColor
+                                                                          .appBarColor1,
+                                                                    ),
+                                                                    child: Text(
+                                                                      '${f.format(price)}원~',
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style:
+                                                                          const TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        letterSpacing:
+                                                                            -0.18,
+                                                                        color: AppColor
+                                                                            .textColor4,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  //맛집 선택하는 코드
+                                                                  SizedBox(
+                                                                      width:
+                                                                          140.17),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                        .only(
+                                                                        bottom:
+                                                                            0),
+                                                                    child:
+                                                                        IconButton(
+                                                                      isSelected:
+                                                                          _isSelected,
+                                                                      onPressed:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          _isSelected =
+                                                                              !_isSelected;
+
+                                                                          if (isSelected) {
+                                                                            _selectedItems.remove(index);
+
+                                                                            firestore.collection("favorite").doc('favorite$index').delete();
+                                                                          } else {
+                                                                            _selectedItems.add(index);
+
+                                                                            firestore.collection("favorite").doc('favorite$index').set(
+                                                                              {
+                                                                                "name": name,
+                                                                                "explain": explain,
+                                                                                "price": price,
+                                                                                "URL": url,
+                                                                                'location': location,
+                                                                                'timestamp': DateTime.now(),
+                                                                              },
+                                                                            );
+                                                                          }
+                                                                        });
+                                                                      },
+                                                                      icon: (isSelected)
+                                                                          ? const Icon(
+                                                                              Icons.favorite)
+                                                                          : favoriteIcon,
+                                                                      style:
+                                                                          const ButtonStyle(
+                                                                        iconColor:
+                                                                            MaterialStatePropertyAll(AppColor.appBarColor1),
+                                                                        backgroundColor:
+                                                                            MaterialStatePropertyAll(AppColor.backGroundColor1),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       ],
-                                                    ),
-                                                  ),
-                                                ),
+                                                    )),
                                               ),
                                             ],
                                           );
@@ -919,152 +927,120 @@ class _HomePage2State extends State<HomePage2> {
                                                       data["URL"] ?? 'null';
 
                                                   return SizedBox(
-                                                    height: 162,
+                                                    height: 148,
+                                                    width: 400,
                                                     child: Card(
-                                                      elevation: 0,
-                                                      color: AppColor
-                                                          .backGroundColor2,
-                                                      child: ListTile(
-                                                        leading:
+                                                        elevation: 0,
+                                                        color: AppColor
+                                                            .backGroundColor2,
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                                width: 9.24),
                                                             GestureDetector(
-                                                          onTap: () {
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/greg.png?alt=media&token=de989507-658d-420f-b983-0fa71384a0f0') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                              onTap: () {
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/greg.png?alt=media&token=de989507-658d-420f-b983-0fa71384a0f0') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage1Cafe()));
-                                                            }
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/cafetita.png?alt=media&token=9d37404f-229d-449a-a163-09e7fb303b82') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                                }
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/cafetita.png?alt=media&token=9d37404f-229d-449a-a163-09e7fb303b82') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage2Cafe()));
-                                                            }
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/frank.png?alt=media&token=5f5725c6-b2b2-4611-a794-f92a2f5b3689') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                                }
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/frank.png?alt=media&token=5f5725c6-b2b2-4611-a794-f92a2f5b3689') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage3Cafe()));
-                                                            }
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/plant.png?alt=media&token=70724d65-e275-4c49-a631-da534ffabeac') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                                }
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/plant.png?alt=media&token=70724d65-e275-4c49-a631-da534ffabeac') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage4Cafe()));
-                                                            }
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20142.png?alt=media&token=2a271f25-8494-41da-9aff-1deb6bf0520c') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                                }
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/Rectangle%20142.png?alt=media&token=2a271f25-8494-41da-9aff-1deb6bf0520c') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage5Cafe()));
-                                                            }
-                                                          },
-                                                          child: SizedBox(
-                                                              width: 113,
-                                                              height: 124,
-                                                              child: Image(
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                                image:
-                                                                    NetworkImage(
-                                                                        url),
-                                                              )),
-                                                        ),
-                                                        title: Row(
-                                                          children: [
-                                                            Text(
-                                                              name,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                letterSpacing:
-                                                                    -0.24,
-                                                              ),
-                                                            ),
-                                                            const Text(' '),
-                                                            Text(
-                                                              location,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                letterSpacing:
-                                                                    -0.18,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 10),
-                                                          ],
-                                                        ),
-                                                        subtitle: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              explain,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                letterSpacing:
-                                                                    -0.18,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 56),
-                                                            Row(
-                                                              children: [
-                                                                Container(
-                                                                  width: 75,
-                                                                  height: 20,
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              0),
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            13),
-                                                                    color: AppColor
-                                                                        .appBarColor1,
+                                                                }
+                                                              },
+                                                              child: Container(
+                                                                width: 104,
+                                                                height: 124,
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              10)),
+                                                                  child: Image(
+                                                                    image:
+                                                                        NetworkImage(
+                                                                            url),
+                                                                    fit: BoxFit
+                                                                        .fill,
                                                                   ),
-                                                                  child: Text(
-                                                                    '${price.toString()}원~',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                left: 12.36,
+                                                                top: 12,
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .start,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    name,
                                                                     style:
                                                                         const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      letterSpacing:
+                                                                          -0.24,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          10),
+                                                                  Text(
+                                                                    location,
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      color: Color(
+                                                                          0xff696969),
                                                                       fontSize:
                                                                           12,
                                                                       fontWeight:
@@ -1072,79 +1048,121 @@ class _HomePage2State extends State<HomePage2> {
                                                                               .w500,
                                                                       letterSpacing:
                                                                           -0.18,
-                                                                      color: AppColor
-                                                                          .textColor4,
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                const Expanded(
-                                                                    child: Text(
-                                                                        ' ')),
-                                                                IconButton(
-                                                                  isSelected:
-                                                                      _isSelectedCafe,
-                                                                  onPressed:
-                                                                      () {
-                                                                    setState(
-                                                                        () {
-                                                                      _isSelectedCafe =
-                                                                          !_isSelectedCafe;
-
-                                                                      if (isSelectedCafe) {
-                                                                        _selectedItemsCafe
-                                                                            .remove(index);
-
-                                                                        firestore
-                                                                            .collection("favorite")
-                                                                            .doc('favoriteCafe$index')
-                                                                            .delete();
-                                                                      } else {
-                                                                        _selectedItemsCafe
-                                                                            .add(index);
-
-                                                                        firestore
-                                                                            .collection("favorite")
-                                                                            .doc('favoriteCafe$index')
-                                                                            .set(
-                                                                          {
-                                                                            "name":
-                                                                                name,
-                                                                            "explain":
-                                                                                explain,
-                                                                            "price":
-                                                                                price,
-                                                                            "URL":
-                                                                                url,
-                                                                            'location':
-                                                                                location,
-                                                                            'timestamp':
-                                                                                DateTime.now(),
-                                                                          },
-                                                                        );
-                                                                      }
-                                                                    });
-                                                                  },
-                                                                  icon: (isSelectedCafe)
-                                                                      ? const Icon(
-                                                                          Icons
-                                                                              .favorite)
-                                                                      : favoriteIcon,
-                                                                  style:
-                                                                      const ButtonStyle(
-                                                                    iconColor: MaterialStatePropertyAll(
-                                                                        AppColor
-                                                                            .appBarColor1),
-                                                                    backgroundColor:
-                                                                        MaterialStatePropertyAll(
-                                                                            AppColor.backGroundColor1),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          10),
+                                                                  Text(
+                                                                    explain,
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      letterSpacing:
+                                                                          -0.18,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ],
+                                                                  SizedBox(
+                                                                      height:
+                                                                          1),
+                                                                  //버튼
+                                                                  Row(
+                                                                    children: [
+                                                                      Container(
+                                                                        width:
+                                                                            75,
+                                                                        height:
+                                                                            20,
+                                                                        padding: const EdgeInsets
+                                                                            .only(
+                                                                            top:
+                                                                                0),
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(13),
+                                                                          color:
+                                                                              AppColor.appBarColor1,
+                                                                        ),
+                                                                        child:
+                                                                            Text(
+                                                                          '${f.format(price)}원~',
+                                                                          textAlign:
+                                                                              TextAlign.center,
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            letterSpacing:
+                                                                                -0.18,
+                                                                            color:
+                                                                                AppColor.textColor4,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      //맛집 선택하는 코드
+                                                                      SizedBox(
+                                                                          width:
+                                                                              140.17),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .only(
+                                                                            bottom:
+                                                                                0),
+                                                                        child:
+                                                                            IconButton(
+                                                                          isSelected:
+                                                                              _isSelectedCafe,
+                                                                          onPressed:
+                                                                              () {
+                                                                            setState(() {
+                                                                              _isSelectedCafe = !_isSelectedCafe;
+
+                                                                              if (isSelectedCafe) {
+                                                                                _selectedItemsCafe.remove(index);
+
+                                                                                firestore.collection("favorite").doc('favorite$index').delete();
+                                                                              } else {
+                                                                                _selectedItemsCafe.add(index);
+
+                                                                                firestore.collection("favorite").doc('favorite$index').set(
+                                                                                  {
+                                                                                    "name": name,
+                                                                                    "explain": explain,
+                                                                                    "price": price,
+                                                                                    "URL": url,
+                                                                                    'location': location,
+                                                                                    'timestamp': DateTime.now(),
+                                                                                  },
+                                                                                );
+                                                                              }
+                                                                            });
+                                                                          },
+                                                                          icon: (isSelectedCafe)
+                                                                              ? const Icon(Icons.favorite)
+                                                                              : favoriteIcon,
+                                                                          style:
+                                                                              const ButtonStyle(
+                                                                            iconColor:
+                                                                                MaterialStatePropertyAll(AppColor.appBarColor1),
+                                                                            backgroundColor:
+                                                                                MaterialStatePropertyAll(AppColor.backGroundColor1),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
                                                           ],
-                                                        ),
-                                                      ),
-                                                    ),
+                                                        )),
                                                   );
                                                 },
                                               ),
@@ -1422,152 +1440,120 @@ class _HomePage2State extends State<HomePage2> {
                                                       data["URL"] ?? 'null';
 
                                                   return SizedBox(
-                                                    height: 162,
+                                                    height: 148,
+                                                    width: 400,
                                                     child: Card(
-                                                      elevation: 0,
-                                                      color: AppColor
-                                                          .backGroundColor2,
-                                                      child: ListTile(
-                                                        leading:
+                                                        elevation: 0,
+                                                        color: AppColor
+                                                            .backGroundColor2,
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                                width: 9.24),
                                                             GestureDetector(
-                                                          onTap: () {
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/ballingimage.png?alt=media&token=bf0de6ed-0dee-4b46-a4b0-b8b561fccf49') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                              onTap: () {
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/ballingimage.png?alt=media&token=bf0de6ed-0dee-4b46-a4b0-b8b561fccf49') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage1Enter()));
-                                                            }
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/manhwacoffee.png?alt=media&token=9e0ef1ee-00b6-4c9d-96a0-ba3f7f5bb5c6') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                                }
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/manhwacoffee.png?alt=media&token=9e0ef1ee-00b6-4c9d-96a0-ba3f7f5bb5c6') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage2Enter()));
-                                                            }
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/laser.png?alt=media&token=9cabb440-a147-416d-bf34-cfecb17d3c16') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                                }
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/laser.png?alt=media&token=9cabb440-a147-416d-bf34-cfecb17d3c16') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage3Enter()));
-                                                            }
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/spacespace.png?alt=media&token=c7f461fd-fc1d-4d29-97c5-43c8e0cc669a') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                                }
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/spacespace.png?alt=media&token=c7f461fd-fc1d-4d29-97c5-43c8e0cc669a') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage4Enter()));
-                                                            }
-                                                            if (url ==
-                                                                'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/boardboard.png?alt=media&token=4fd86757-d051-4c4f-a809-6aae822eecda') {
-                                                              //
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
+                                                                }
+                                                                if (url ==
+                                                                    'https://firebasestorage.googleapis.com/v0/b/soda-project-final.appspot.com/o/boardboard.png?alt=media&token=4fd86757-d051-4c4f-a809-6aae822eecda') {
+                                                                  //
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
                                                                               const TapPage5Enter()));
-                                                            }
-                                                          },
-                                                          child: SizedBox(
-                                                              width: 113,
-                                                              height: 124,
-                                                              child: Image(
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                                image:
-                                                                    NetworkImage(
-                                                                        url),
-                                                              )),
-                                                        ),
-                                                        title: Row(
-                                                          children: [
-                                                            Text(
-                                                              name,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                letterSpacing:
-                                                                    -0.24,
-                                                              ),
-                                                            ),
-                                                            const Text(' '),
-                                                            Text(
-                                                              location,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                letterSpacing:
-                                                                    -0.18,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 10),
-                                                          ],
-                                                        ),
-                                                        subtitle: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              explain,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                letterSpacing:
-                                                                    -0.18,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 56),
-                                                            Row(
-                                                              children: [
-                                                                Container(
-                                                                  width: 75,
-                                                                  height: 20,
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              0),
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            13),
-                                                                    color: AppColor
-                                                                        .appBarColor1,
+                                                                }
+                                                              },
+                                                              child: Container(
+                                                                width: 104,
+                                                                height: 124,
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              10)),
+                                                                  child: Image(
+                                                                    image:
+                                                                        NetworkImage(
+                                                                            url),
+                                                                    fit: BoxFit
+                                                                        .fill,
                                                                   ),
-                                                                  child: Text(
-                                                                    '${price.toString()}원~',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                left: 12.36,
+                                                                top: 12,
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .start,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    name,
                                                                     style:
                                                                         const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      letterSpacing:
+                                                                          -0.24,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          10),
+                                                                  Text(
+                                                                    location,
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      color: Color(
+                                                                          0xff696969),
                                                                       fontSize:
                                                                           12,
                                                                       fontWeight:
@@ -1575,81 +1561,121 @@ class _HomePage2State extends State<HomePage2> {
                                                                               .w500,
                                                                       letterSpacing:
                                                                           -0.18,
-                                                                      color: AppColor
-                                                                          .textColor4,
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                const Expanded(
-                                                                    child: Text(
-                                                                        ' ')),
-                                                                IconButton(
-                                                                  isSelected:
-                                                                      _isSelectedEntertainment,
-                                                                  onPressed:
-                                                                      () {
-                                                                    setState(
-                                                                        () {
-                                                                      _isSelectedEntertainment =
-                                                                          !_isSelectedEntertainment;
-
-                                                                      if (isSelectedEntertainment) {
-                                                                        _selectedItemsEntertainment
-                                                                            .remove(index);
-
-                                                                        firestore
-                                                                            .collection("favorite")
-                                                                            .doc('favoriteEntertainment$index')
-                                                                            .delete();
-                                                                      } else {
-                                                                        _selectedItemsEntertainment
-                                                                            .add(index);
-
-                                                                        firestore
-                                                                            .collection("favorite")
-                                                                            .doc('favoriteEntertainment$index')
-                                                                            .set(
-                                                                          {
-                                                                            "name":
-                                                                                name,
-                                                                            "explain":
-                                                                                explain,
-                                                                            "price":
-                                                                                price,
-                                                                            "URL":
-                                                                                url,
-                                                                            'location':
-                                                                                location,
-                                                                            'timestamp':
-                                                                                DateTime.now(),
-                                                                            'index':
-                                                                                index
-                                                                          },
-                                                                        );
-                                                                      }
-                                                                    });
-                                                                  },
-                                                                  icon: (isSelectedEntertainment)
-                                                                      ? const Icon(
-                                                                          Icons
-                                                                              .favorite)
-                                                                      : favoriteIcon,
-                                                                  style:
-                                                                      const ButtonStyle(
-                                                                    iconColor: MaterialStatePropertyAll(
-                                                                        AppColor
-                                                                            .appBarColor1),
-                                                                    backgroundColor:
-                                                                        MaterialStatePropertyAll(
-                                                                            AppColor.backGroundColor1),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          10),
+                                                                  Text(
+                                                                    explain,
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      letterSpacing:
+                                                                          -0.18,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ],
+                                                                  SizedBox(
+                                                                      height:
+                                                                          1),
+                                                                  //버튼
+                                                                  Row(
+                                                                    children: [
+                                                                      Container(
+                                                                        width:
+                                                                            75,
+                                                                        height:
+                                                                            20,
+                                                                        padding: const EdgeInsets
+                                                                            .only(
+                                                                            top:
+                                                                                0),
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(13),
+                                                                          color:
+                                                                              AppColor.appBarColor1,
+                                                                        ),
+                                                                        child:
+                                                                            Text(
+                                                                          '${f.format(price)}원~',
+                                                                          textAlign:
+                                                                              TextAlign.center,
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            letterSpacing:
+                                                                                -0.18,
+                                                                            color:
+                                                                                AppColor.textColor4,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      //맛집 선택하는 코드
+                                                                      SizedBox(
+                                                                          width:
+                                                                              140.17),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .only(
+                                                                            bottom:
+                                                                                0),
+                                                                        child:
+                                                                            IconButton(
+                                                                          isSelected:
+                                                                              _isSelectedEntertainment,
+                                                                          onPressed:
+                                                                              () {
+                                                                            setState(() {
+                                                                              _isSelectedEntertainment = !_isSelectedEntertainment;
+
+                                                                              if (isSelectedEntertainment) {
+                                                                                _selectedItemsEntertainment.remove(index);
+
+                                                                                firestore.collection("favorite").doc('favorite$index').delete();
+                                                                              } else {
+                                                                                _selectedItemsEntertainment.add(index);
+
+                                                                                firestore.collection("favorite").doc('favorite$index').set(
+                                                                                  {
+                                                                                    "name": name,
+                                                                                    "explain": explain,
+                                                                                    "price": price,
+                                                                                    "URL": url,
+                                                                                    'location': location,
+                                                                                    'timestamp': DateTime.now(),
+                                                                                  },
+                                                                                );
+                                                                              }
+                                                                            });
+                                                                          },
+                                                                          icon: (isSelectedEntertainment)
+                                                                              ? const Icon(Icons.favorite)
+                                                                              : favoriteIcon,
+                                                                          style:
+                                                                              const ButtonStyle(
+                                                                            iconColor:
+                                                                                MaterialStatePropertyAll(AppColor.appBarColor1),
+                                                                            backgroundColor:
+                                                                                MaterialStatePropertyAll(AppColor.backGroundColor1),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
                                                           ],
-                                                        ),
-                                                      ),
-                                                    ),
+                                                        )),
                                                   );
                                                 },
                                               ),

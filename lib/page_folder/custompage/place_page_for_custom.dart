@@ -9,6 +9,7 @@ import '../../firestore_file/firestore_cafes.dart';
 import '../../firestore_file/firestore_resturant.dart';
 import '../../provider/appstate_provider.dart';
 import '../my_page/my_custom_in_my_page.dart';
+import 'package:intl/intl.dart';
 
 class PlacePageForCustom extends StatefulWidget {
   const PlacePageForCustom({Key? key});
@@ -29,6 +30,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
   final FirestoreServiseCafes firestoreService3 = FirestoreServiseCafes();
 
   TextEditingController textEditingController = TextEditingController();
+  var f = NumberFormat('###,###,###,###');
 
   int? _value = 0;
   List<String> item = ['맛집', '카페', '놀거리', '나의 찜'];
@@ -42,8 +44,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
 
   int sum = 0;
 
-  late Trip tripInstance;
-
   List<DocumentSnapshot> selectedList = [];
 
   List<DocumentSnapshot> notesList = [];
@@ -51,6 +51,8 @@ class _PlacePageState extends State<PlacePageForCustom> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   final firestoreServiseCustom = FirestoreServiceCustom();
+
+  bool isSelected = false;
 
   @override
   void initState() {
@@ -70,6 +72,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
   @override
   Widget build(BuildContext context) {
     MyAppState appState = Provider.of<MyAppState>(context);
+    Trip tripInstance = appState.trip!;
 
     void showOverlay2(BuildContext context) {
       OverlayEntry overlayEntry2 = OverlayEntry(
@@ -134,8 +137,8 @@ class _PlacePageState extends State<PlacePageForCustom> {
         overlayEntry = OverlayEntry(
           builder: (context) => Positioned(
             bottom: 0,
-            left: 10.0,
-            right: 10.0,
+            left: 0.0,
+            right: 0.0,
             child: Material(
               elevation: 0,
               child: Container(
@@ -145,9 +148,171 @@ class _PlacePageState extends State<PlacePageForCustom> {
                 color: Colors.white,
                 child: Row(
                   children: [
-                    Text('총 가격: $sum원',
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w700)),
+                    Row(
+                      children: [
+                        Text('총 가격: ${f.format(sum)}원',
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w700)),
+                        StatefulBuilder(builder:
+                            (BuildContext context, StateSetter setState) {
+                          return GestureDetector(
+                              onTap: () {
+                                isSelected = true;
+
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            color: AppColor.textColor4,
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10))),
+                                        width: 700,
+                                        height: 300,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    SizedBox(width: 20),
+                                                    Text('예상 금액',
+                                                        style: TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600)),
+                                                    Expanded(child: Text(''))
+                                                  ],
+                                                ),
+                                                SizedBox(height: 10),
+                                                for (int i = 0;
+                                                    i <
+                                                        tripInstance
+                                                            .selectedRestaurants
+                                                            .length;
+                                                    i++)
+                                                  Row(
+                                                    children: [
+                                                      SizedBox(width: 18),
+                                                      SizedBox(
+                                                        width: 5,
+                                                        height: 5,
+                                                        child: Image(
+                                                            image: AssetImage(
+                                                                'assets/circle.png')),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      Text(
+                                                          '${tripInstance.selectedRestaurants[i]}',
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400)),
+                                                      Expanded(child: Text('')),
+                                                      Text(
+                                                        '${f.format(tripInstance.selectedRestaurantsPrice[i])}원',
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                      SizedBox(width: 210),
+                                                    ],
+                                                  ),
+                                                SizedBox(height: 15),
+                                                for (int i = 0;
+                                                    i <
+                                                        tripInstance
+                                                            .selectedCafes
+                                                            .length;
+                                                    i++)
+                                                  Row(
+                                                    children: [
+                                                      SizedBox(width: 18),
+                                                      SizedBox(
+                                                        width: 5,
+                                                        height: 5,
+                                                        child: Image(
+                                                            image: AssetImage(
+                                                                'assets/circle.png')),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      Text(
+                                                        '${tripInstance.selectedCafes[i]}',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                      Expanded(child: Text('')),
+                                                      Text(
+                                                          '${f.format(tripInstance.selectedCafesPrice[i])}원',
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400)),
+                                                      SizedBox(width: 210),
+                                                    ],
+                                                  ),
+                                                SizedBox(height: 15),
+                                                for (int i = 0;
+                                                    i <
+                                                        tripInstance
+                                                            .selectedEntertainment
+                                                            .length;
+                                                    i++)
+                                                  Row(
+                                                    children: [
+                                                      SizedBox(width: 18),
+                                                      SizedBox(
+                                                        width: 5,
+                                                        height: 5,
+                                                        child: Image(
+                                                            image: AssetImage(
+                                                                'assets/circle.png')),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      Text(
+                                                        '${tripInstance.selectedEntertainment[i]}',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                      Expanded(child: Text('')),
+                                                      Text(
+                                                          '${f.format(tripInstance.selectedEntertainmentPrice[i])}원',
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400)),
+                                                      SizedBox(width: 210),
+                                                    ],
+                                                  ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Icon(Icons.keyboard_arrow_up));
+                        })
+                      ],
+                    ),
                     const Expanded(child: Text('')),
                     SizedBox(
                       width: 100,
@@ -469,17 +634,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             'price': price
                                           },
                                         );
-
-                                        firestore
-                                            .collection("collectionImage")
-                                            .doc('collectionImage$index')
-                                            .set(
-                                          {
-                                            "name": name,
-                                            "URL": url,
-                                            'timestamp': DateTime.now(),
-                                          },
-                                        );
                                       } else {
                                         // 선택 해제됐다면 삭제
                                         appState.deleteRestaurant(name);
@@ -487,11 +641,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                         firestore
                                             .collection("collection")
                                             .doc('collection$index')
-                                            .delete();
-
-                                        firestore
-                                            .collection("collectionImage")
-                                            .doc('collectionImage$index')
                                             .delete();
                                       }
                                     });
@@ -576,7 +725,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                               padding: const EdgeInsets.only(
                                                   left: 8.37),
                                               child: Text(
-                                                '${price.toString()}원',
+                                                '${f.format(price)}원',
                                                 style: const TextStyle(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w400,
@@ -835,18 +984,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   'price': price
                                                 },
                                               );
-
-                                              firestore
-                                                  .collection("collectionImage")
-                                                  .doc(
-                                                      'collectionImageCafe$index')
-                                                  .set(
-                                                {
-                                                  "name": name,
-                                                  "URL": url,
-                                                  'timestamp': DateTime.now(),
-                                                },
-                                              );
                                             } else {
                                               // 선택 해제됐다면 삭제
                                               appState.deleteCafe(name);
@@ -855,12 +992,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                               firestore
                                                   .collection("collection")
                                                   .doc('collectionCafe$index')
-                                                  .delete();
-
-                                              firestore
-                                                  .collection("collectionImage")
-                                                  .doc(
-                                                      'collectionImageCafe$index')
                                                   .delete();
                                             }
                                           });
@@ -952,7 +1083,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                         const EdgeInsets.only(
                                                             left: 8.37),
                                                     child: Text(
-                                                      '${price.toString()}원',
+                                                      '${f.format(price)}원',
                                                       style: const TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -1231,18 +1362,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   'index': index,
                                                 },
                                               );
-
-                                              firestore
-                                                  .collection("collectionImage")
-                                                  .doc(
-                                                      'collectionImageEnter$index')
-                                                  .set(
-                                                {
-                                                  "name": name,
-                                                  "URL": url,
-                                                  'timestamp': DateTime.now(),
-                                                },
-                                              );
                                             } else {
                                               // 선택 해제됐다면 삭제
                                               appState
@@ -1254,12 +1373,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                   .collection("collection")
                                                   .doc(
                                                       'collectionEntertainment$index')
-                                                  .delete();
-
-                                              firestore
-                                                  .collection("collectionImage")
-                                                  .doc(
-                                                      'collectionImageEnter$index')
                                                   .delete();
                                             }
                                           });
@@ -1354,7 +1467,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                         const EdgeInsets.only(
                                                             left: 8.37),
                                                     child: Text(
-                                                      '${price.toString()}원',
+                                                      '${f.format(price)}원',
                                                       style: const TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -1483,7 +1596,7 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                                 padding: const EdgeInsets.only(
                                                     left: 8.37),
                                                 child: Text(
-                                                  '${price.toString()}원',
+                                                  '${f.format(price)}원',
                                                   style: const TextStyle(
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w400,
