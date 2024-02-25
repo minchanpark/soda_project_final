@@ -31,6 +31,19 @@ class HomePage2 extends StatefulWidget {
 }
 
 class _HomePage2State extends State<HomePage2> {
+  void onSortOptionSelected(String result) {
+    // 상위 위젯에서 정렬 옵션 처리
+    if (result == '낮은 가격순') {
+      setState(() {
+        cards.sort((a, b) => a.price.compareTo(b.price));
+      });
+    } else if (result == '높은 가격순') {
+      setState(() {
+        cards.sort((a, b) => b.price.compareTo(a.price));
+      });
+    }
+  }
+
   List<Card1> cards = [
     const Card1(
       index: 0,
@@ -273,29 +286,22 @@ class _HomePage2State extends State<HomePage2> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: <Widget>[
-                                                        const Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      left: 40),
-                                                              child: Text(
-                                                                '정렬',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 24,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                ),
-                                                              ),
+                                                        const Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 40,
+                                                                  top: 20),
+                                                          child: Text(
+                                                            '정렬',
+                                                            style: TextStyle(
+                                                              fontSize: 24,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
                                                             ),
-                                                            Divider()
-                                                          ],
+                                                          ),
                                                         ),
+                                                        const Divider(),
                                                         const SizedBox(
                                                             height: 10),
                                                         GestureDetector(
@@ -320,18 +326,32 @@ class _HomePage2State extends State<HomePage2> {
                                                             Navigator.pop(
                                                                 context); // 모달 바텀 시트 닫기
                                                           },
-                                                          child: const Padding(
+                                                          child: Padding(
                                                             padding:
-                                                                EdgeInsets.only(
-                                                              left: 40,
-                                                            ),
-                                                            child: Text(
-                                                              '낮은 가격순',
-                                                              style: TextStyle(
-                                                                  fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    left: 40),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                const Text(
+                                                                  '낮은 가격순',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          20,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                                if (title ==
+                                                                    '낮은 가격순')
+                                                                  Icon(
+                                                                      Icons
+                                                                          .check,
+                                                                      size: 24)
+                                                              ],
                                                             ),
                                                           ),
                                                         ),
@@ -362,26 +382,37 @@ class _HomePage2State extends State<HomePage2> {
                                                             Navigator.pop(
                                                                 context); // 모달 바텀 시트 닫기
                                                           },
-                                                          child: const Padding(
+                                                          child: Padding(
                                                             padding:
-                                                                EdgeInsets.only(
-                                                              left: 40,
-                                                            ),
-                                                            child: Text(
-                                                              '높은 가격순',
-                                                              style: TextStyle(
-                                                                  fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    left: 40),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                const Text(
+                                                                  '높은 가격순',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          20,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                                if (title ==
+                                                                    '높은 가격순')
+                                                                  Icon(
+                                                                    Icons.check,
+                                                                  )
+                                                              ],
                                                             ),
                                                           ),
                                                         ),
                                                         const SizedBox(
                                                             height: 10),
                                                         const Divider(),
-                                                        const SizedBox(
-                                                            height: 11),
                                                       ],
                                                     ),
                                                   ),
@@ -731,6 +762,7 @@ class _HomePage2State extends State<HomePage2> {
                                                       builder: (BuildContext
                                                           context) {
                                                         return Container(
+                                                          height: 261,
                                                           decoration: const BoxDecoration(
                                                               color: AppColor
                                                                   .textColor4,
@@ -741,7 +773,6 @@ class _HomePage2State extends State<HomePage2> {
                                                                   topRight: Radius
                                                                       .circular(
                                                                           30))),
-                                                          height: 261,
                                                           child: Center(
                                                             child: Column(
                                                               mainAxisSize:
@@ -751,28 +782,26 @@ class _HomePage2State extends State<HomePage2> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: <Widget>[
-                                                                const Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: EdgeInsets.only(
+                                                                const Padding(
+                                                                  padding: EdgeInsets
+                                                                      .only(
                                                                           left:
-                                                                              40),
-                                                                      child:
-                                                                          Text(
-                                                                        '정렬',
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                24,
-                                                                            fontWeight:
-                                                                                FontWeight.w700),
-                                                                      ),
+                                                                              40,
+                                                                          top:
+                                                                              20),
+                                                                  child: Text(
+                                                                    '정렬',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          24,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
                                                                     ),
-                                                                    Divider()
-                                                                  ],
+                                                                  ),
                                                                 ),
+                                                                const Divider(),
                                                                 const SizedBox(
                                                                     height: 10),
                                                                 GestureDetector(
@@ -799,18 +828,28 @@ class _HomePage2State extends State<HomePage2> {
                                                                         context); // 모달 바텀 시트 닫기
                                                                   },
                                                                   child:
-                                                                      const Padding(
-                                                                    padding: EdgeInsets
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
                                                                         .only(
-                                                                            left:
-                                                                                40),
-                                                                    child: Text(
-                                                                      '낮은 가격순',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              20,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
+                                                                        left:
+                                                                            40),
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        const Text(
+                                                                          '낮은 가격순',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        ),
+                                                                        if (title ==
+                                                                            '낮은 가격순')
+                                                                          Icon(
+                                                                              Icons.check,
+                                                                              size: 24)
+                                                                      ],
                                                                     ),
                                                                   ),
                                                                 ),
@@ -843,26 +882,34 @@ class _HomePage2State extends State<HomePage2> {
                                                                         context); // 모달 바텀 시트 닫기
                                                                   },
                                                                   child:
-                                                                      const Padding(
-                                                                    padding: EdgeInsets
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
                                                                         .only(
-                                                                            left:
-                                                                                40),
-                                                                    child: Text(
-                                                                      '높은 가격순',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              20,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
+                                                                        left:
+                                                                            40),
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        const Text(
+                                                                          '높은 가격순',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        ),
+                                                                        if (title ==
+                                                                            '높은 가격순')
+                                                                          Icon(
+                                                                            Icons.check,
+                                                                          )
+                                                                      ],
                                                                     ),
                                                                   ),
                                                                 ),
                                                                 const SizedBox(
                                                                     height: 10),
                                                                 const Divider(),
-                                                                const SizedBox(
-                                                                    height: 10),
                                                               ],
                                                             ),
                                                           ),
@@ -1243,6 +1290,7 @@ class _HomePage2State extends State<HomePage2> {
                                                       builder: (BuildContext
                                                           context) {
                                                         return Container(
+                                                          height: 261,
                                                           decoration: const BoxDecoration(
                                                               color: AppColor
                                                                   .textColor4,
@@ -1253,7 +1301,6 @@ class _HomePage2State extends State<HomePage2> {
                                                                   topRight: Radius
                                                                       .circular(
                                                                           30))),
-                                                          height: 261,
                                                           child: Center(
                                                             child: Column(
                                                               mainAxisSize:
@@ -1263,28 +1310,26 @@ class _HomePage2State extends State<HomePage2> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: <Widget>[
-                                                                const Column(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: EdgeInsets.only(
+                                                                const Padding(
+                                                                  padding: EdgeInsets
+                                                                      .only(
                                                                           left:
-                                                                              40),
-                                                                      child:
-                                                                          Text(
-                                                                        '정렬',
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                24,
-                                                                            fontWeight:
-                                                                                FontWeight.w700),
-                                                                      ),
+                                                                              40,
+                                                                          top:
+                                                                              20),
+                                                                  child: Text(
+                                                                    '정렬',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          24,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
                                                                     ),
-                                                                    Divider()
-                                                                  ],
+                                                                  ),
                                                                 ),
+                                                                const Divider(),
                                                                 const SizedBox(
                                                                     height: 10),
                                                                 GestureDetector(
@@ -1311,18 +1356,28 @@ class _HomePage2State extends State<HomePage2> {
                                                                         context); // 모달 바텀 시트 닫기
                                                                   },
                                                                   child:
-                                                                      const Padding(
-                                                                    padding: EdgeInsets
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
                                                                         .only(
-                                                                            left:
-                                                                                40),
-                                                                    child: Text(
-                                                                      '낮은 가격순',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              20,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
+                                                                        left:
+                                                                            40),
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        const Text(
+                                                                          '낮은 가격순',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        ),
+                                                                        if (title ==
+                                                                            '낮은 가격순')
+                                                                          Icon(
+                                                                              Icons.check,
+                                                                              size: 24)
+                                                                      ],
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1355,18 +1410,28 @@ class _HomePage2State extends State<HomePage2> {
                                                                         context); // 모달 바텀 시트 닫기
                                                                   },
                                                                   child:
-                                                                      const Padding(
-                                                                    padding: EdgeInsets
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
                                                                         .only(
-                                                                            left:
-                                                                                40),
-                                                                    child: Text(
-                                                                      '높은 가격순',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              20,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
+                                                                        left:
+                                                                            40),
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        const Text(
+                                                                          '높은 가격순',
+                                                                          style: TextStyle(
+                                                                              fontSize: 20,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        ),
+                                                                        if (title ==
+                                                                            '높은 가격순')
+                                                                          Icon(
+                                                                            Icons.check,
+                                                                          )
+                                                                      ],
                                                                     ),
                                                                   ),
                                                                 ),
@@ -1715,7 +1780,7 @@ class _HomePage2State extends State<HomePage2> {
                         const Expanded(child: Text('')),
                         GestureDetector(
                           onTap: () {
-                            showModalBottomSheet<void>(
+                            showModalBottomSheet<String>(
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
@@ -1758,101 +1823,146 @@ class _HomePage2State extends State<HomePage2> {
                                               StatefulBuilder(builder:
                                                   (BuildContext context,
                                                       StateSetter setState) {
-                                                return Slider(
-                                                  thumbColor:
-                                                      AppColor.appBarColor1,
-                                                  activeColor:
-                                                      AppColor.appBarColor1,
-                                                  inactiveColor:
-                                                      AppColor.appBarColor1,
-                                                  value: _currentSliderValue,
-                                                  min: 0,
-                                                  max: 60000,
-                                                  divisions: 3,
-                                                  label: _currentSliderValue
-                                                      .round()
-                                                      .toString(),
-                                                  onChanged: (double value) {
-                                                    setState(() {
-                                                      _currentSliderValue =
-                                                          value;
-                                                      // 카드를 필터링하여 업데이트된 카드 배열을 얻습니다.
-                                                      filteredCards = cards
-                                                          .where((card) =>
-                                                              card.price <=
-                                                              _currentSliderValue)
-                                                          .toList();
-                                                    });
-                                                  },
+                                                return Stack(
+                                                  children: <Widget>[
+                                                    Positioned(
+                                                      top: 120,
+                                                      left: 20,
+                                                      right: 5,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: <Widget>[
+                                                          Text('0원'),
+                                                          Text('2만원'),
+                                                          Text('4만원'),
+                                                          Text('6만원'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Slider(
+                                                      thumbColor:
+                                                          AppColor.appBarColor1,
+                                                      activeColor:
+                                                          AppColor.appBarColor1,
+                                                      inactiveColor:
+                                                          AppColor.appBarColor1,
+                                                      value:
+                                                          _currentSliderValue,
+                                                      min: 0,
+                                                      max: 60000,
+                                                      divisions: 3,
+                                                      label: _currentSliderValue
+                                                          .round()
+                                                          .toString(),
+                                                      onChanged:
+                                                          (double value) {
+                                                        setState(() {
+                                                          _currentSliderValue =
+                                                              value;
+                                                          // 카드를 필터링하여 업데이트된 카드 배열을 얻습니다.
+                                                          filteredCards = cards
+                                                              .where((card) =>
+                                                                  card.price <=
+                                                                  _currentSliderValue)
+                                                              .toList();
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
                                                 );
                                               }),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 21),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 39),
-                                                      child: GestureDetector(
-                                                        child: const Text(
-                                                          '낮은 가격순',
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
+                                              StatefulBuilder(builder:
+                                                  (BuildContext context,
+                                                      StateSetter setState) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 21),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 39),
+                                                        child: GestureDetector(
+                                                          child: Row(
+                                                            children: [
+                                                              const Text(
+                                                                '낮은 가격순',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 240),
+                                                              if (title ==
+                                                                  '낮은 가격순')
+                                                                Icon(Icons
+                                                                    .check),
+                                                            ],
+                                                          ),
+                                                          onTap: () {
+                                                            setState(() {
+                                                              onSortOptionSelected(
+                                                                  '낮은 가격순');
+                                                              title = '낮은 가격순';
+                                                            });
+                                                          },
                                                         ),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            cards = List.from(
-                                                                cards)
-                                                              ..sort((a, b) => a
-                                                                  .price
-                                                                  .compareTo(
-                                                                      b.price));
-                                                          });
-                                                          title = '낮은 가격순';
-                                                        },
                                                       ),
-                                                    ),
-                                                    const SizedBox(height: 10),
-                                                    const Divider(),
-                                                    const SizedBox(height: 10),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 39),
-                                                      child: GestureDetector(
-                                                        child: const Text(
-                                                          '높은 가격순',
-                                                          style: TextStyle(
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      const Divider(),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 39),
+                                                        child: GestureDetector(
+                                                          child: Row(
+                                                            children: [
+                                                              const Text(
+                                                                '높은 가격순',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 240),
+                                                              if (title ==
+                                                                  '높은 가격순')
+                                                                Icon(Icons
+                                                                    .check),
+                                                            ],
+                                                          ),
+                                                          onTap: () {
+                                                            setState(() {
+                                                              onSortOptionSelected(
+                                                                  '높은 가격순');
+                                                              title = '높은 가격순';
+                                                            });
+                                                          },
                                                         ),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            cards = List.from(
-                                                                cards)
-                                                              ..sort((a, b) => b
-                                                                  .price
-                                                                  .compareTo(
-                                                                      a.price));
-                                                          });
-                                                          title = '높은 가격순';
-                                                        },
                                                       ),
-                                                    ),
-                                                    const SizedBox(height: 10),
-                                                    const Divider(),
-                                                  ],
-                                                ),
-                                              ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      const Divider(),
+                                                    ],
+                                                  ),
+                                                );
+                                              }),
                                             ]),
                                           )
                                         ],

@@ -634,17 +634,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             'price': price
                                           },
                                         );
-
-                                        /*firestore
-                                            .collection("collectionImage")
-                                            .doc('collectionImage$index')
-                                            .set(
-                                          {
-                                            "name": name,
-                                            "URL": url,
-                                            'timestamp': DateTime.now(),
-                                          },
-                                        );*/
                                       } else {
                                         // 선택 해제됐다면 삭제
                                         appState.deleteRestaurant(name);
@@ -653,11 +642,6 @@ class _PlacePageState extends State<PlacePageForCustom> {
                                             .collection("collection")
                                             .doc('collection$index')
                                             .delete();
-
-                                        /*firestore
-                                            .collection("collectionImage")
-                                            .doc('collectionImage$index')
-                                            .delete();*/
                                       }
                                     });
                                   },
