@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:soda_project_final/firestore_file/firestore_custom.dart';
 import '../../app_color/app_color.dart';
 import '../../provider/appstate_provider.dart';
 import '../../provider/trip_provider.dart';

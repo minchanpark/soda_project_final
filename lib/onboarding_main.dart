@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:soda_project_final/page_folder/home_page/home_page_2.dart';
-
 import 'app_color/app_color.dart';
 import 'page_folder/home_page/home_page.dart';
 

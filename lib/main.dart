@@ -6,7 +6,6 @@ import 'package:soda_project_final/page_folder/custompage/custom_page.dart';
 import 'package:soda_project_final/provider/appstate_provider.dart';
 import 'onboarding.dart';
 import 'page_folder/custompage/custom_main_page.dart';
-import 'page_folder/home_page/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
